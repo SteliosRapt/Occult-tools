@@ -4,8 +4,8 @@
    design per category back; fit.js adds a mirrored back sheet after every front sheet. #}
 {% block body %}
 {% for deck in decks %}
-<div class="deck" data-size="{{ deck.size }}" data-cols="{{ deck.cols }}" data-rows="{{ deck.rows }}" data-art="{{ art_mode }}">
-{% for c in deck.cards %}{% include "cards/" ~ c.kind ~ ".j2" %}{% endfor %}
+<div class="deck" data-size="{{ deck.size }}" data-cols="{{ deck.cols }}" data-rows="{{ deck.rows }}"{% if deck_attributes_template is defined %}{% include deck_attributes_template %}{% endif %}>
+{% for c in deck.cards %}{% include card_templates.get(c.kind, "cards/" ~ c.kind ~ ".j2") if card_templates is defined else "cards/" ~ c.kind ~ ".j2" %}{% endfor %}
 </div>
 {% if backs %}
 <div class="back-designs" data-size="{{ deck.size }}">

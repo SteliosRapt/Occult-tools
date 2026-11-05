@@ -22,7 +22,7 @@ def fold(s):
 LINK = re.compile(r"\[([^\]\n]+)\]\(([a-z0-9.-]+(?:/[a-z0-9-]+)+)\)")
 ITALIC = re.compile(r"(?<![*\w])\*(?!\*)([^*\n]+?)\*(?![*\w])")
 BOLD = re.compile(r"\*\*([^*\n]+?)\*\*")
-# an italic name followed by a literal footnote asterisk: `*Identify**` (FRHoF's "*Spell of the Divination school")
+# an italic name followed by a literal footnote asterisk: `*Identify**` (a school-list footnote)
 ITALIC_MARKED = re.compile(r"(?<![*\w])\*(?!\*)([^*\n]+?)\*\*(?![*\w])")
 DAMAGE_TYPES = ("Acid|Bludgeoning|Cold|Fire|Force|Lightning|Necrotic|Piercing|Poison|Psychic|Radiant|Slashing|Thunder")
 # a dice expression, plus its damage type when one follows (`8d6 Fire damage` is bolded as one run)

@@ -3,8 +3,7 @@
 {% import "book/_spells.j2" as sp %}
 {# Class booklet: core traits, the 20-level progression (from data), features in level order,
    the class's option menus and spell list as printed, then the subclasses. A booklet to a level
-   (book.level) stops at that level, shows the subclass art on one gallery page and ends with the
-   spells the class casts by then, in full. #}
+   to a level stops at that level and includes the spells cast by then in full. #}
 {% block book %}
 <section class="class-opener">
 {{ k.opener(book.kicker, book.title, book.tagline) }}
@@ -24,17 +23,12 @@
 <div class="columns-2">{% for c in s.children %}{{ k.tree(c) }}{% endfor %}</div>
 </section>
 {% elif s.get('break') %}
-{% if s.get('gallery') %}{# a booklet to a level: the subclasses' art alone on a page, under the title #}
-<section class="art-gallery page-break" style="--per-row: {{ s.gallery.per_row }}; --art-h: {{ s.gallery.height }}in">
-<h1>{{ s.title }}</h1>
-<div class="gallery">{% for row in s.gallery.rows %}<div class="g-row">{% for a in row %}<img src="{{ a.src }}" alt="">{% endfor %}</div>{% endfor %}</div>
-</section>
-{% endif %}
+{% if gallery_template is defined %}{% include gallery_template %}{% endif %}
 {# a subclass booklet (--subclass) runs on under the opener, with no section title (after class features: a new page) #}
 <section class="class-sec{% if not s.get('run_on') %} page-break{% endif %}" id="{{ s.sid }}">
-{% if not s.get('gallery') and s.title %}<h1>{{ s.title }}</h1>{% endif %}
-{# a subclass whose art found no page of its own (art_break) starts a page, in new columns #}
-<div class="columns-2">{{ k.blocks(s.content) }}{% for c in s.children %}{% if c.get("art_break") %}</div>
+{% if not s.get('hide_title') and s.title %}<h1>{{ s.title }}</h1>{% endif %}
+{# a subclass whose art found no page of its own (break_before) starts a page, in new columns #}
+<div class="columns-2">{{ k.blocks(s.content) }}{% for c in s.children %}{% if c.get("break_before") %}</div>
 <div class="columns-2 page-break">{% endif %}{{ k.subclass(c) }}{% endfor %}</div>
 </section>
 {% else %}{# a subclass booklet's spell list and Character Options: headings across both columns (book.css) #}

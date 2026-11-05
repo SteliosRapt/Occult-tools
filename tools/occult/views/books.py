@@ -9,14 +9,12 @@ Content blocks stay as in the JSON; templates/book/_blocks.j2 maps them to page.
 """
 import re
 
-from .. import data, query
-from ._common import art, book_table, book_titles, caster_classes, page_ref
+from .. import components, data, query
+from ._common import book_table, book_titles, caster_classes, page_ref
 from . import creature
 from .klass import progression
 
 LEVEL_NAMES = {0: "Cantrips"}
-# Subclass art prints a column wide (Letter: 88 mm) and up to --subclass-art-h (6.4in) tall (book.css).
-SUBCLASS_ART_BOX = (90, 163)
 
 
 def level_name(n):
@@ -68,7 +66,7 @@ def spell_entry(e):
             "content": [b for b in e.content if b["type"] != "caption"]}
 
 
-# The PHB's Special column marks M only for a material with a cost or one the spell consumes.
+# The spell-list Special column marks M only for a material with a cost or one the spell consumes.
 COSTLY = re.compile(r"\bworth\b|\d[\d,]*\+? ?[GCSP]P\b|consume", re.I)
 
 
@@ -111,7 +109,7 @@ def spellbook(ix, cls, level=None):
     note = next((b for b in sl.content if b["type"] == "paragraph"), None) if sl else None
     upto = f" (Level {level} {klass.title})" if level else ""
     return {"title": f"{klass.title} Spells", "kicker": f"Spellbook{' to Level ' + str(level) if level else ''}",
-            "footer": f"Spellbook | {klass.title} Spells{upto}", "class": klass.title, "class_id": cls,
+            "footer": f"Spellbook | {klass.title} Spells{upto}", "class": klass.title, "source_title": ix.books[0]["title"], "class_id": cls,
             "count": len(ss), "note": note, "levels": levels, "books": book_titles(ix, ss), "class_level": level,
             "stats": f"{plural(len(ss), 'spell')} · {plural(len(levels), 'level')}"}
 
@@ -135,7 +133,7 @@ ARMOR_ORDER = ["light", "medium", "heavy", "shield"]
 
 
 def equipment(ix):
-    """The PHB's equipment chapter (other books' weapons, tools and gear are not part of it)."""
+    """The first equipment chapter and the equipment entries in its book."""
     ch = next((e for e in ix.all("chapter") if e.title.lower().endswith("equipment")), None)
     if ch is None:
         raise data.NotFound("equipment chapter is not in this data set", data.Lookup())
@@ -236,7 +234,7 @@ def glossary(ix):
 # ---------------------------------------------------------------- class booklet
 def spell_list(ix, klass, secs, top=None):
     """Rebuild the printed spell-list tables from the data, so spells other books add to the class
-    (FRHoF, AU) are listed too; each table keeps its printed title and gains a Source column.
+    are listed too; each table keeps its printed title and gains a Source column.
     `top`: only spell levels up to it (a subclass booklet with --class-features)."""
     try:
         sl = ix.get(f"section:{klass.title.lower()}-spell-list")
@@ -268,7 +266,6 @@ def walk_nodes(n):
 
 # A booklet to a class level (`make class --level N`): features, options and subclass features up to N,
 # the subclass art together on one gallery page, and the spells the class casts by then in full.
-GALLERY_W, GALLERY_H = 7.0, 9.0          # inches the gallery may fill under its title (A4 and Letter)
 OPTION_LEVEL = re.compile(r"\bLevel (\d+)\+")
 
 
@@ -292,18 +289,6 @@ def prune(ix, n, level):
     return n
 
 
-def gallery(arts):
-    """The gallery layout for these art models: images per row and their height (in), the most
-    art-filling of every row count."""
-    if not arts:
-        return None
-    r = sum(a["ratio"] for a in arts) / len(arts)
-    best = max(range(1, len(arts) + 1), key=lambda k: min(GALLERY_H / -(-len(arts) // k) - 0.15,
-                                                            (GALLERY_W / k - 0.15) * r))
-    rows = -(-len(arts) // best)
-    h = min(GALLERY_H / rows - 0.15, (GALLERY_W / best - 0.15) * r)
-    return {"arts": arts, "rows": [arts[k:k + best] for k in range(0, len(arts), best)], "per_row": best,
-            "height": round(h, 2)}
 
 
 def class_subclass(ix, cls, ref):
@@ -357,21 +342,21 @@ def booklet(ix, cls, level=None, subclass=None, class_features=None, add=None):
             for s, se in zip(n["children"], c.children):
                 if se.type == "subclass":
                     s["subtitle"] = se.data.get("tagline")
-                    s["art"] = art(se.images, box=SUBCLASS_ART_BOX)[0]
+                    components.apply("subclass_model", s, se)
                     for f, fe in zip(s["children"], se.children):
                         if fe.type == "feature" and fe.data.get("level"):
                             f["title"] = f"Level {fe.data['level']}: {fe.title}"
         else:
             n = node(c, 1)
         secs.append(n)
-    # subclasses other books print for this class (AU, FRHoF, RHW: data.class), labelled with their book
+    # subclasses other books print for this class (data.class), labelled with their book
     others = [s for s in query.select(ix, "subclass", {"class": cls}) if e not in s.ancestors()]
     if others:
         titles = {b["short"]: b["title"] for b in ix.books}
         kids = []
         for se in others:
             s = node(se, 1, subtitle=" · ".join(x for x in (se.data.get("tagline"), titles.get(se.book)) if x))
-            s["art"] = art(se.images, box=SUBCLASS_ART_BOX)[0]
+            components.apply("subclass_model", s, se)
             for f, fe in zip(s["children"], se.children):
                 if fe.type == "feature" and fe.data.get("level"):
                     f["title"] = f"Level {fe.data['level']}: {fe.title}"
@@ -423,12 +408,7 @@ def booklet(ix, cls, level=None, subclass=None, class_features=None, add=None):
             if only:
                 raise ValueError(f"a level {level} {e.title} has no subclass yet (level {d.get('subclass_level')})")
             secs = [s for s in secs if not s.get("break")]
-        for s in secs:
-            if s.get("break") and not s.get("only"):  # every subclass's art on one page, before the text
-                kids = [n for n in s["children"] if n.get("art")]
-                s["gallery"] = gallery([n["art"] for n in kids])
-                for n in kids:
-                    n["art"] = None
+        components.apply("booklet_level", secs)
         if e.title in caster_classes(ix) and max_spell_level(d, level) is not None:
             spells = spellbook(ix, cls, level)
         ids = {n["sid"] for s in secs for n in walk_nodes(s)}
@@ -439,14 +419,14 @@ def booklet(ix, cls, level=None, subclass=None, class_features=None, add=None):
         feats = [f for f in feats if f.sid in ids]
         return {"title": only.title, "kicker": f"{e.title} Subclass{upto}",
                 "footer": f"{e.title} Subclass | {only.title}{upto}", "tagline": None,
-                "class_id": cls, "class_title": e.title, "intro": [], "sections": secs, "level": level, "spells": None,
+                "source_title": ix.books[0]["title"], "class_id": cls, "class_title": e.title, "intro": [], "sections": secs, "level": level, "spells": None,
                 # with the class features, the Core Traits box too: saves, skills, equipment at level 1
                 "traits": book_table(traits) if traits and class_features else None,
                 "caster": False, "span_heads": bool(class_features),
                 "stats": " · ".join([plural(len(feats), "feature"), "1 subclass"]
                                     + ([plural(len(add), "added option")] if add else []))}
     return {"title": e.title, "kicker": f"Class Booklet{upto}", "footer": f"Class Booklet | {e.title}{upto}",
-            "tagline": d.get("tagline"), "class_id": cls, "intro": intro,
+            "tagline": d.get("tagline"), "source_title": ix.books[0]["title"], "class_id": cls, "intro": intro,
             "traits": book_table(traits) if traits else None, "sections": secs, "level": level, "spells": spells,
             "caster": e.title in caster_classes(ix) and bool(sc),
             "stats": " · ".join([plural(len(feats), "feature"), plural(len(subs), "subclass", "subclasses")]

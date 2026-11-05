@@ -43,7 +43,6 @@
 .sb p { text-indent: 0 !important; margin: 0 0 2pt; }
 .sb-head { display: flex; align-items: center; gap: 5pt; }
 .sb-titles { flex: 1; min-width: 0; }
-.sb-token { width: 0.42in; height: 0.42in; border-radius: 50%; object-fit: cover; }
 .sb-name { font: 700 13pt/1.1 var(--font-heading); color: var(--sb-name); margin: 0; font-variant: small-caps; }
 .sb-count { font: 700 9pt var(--font-sans); color: var(--ink-soft); font-variant: normal; }
 .sb-type { font-style: italic; margin: 0 0 2pt !important; }

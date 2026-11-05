@@ -1,4 +1,4 @@
-"""Loader and Index for every book in data/ (stdlib only): data/phb-2024 first, then the others (LOAD_ORDER).
+"""Loader and Index for every book in data/ (stdlib only): the configured book order, then alphabetically.
 
     ix = data.load()                 # cached per process
     e = ix.get("spell:fireball")     # full id, short id, alias:slug, bare slug, exact title or variant title
@@ -16,14 +16,11 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from . import text
+from . import components, text
 from .types import TYPES, rank, resolve_type, type_name
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA_ROOT = Path(os.environ.get("OCCULT_DATA", ROOT / "data"))
-# Book load order (see book_dirs): the PHB, then the books in the order they were added.
-LOAD_ORDER = ["phb-2024", "dmg-2024", "efa-2025", "mm-2025", "frhof-2025", "au-2026", "rhw-2026"]
-
 # Owners used to disambiguate repeated slugs, nearest first.
 OWNER_TYPES = ("subclass", "class", "species", "feature")
 # Types never used to resolve cross-references (headings, not things).
@@ -40,12 +37,12 @@ def book_short(book_id):
     return book_id.split("-", 1)[0]
 
 
-BOOK_ABBR = {"frhof": "FRHoF"}
+BOOK_ABBR = {}
 
 
 def book_abbr(short):
-    """`phb` -> `PHB`, `frhof` -> `FRHoF`: a book's printed abbreviation (labels, `show` headers)."""
-    return BOOK_ABBR.get(short, short.upper())
+    """The loaded book's abbreviation, falling back to its uppercase short name."""
+    return components.transform("abbreviation", BOOK_ABBR.get(short, short.upper()), short)
 
 
 def _words(title):
@@ -54,7 +51,7 @@ def _words(title):
 
 class Entity:
     __slots__ = ("id", "sid", "type", "node_type", "title", "page", "book", "data", "content", "children", "parent",
-                 "owner_class", "owner_subclass", "classes", "order", "_blob", "images")
+                 "owner_class", "owner_subclass", "classes", "order", "_blob", "primary", *components.values("entity_fields"))
 
     def __init__(self, node, parent, order, book):
         self.id = node["id"]
@@ -66,7 +63,7 @@ class Entity:
         self.page = node.get("page")
         self.data = node.get("data") or {}
         self.content = node.get("content") or []
-        self.images = node.get("images") or []          # art refs (img/ paths), e.g. magic items
+        components.apply("entity_fields_init", self, node)
         self.classes = list(self.data.get("classes") or []) if self.type == "spell" else None
         self.children = []
         self.parent = parent
@@ -100,14 +97,13 @@ class Entity:
 
     def as_json(self, full=True):
         d = {"sid": self.sid, "type": self.type, "title": self.title, "page": self.page}
-        if self.book != "phb":
+        if not self.primary:
             d["book"] = self.book
         d["data"] = {k: v for k, v in self.data.items() if not k.startswith("_")}
         if full:
             d.update(id=self.id, parent=self.parent.sid if self.parent else None, content=self.content,
                      children=[c.sid for c in self.children])
-            if self.images:
-                d["images"] = self.images
+            components.apply("entity_json", d, self)
         return d
 
     def __repr__(self):
@@ -132,7 +128,7 @@ class NotFound(LookupError):
 
 
 def book_dirs(root):
-    """Book folders under a data root (or the root itself when it is one book), in LOAD_ORDER, then by id.
+    """Book folders under a data root (or the root itself when it is one book), in component order, then by id.
 
     The order decides short ids on a slug collision (an earlier book keeps the plain `type:slug`),
     so the books that came first keep theirs as new ones are added.
@@ -141,8 +137,7 @@ def book_dirs(root):
     if (root / "book.json").is_file():
         return [root]
     dirs = [f.parent for f in root.glob("*/book.json")]
-    rank = lambda d: LOAD_ORDER.index(d.name) if d.name in LOAD_ORDER else len(LOAD_ORDER)
-    return sorted(dirs, key=lambda d: (rank(d), d.name))
+    return components.transform("book_dirs", sorted(dirs))
 
 
 class Index:
@@ -155,12 +150,13 @@ class Index:
             meta = json.loads((d / "book.json").read_text(encoding="utf-8"))
             book = dict({k: v for k, v in meta.items() if k != "contents"}, short=book_short(meta["id"]))
             self.books.append(book)
-            # the chapter files book.json lists (images.json and corrections.json are not chapters)
+            BOOK_ABBR[book["short"]] = meta.get("abbreviation") or meta.get("abbr") or book["short"].upper()
+            # Load only the chapter files explicitly listed in book.json.
             for f in [d / c["file"] for c in meta["contents"]]:
                 self.roots.append(self._walk(json.loads(f.read_text(encoding="utf-8")), None, book["short"]))
         self._cross_book_owners()
         for i, b in enumerate(self.books):
-            self._assign_sids([e for e in self.entities if e.book == b["short"]], i != 0 or b["short"] != "phb")
+            self._assign_sids([e for e in self.entities if e.book == b["short"]], components.transform("qualify_ids", True, b, i))
         for e in self.entities:
             self.by_title[e.title.lower()].append(e)
         self.by_variant = defaultdict(list)    # slugified data.variants[].title and .record -> entries
@@ -180,6 +176,7 @@ class Index:
     # ------------------------------------------------------------ build
     def _walk(self, node, parent, book):
         e = Entity(node, parent, len(self.entities), book)
+        e.primary = book == self.books[0]["short"]
         assert e.id not in self.by_id, f"duplicate id {e.id}"
         self.by_id[e.id] = e
         self.entities.append(e)
@@ -187,7 +184,7 @@ class Index:
         return e
 
     def _cross_book_owners(self):
-        """A subclass printed in another book than its class (AU, FRHoF, RHW) names the class in `data.class`
+        """A subclass printed in another book than its class names the class in `data.class`
         (node id; `data.class_name` as a fallback): it and its features get that owner class."""
         for e in self.entities:
             if e.owner_class is not None:
@@ -204,8 +201,7 @@ class Index:
 
         A later book (`qualify`) treats a slug an earlier book has in the type as a repeat, and never
         takes a short id already given; when the owner is the chapter, it is book-qualified
-        (`section:dmg/07/slug`, `chapter:dmg/07`). A later book's chapters are always book-qualified
-        (`chapter:dmg/08`, though the PHB has no chapter 08).
+        (`section:book/07/slug`, `chapter:book/07`). Qualified chapters carry the book short name.
         """
         taken = {(e.type, e.slug) for e in self.by_sid.values()}
         groups = defaultdict(list)
@@ -227,7 +223,7 @@ class Index:
                     sid = f"{t}:{e.book}/{owner.slug}" + ("" if owner is e else f"/{slug}")
                 else:
                     sid = f"{t}:{owner.slug}/{slug}"
-                # an owner id that is another repeat's own full path is left to it (RHW genres-of-horror)
+                # an owner id that is another repeat's own full path is left to it
                 taken_by_other = sid in self.by_sid or fulls.get(sid, e) is not e
                 self._set(e, full if taken_by_other else sid)
 
@@ -253,8 +249,8 @@ class Index:
 
     @staticmethod
     def _book_rank(e, src):
-        """Same book as `src` first, then the PHB, then the rest."""
-        return 0 if src is not None and e.book == src.book else 1 if e.book == "phb" else 2
+        """Same book as `src` first, then the first loaded book, then the rest."""
+        return 0 if src is not None and e.book == src.book else 1 if e.primary else 2
 
     # ------------------------------------------------------------ access
     def all(self, t):
@@ -320,15 +316,15 @@ class Index:
         """An italic name (`*Arrows*`, `*Potions of Healing*`, `*+2 Weapon*`) -> one entity, or None.
 
         Tries the exact title, text.REF_ALIASES, singular forms, variant titles, then a close fuzzy
-        match. Several hits: prefer one in the same chapter as `src`, then its book, then the PHB,
-        then by type rank. Outside the PHB, a title (or singular, or variant) in src's own book beats an alias.
+        match. Several hits: prefer one in the same chapter as `src`, then its book, then the first loaded book,
+        then by type rank. Outside the primary book, a title (or singular, or variant) in src's own book beats an alias.
         """
         key = re.sub(r"\s+", " ", name.strip(" .,;:")).lower()
         chap = src.chapter() if src else None
         if (key, chap) in self._ref_cache:
             return self._ref_cache[(key, chap)]
         hit = None
-        if src is not None and src.book != "phb":
+        if src is not None and not src.primary:
             hit = next((e for k in [key, *text.singulars(key)] for e in self.by_title.get(k, []) + self.by_variant.get(slugify(k), [])
                         if e.book == src.book and e.type not in NOT_REFS), None)
         if not hit and key in text.REF_ALIASES:
@@ -368,7 +364,7 @@ _INDEX = None
 
 
 def load():
-    """The Index of every book in data/, built once per process (~0.1 s for the PHB)."""
+    """The Index of every book in data/, built once per process."""
     global _INDEX
     if _INDEX is None:
         _INDEX = Index()

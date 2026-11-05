@@ -31,7 +31,7 @@ saves (save_dex). `set_abilities` ({"str": 21}) models items that set a score.
 import math
 import re
 
-from .. import data, text
+from .. import components, data, text
 from . import core, tables
 from .tables import ABILITIES, ABILITY_NAMES, ability
 
@@ -54,21 +54,16 @@ EFFECTS = {
     "feature:monk/extra-attack": {"attacks": 2},
     "feature:paladin/extra-attack": {"attacks": 2},
     "feature:ranger/extra-attack": {"attacks": 2},
-    "feature:college-of-valor/extra-attack": {"attacks": 2},
-    "feature:armorer/extra-attack": {"attacks": 2},
-    "feature:battle-smith/extra-attack": {"attacks": 2},
-    "feature:bladesinger/extra-attack": {"attacks": 2},
-    "feat:tough": {"hp_per_level": 2},
     "feat:alert": {"initiative_pb": True},
     "feat:defense": {"ac_in_armor": 1},
     "feat:archery": {"ranged_attack": 2},
-    "feat:dueling": {"note": "Dueling: +2 damage with a melee weapon in one hand and no other weapon"},
     "feat:great-weapon-fighting": {"note": "Great Weapon Fighting: treat 1s and 2s on damage dice as 3s (two-handed or versatile, held in two hands)"},
     "species:dwarf": {"hp_per_level": 1, "label": "Dwarven Toughness"},
-    "species:warforged": {"ac": 1, "label": "Integrated Protection"},
     "species:goliath": {"size_up_for_carrying": True, "label": "Powerful Build"},
     "option:protector": {"armor": ("heavy",), "weapons": ("martial",)},        # Divine Order
 }
+
+components.apply("register_effects", EFFECTS)
 
 CASTER_KINDS = ("spellcasting", "pact", "subclass")
 UNNAMED = "Unnamed"                 # the sheet's name when the spec has none
@@ -126,12 +121,12 @@ def class_features(ix, cls, level, subclass=None):
     return out
 
 
-def caster_progression(cls, subclass=None, level=20):
-    """'full' | 'half' | 'third' | 'pact' | None, read from the tables: a class whose level 20 row has
-    9th-level slots is a full caster, one that stops at 5th a half caster (rounding up, as the PHB says
-    for the Paladin and Ranger; the Artificer is treated the same, docs/architecture.md §10), and a subclass with
-    its own spellcasting table counts a third of the class level (Eldritch Knight, Arcane Trickster,
-    Warrior of the Mystic Arts)."""
+def caster_progression(cls, subclass=None):
+    """Read full/half/pact progression from the class table, or third from its subclass.
+
+    Full casters have level-9 slots at class level 20; half casters stop at level 5 and
+    round their caster level up. Subclasses with their own spellcasting table count a third.
+    """
     sc = cls.data.get("spellcasting") or {}
     if sc.get("kind") == "pact":
         return "pact"
@@ -179,7 +174,7 @@ def spell_slots(entries):
     combined caster level. Pact Magic is always separate."""
     casters, pact = [], None
     for cls, level, sub in entries:
-        prog = caster_progression(cls, sub, level)
+        prog = caster_progression(cls, sub)
         if prog == "pact":
             row = cls.data["levels"][level - 1]
             pact = {"slots": row["pact_slots"], "level": row["pact_slot_level"]}
@@ -264,43 +259,9 @@ class _Sheet:
         return EFFECTS.get(i, {}).get("label") or self.ix.get(i).title
 
     def run(self):
-        ix, spec = self.ix, self.spec
-        if not spec.get("classes"):
-            raise SpecError("a character needs at least one class: \"classes\": [{\"class\": \"fighter\", \"level\": 1}]")
-        self.classes = []
-        for c in spec["classes"]:
-            if isinstance(c, str):
-                c = {"class": c, "level": 1}
-            cls = resolve(ix, "class", c["class"])
-            lvl = int(c.get("level", 1))
-            sub = resolve(ix, "subclass", c["subclass"]) if c.get("subclass") else None
-            if sub is not None and (sub.owner_class or "") != cls.title.lower():
-                raise SpecError(f"{sub.sid} is a {sub.owner_class} subclass, not {cls.title}")
-            if not 1 <= lvl <= 20:
-                raise SpecError(f"{cls.title} level must be 1-20, not {lvl}")
-            self.classes.append((cls, lvl, sub))
-        if len({c.sid for c, _, _ in self.classes}) != len(self.classes):
-            raise SpecError("each class appears once in \"classes\"; add the levels together")
-        self.level = sum(l for _, l, _ in self.classes)
-        if self.level > 20:
-            raise SpecError(f"total character level is {self.level}; the maximum is 20")
-        self.pb = core.proficiency_bonus(self.level)
-        self.species = resolve(ix, "species", spec["species"]) if spec.get("species") else None
-        self.background = resolve(ix, "background", spec["background"]) if spec.get("background") else None
-
-        self.features = []                # (class title, level, entity or name)
-        for cls, lvl, sub in self.classes:
-            if lvl >= 3 and sub is None and any("Subclass" in n for r in cls.data["levels"][:lvl] for n in r["features"]):
-                self.W(f"{cls.title} {lvl} has a subclass by level 3; add \"subclass\" to the class entry")
-            for at, f in class_features(ix, cls, lvl, sub):
-                self.features.append((cls.title, at, f))
-        self.feats = self._feats()
-        self.effect_ids = {f.sid for _, _, f in self.features if isinstance(f, data.Entity)}
-        self.effect_ids |= {f.sid for f, _ in self.feats}
-        if self.species is not None:
-            self.effect_ids.add(self.species.sid)
-        self.options = [resolve(ix, "option", x) for x in spec.get("options") or []]
-        self.effect_ids |= {o.sid for o in self.options}
+        spec = self.spec
+        self._classes()
+        self._features()
 
         self.scores = self._abilities()
         self.m = {a: core.mod(s) for a, s in self.scores.items()}
@@ -354,6 +315,49 @@ class _Sheet:
         out["applied_rules"] = [{"rule": what, "from": where} for what, where in self.applied]
         out["warnings"] = self.warn
         return out
+
+    def _classes(self):
+        ix, spec = self.ix, self.spec
+        if not spec.get("classes"):
+            raise SpecError("a character needs at least one class: \"classes\": [{\"class\": \"fighter\", \"level\": 1}]")
+        self.classes = []
+        for c in spec["classes"]:
+            if isinstance(c, str):
+                c = {"class": c, "level": 1}
+            cls = resolve(ix, "class", c["class"])
+            lvl = int(c.get("level", 1))
+            sub = resolve(ix, "subclass", c["subclass"]) if c.get("subclass") else None
+            if sub is not None and (sub.owner_class or "") != cls.title.lower():
+                raise SpecError(f"{sub.sid} is a {sub.owner_class} subclass, not {cls.title}")
+            if not 1 <= lvl <= 20:
+                raise SpecError(f"{cls.title} level must be 1-20, not {lvl}")
+            self.classes.append((cls, lvl, sub))
+        if len({c.sid for c, _, _ in self.classes}) != len(self.classes):
+            raise SpecError("each class appears once in \"classes\"; add the levels together")
+        self.level = sum(l for _, l, _ in self.classes)
+        if self.level > 20:
+            raise SpecError(f"total character level is {self.level}; the maximum is 20")
+        self.pb = core.proficiency_bonus(self.level)
+        self.species = resolve(ix, "species", spec["species"]) if spec.get("species") else None
+        self.background = resolve(ix, "background", spec["background"]) if spec.get("background") else None
+
+
+    def _features(self):
+        ix, spec = self.ix, self.spec
+        self.features = []                # (class title, level, entity or name)
+        for cls, lvl, sub in self.classes:
+            if lvl >= 3 and sub is None and any("Subclass" in n for r in cls.data["levels"][:lvl] for n in r["features"]):
+                self.W(f"{cls.title} {lvl} has a subclass by level 3; add \"subclass\" to the class entry")
+            for at, f in class_features(ix, cls, lvl, sub):
+                self.features.append((cls.title, at, f))
+        self.feats = self._feats()
+        self.effect_ids = {f.sid for _, _, f in self.features if isinstance(f, data.Entity)}
+        self.effect_ids |= {f.sid for f, _ in self.feats}
+        if self.species is not None:
+            self.effect_ids.add(self.species.sid)
+        self.options = [resolve(ix, "option", x) for x in spec.get("options") or []]
+        self.effect_ids |= {o.sid for o in self.options}
+
 
     # ---- abilities
     def _feats(self):
@@ -637,7 +641,7 @@ class _Sheet:
                 self.W(f"hp roll {r} is not possible on a d{die}")
             v = int(r) if r is not None else die // 2 + 1
             gained += v
-            if v + con < 1:                  # PHB p43: each level adds roll + Con, minimum of 1
+            if v + con < 1:                  # Each level adds roll + Con, minimum of 1
                 clamped += 1 - (v + con)
         total = max(total, 1) + gained + con * len(later) + clamped
         if later:
@@ -717,7 +721,7 @@ class _Sheet:
         out = []
         monk = next((l for c, l, _ in self.classes if c.slug == "monk"), 0)
         if monk and (self._armor()[0] is not None or self.spec.get("shield")):
-            monk = 0                         # Martial Arts: no armor and no Shield (PHB p101)
+            monk = 0                         # Martial Arts: no armor and no Shield
             self.W("Martial Arts needs no armor and no Shield: monk weapon and Unarmed Strike benefits not counted")
         martial_die = None
         if monk:
@@ -768,7 +772,7 @@ class _Sheet:
     def _spellcasting(self):
         out = []
         for cls, lvl, sub in self.classes:
-            prog = caster_progression(cls, sub, lvl)
+            prog = caster_progression(cls, sub)
             if not prog:
                 continue
             src = cls.data["spellcasting"] if prog != "third" else sub.data["spellcasting"]

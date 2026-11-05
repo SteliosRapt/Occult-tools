@@ -1,30 +1,4 @@
 {
-  "ability": {
-    "strength": {
-      "label": "Strength",
-      "svg": "svg/ability/strength.svg"
-    },
-    "dexterity": {
-      "label": "Dexterity",
-      "svg": "svg/ability/dexterity.svg"
-    },
-    "constitution": {
-      "label": "Constitution",
-      "svg": "svg/ability/constitution.svg"
-    },
-    "intelligence": {
-      "label": "Intelligence",
-      "svg": "svg/ability/intelligence.svg"
-    },
-    "wisdom": {
-      "label": "Wisdom",
-      "svg": "svg/ability/wisdom.svg"
-    },
-    "charisma": {
-      "label": "Charisma",
-      "svg": "svg/ability/charisma.svg"
-    }
-  },
   "class": {
     "barbarian": {
       "label": "Barbarian",
@@ -73,102 +47,92 @@
     "wizard": {
       "label": "Wizard",
       "svg": "svg/class/wizard.svg"
-    },
-    "artificer": {
-      "label": "Artificer",
-      "svg": "svg/class/artificer.svg",
-      "extra": true
     }
   },
   "school": {
-    "evocation": {
-      "label": "Evocation",
-      "svg": "svg/school/evocation.svg"
-    },
-    "transmutation": {
-      "label": "Transmutation",
-      "svg": "svg/school/transmutation.svg"
-    },
-    "illusion": {
-      "label": "Illusion",
-      "svg": "svg/school/illusion.svg"
-    },
-    "divination": {
-      "label": "Divination",
-      "svg": "svg/school/divination.svg"
+    "abjuration": {
+      "label": "Abjuration",
+      "svg": "svg/school/abjuration.svg"
     },
     "conjuration": {
       "label": "Conjuration",
       "svg": "svg/school/conjuration.svg"
     },
+    "divination": {
+      "label": "Divination",
+      "svg": "svg/school/divination.svg"
+    },
     "enchantment": {
       "label": "Enchantment",
       "svg": "svg/school/enchantment.svg"
     },
-    "abjuration": {
-      "label": "Abjuration",
-      "svg": "svg/school/abjuration.svg"
+    "evocation": {
+      "label": "Evocation",
+      "svg": "svg/school/evocation.svg"
+    },
+    "illusion": {
+      "label": "Illusion",
+      "svg": "svg/school/illusion.svg"
     },
     "necromancy": {
       "label": "Necromancy",
       "svg": "svg/school/necromancy.svg"
+    },
+    "transmutation": {
+      "label": "Transmutation",
+      "svg": "svg/school/transmutation.svg"
     }
   },
   "ui": {
     "clock": {
       "label": "Casting time",
-      "svg": "svg/ui/clock.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/clock.svg"
     },
     "coin": {
       "label": "Costly component",
-      "svg": "svg/ui/coin.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/coin.svg"
     },
     "concentration": {
       "label": "Concentration",
-      "svg": "svg/ui/concentration.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/concentration.svg"
     },
     "duration": {
       "label": "Duration",
-      "svg": "svg/ui/duration.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/duration.svg"
     },
     "material": {
       "label": "Material",
-      "svg": "svg/ui/material.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/material.svg"
     },
     "range": {
       "label": "Range",
-      "svg": "svg/ui/range.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/range.svg"
     },
     "ritual": {
       "label": "Ritual",
-      "svg": "svg/ui/ritual.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/ritual.svg"
     },
     "shield": {
       "label": "Armor Class",
-      "svg": "svg/ui/shield.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/shield.svg"
     },
     "somatic": {
       "label": "Somatic",
-      "svg": "svg/ui/somatic.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/somatic.svg"
     },
     "verbal": {
       "label": "Verbal",
-      "svg": "svg/ui/verbal.svg",
-      "line": true
-    },
-    "weight": {
-      "label": "Weight",
-      "svg": "svg/ui/weight.svg",
-      "line": true
+      "line": true,
+      "svg": "svg/ui/verbal.svg"
     }
   }
 }

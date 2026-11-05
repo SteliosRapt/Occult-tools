@@ -1,4 +1,4 @@
-"""Combat encounters by the DMG 2024 rules (DMG p114): XP budgets, difficulty, and suggestions.
+"""Combat encounters from the loaded rules tables: XP budgets, difficulty, and suggestions.
 
     encounter.party("5,5,5,4") / party("4x5")       # -> [5, 5, 5, 4] / [5, 5, 5, 5]
     encounter.budget([5, 5, 5, 4])                  # {"low": 1750, "moderate": 2625, "high": 3800}
@@ -8,7 +8,7 @@
 Difficulty: the budgets are ceilings ("spend as much of your XP budget as you can without going over"),
 so an encounter is rated by the smallest budget its XP fits under: up to the Low budget is Low, up to
 Moderate is Moderate, up to High is High, and anything past the High budget is "beyond High". There are
-no multipliers for numbers of monsters in the 2024 rules; the DMG's Troubleshooting advice (p115) is
+no multipliers for numbers of monsters in the 2024 rules; encounter troubleshooting advice is
 turned into warnings instead.
 """
 import random

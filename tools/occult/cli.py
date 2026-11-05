@@ -10,7 +10,7 @@ import re
 import sys
 from collections import Counter
 
-from . import data, query, text
+from . import components, data, query, text
 from .views.creature import statblock_md
 from .views.klass import progression_md, traits_md
 from .views.weapon import weapon_rules
@@ -18,7 +18,15 @@ from .types import ALIAS, TYPES, has_data, rank, resolve_type
 
 PROG = "./occult"
 
-USAGE = f"""usage: {PROG} <command> [args]      D&D 2024 data: PHB, DMG, MM, EFA, FRHoF, AU, RHW (data/<book>/; --book filters)
+def usage():
+    ix = data.load()
+    reading_extra = "".join(components.values("reading_usage"))
+    rules_extra = "".join(components.values("rules_usage"))
+    labels = components.transform("book_labels", [b.get("abbreviation") or b.get("abbr") or b["title"] for b in ix.books], ix)
+    books = ", ".join(labels)
+    filters = "; --book filters" if len(ix.books) > 1 else ""
+    from .rules.rolltables import all_tables
+    return f"""usage: {PROG} <command> [args]      D&D 2024 data: {books} (data/<book>/{filters})
 
   types                                   types, counts and their list filters
   toc [id] [--depth N] [--limit N]        browse the book tree
@@ -29,25 +37,24 @@ USAGE = f"""usage: {PROG} <command> [args]      D&D 2024 data: PHB, DMG, MM, EFA
                                           filtered table, e.g. list spells --class wizard --level 0-3
   make <output> [selector] [opts]         run a generator (needs jinja2); `make --list` lists them
                                           e.g. make cards spells --class wizard --mode bw · make md
-  fetch images [--book B] [--check]       copy the art the data refers to into img/ (gitignored)
+{reading_extra}
 
 Rules engine (tools/occult/rules):
   character <spec.json> [--json] [--level-up CLASS]
                                           a character's derived numbers: AC, HP, saves, skills, slots ...
   encounter --party 4x5 [creature[xN]...] [--suggest]
-                                          rate an encounter by the DMG XP budget, or suggest some
+                                          rate an encounter by the XP budget, or suggest some
   calc mod|pb|level|cr|slots|point-buy|budget ...   one rule number, e.g. calc slots wizard=5 cleric=3
   roll <expr>... [--avg]                  dice: 2d6+3, 4d6kh3, 2d20kl1
-  loot individual|hoard|items|for ...     treasure by the DMG tables, e.g. loot hoard --cr 7 --theme arcana
-  npc [--creature C] · settlement · tavern [--level L]
-                                          NPCs, settlements and taverns rolled on the books' tables
-  table <title|id> [--times N] · table --list [TEXT]
-                                          roll on any die table in the books (351)
+{rules_extra}  table <title|id> [--times N] · table --list [TEXT]
+                                          roll on any die table in the books ({len(all_tables(ix))})
 
 Ids look like spell:fireball, term:grappled, feature:wizard/spellcasting; every row starts with one.
 `{PROG} <command> --help` for details."""
 
-RULES_COMMANDS = ("character", "encounter", "calc", "roll", "loot", "npc", "settlement", "tavern", "table")
+
+RULES_COMMANDS = components.transform("rule_order", ("character", "encounter", "calc", "roll", "table", *components.values("rule_names")))
+EXTRA_COMMANDS = components.mapping("commands")
 
 HELP = {
     "types": f"""usage: {PROG} types
@@ -123,6 +130,22 @@ def opt_usage(opts):
     return " ".join(f"--{k}" + ("" if kind is bool else " N" if kind is int else " T") for k, kind in opts.items())
 
 
+def list_filter(type_name, name, options):
+    """Resolve one public list filter, keeping parsing errors in one place."""
+    t = resolve_type(type_name)
+    if not t:
+        raise Usage(f"unknown type '{type_name}'", query_hints(type_name))
+    filters = query.listed_filters(t)
+    if name in filters:
+        return bool if filters[name].op == "flag" else str
+    known = list(filters)
+    close = difflib.get_close_matches(name, known + list(options), 3, 0.5)
+    raise Usage(f"'{t}' has no filter --{name}",
+                ["--" + x for x in close + [x for x in known if x not in close]] or
+                [f"none; `list {t}` takes no filters (try `find <text> --type {t}`)"],
+                "did you mean" if close else "valid filters")
+
+
 def parse(cmd, argv):
     """-> (positionals, options, filters). Filters only for `list` (validated by query)."""
     pos_name, nargs, opts = SPECS[cmd]
@@ -137,20 +160,7 @@ def parse(cmd, argv):
             name, eq, val = a[2:].partition("=")
             kind = opts.get(name)
             if kind is None and cmd == "list" and pos:
-                t = resolve_type(pos[0])
-                if not t:
-                    raise Usage(f"unknown type '{pos[0]}'", query_hints(pos[0]))
-                f = query.filters_of(t).get(name)
-                if f is not None:
-                    kind = bool if f.op == "flag" else str
-                    target = filters
-                else:
-                    known = [*query.listed_filters(t)]
-                    close = difflib.get_close_matches(name, known + list(opts), 3, 0.5)
-                    raise Usage(f"'{t}' has no filter --{name}",
-                                ["--" + x for x in close + [x for x in known if x not in close]] or
-                                [f"none; `list {t}` takes no filters (try `find <text> --type {t}`)"],
-                                "did you mean" if close else "valid filters")
+                kind, target = list_filter(pos[0], name, opts), filters
             elif kind is None:
                 close = difflib.get_close_matches(name, opts, 3, 0.5)
                 if cmd == "list" and not pos:
@@ -201,15 +211,15 @@ def table(rows, header):
 
 
 def page_of(e):
-    """`p274` (PHB); another book's entity carries its book: `dmg p234`, or `dmg` when it has no page."""
+    """Page labels omit the first loaded book's name; later books carry their short name."""
     p = f"p{e.page}" if e.page is not None else ""
-    return (p or e.book) if e.book == "phb" else f"{e.book} {p}".rstrip()
+    return (p or e.book) if e.primary else f"{e.book} {p}".rstrip()
 
 
 def page_label(e):
-    """The `show` header's `(p.274)`, `(DMG p.234)`, `(DMG)`; nothing for a PHB entity with no page."""
+    """The show header's page reference, qualified for books after the first."""
     p = f"p.{e.page}" if e.page is not None else ""
-    s = (p or data.book_abbr(e.book)) if e.book == "phb" else f"{data.book_abbr(e.book)} {p}".rstrip()
+    s = (p or data.book_abbr(e.book)) if e.primary else f"{data.book_abbr(e.book)} {p}".rstrip()
     return f"  ({s})" if s else ""
 
 
@@ -354,7 +364,7 @@ def cmd_toc(ix, pos, o, f):
         out(h)
 
 
-def find_scores(ix, q, pool):
+def find_scores(q, pool):
     toks = q.split()
     flat = q.replace(" ", "")
     scored = []
@@ -405,7 +415,7 @@ def cmd_find(ix, pos, o, f):
         if not t:
             raise Usage(f"unknown type '{o['type']}'", query_hints(o["type"]))
     pool = ix.all(t) if t else ix.entities
-    hits = find_scores(ix, q, pool)
+    hits = find_scores(q, pool)
     mode = "title match"
     text_hits = []
     if len(hits) < 3:
@@ -501,20 +511,19 @@ def main(argv=None):
         except (AttributeError, ValueError):
             pass
     if not argv or argv[0] in ("-h", "--help", "help"):
-        out(USAGE)
+        out(components.transform("main_usage", usage()))
         return 0 if argv else 2
     cmd, rest = argv[0], argv[1:]
     if cmd == "make":                        # generators: own argument parsing (tools/occult/make.py)
         from . import make
         return make.main(rest)
-    if cmd == "fetch":                       # img/ from a 5etools-img checkout or GitHub (tools/occult/fetch.py)
-        from . import fetch
-        return fetch.main(rest)
+    if cmd in EXTRA_COMMANDS:
+        return EXTRA_COMMANDS[cmd](rest)
     if cmd in RULES_COMMANDS:                # the rules engine (tools/occult/rules/cli.py)
         from .rules import cli as rules_cli
         return rules_cli.main(cmd, rest)
     if cmd not in COMMANDS:
-        known = [*COMMANDS, "make", "fetch", *RULES_COMMANDS]
+        known = [*COMMANDS, "make", *EXTRA_COMMANDS, *RULES_COMMANDS]
         err(f"unknown command '{cmd}'", difflib.get_close_matches(cmd, known, 2, 0.5) or known,
             "did you mean" if difflib.get_close_matches(cmd, known, 2, 0.5) else "commands")
         return 2

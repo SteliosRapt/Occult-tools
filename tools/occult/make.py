@@ -6,7 +6,7 @@ pipeline.py builds it. Parsing stays stdlib-only; jinja2 is imported by the pipe
 import difflib
 import sys
 
-from . import data, query
+from . import components, data, query
 from .outputs import CATALOGUE, Choices
 from .types import resolve_type
 
@@ -58,8 +58,8 @@ def parse(out, argv):
         name, eq, val = a[2:].partition("=")
         spec, target = out.flags.get(name), opts
         if spec is None and out.selector:
-            f = next((query.filters_of(t)[name] for t in map(resolve_type, terms)
-                      if t and name in query.filters_of(t)), None)
+            f = next((query.listed_filters(t)[name] for t in map(resolve_type, terms)
+                      if t and name in query.listed_filters(t)), None)
             if f is not None:
                 spec, target = (True if f.op == "flag" else f.metavar), filters
         if spec is None:
@@ -123,7 +123,8 @@ def main(argv):
     from . import pipeline
     ix = data.load()
     try:
-        return getattr(pipeline, "run_" + out.runner)(ix, out, terms, filters, opts)
+        runner = components.mapping("runners").get(out.runner) or getattr(pipeline, "run_" + out.runner)
+        return runner(ix, out, terms, filters, opts)
     except query.QueryError as x:
         err(str(x), x.hints, x.label)
         return 2

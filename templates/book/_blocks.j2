@@ -55,28 +55,14 @@
 {% endif %}
 {%- endmacro %}
 
-{# A subclass (class booklets), in the flow of the two columns: its art floats a column wide where
-   `art_at` puts it (0: under the title; n: before the n-th child, or at the end), so text fills any room the art leaves
-   at a column's foot. pipeline.place_art moves it later when two artworks share a page. A `group` node is
-   the heading of the subclasses other books print, run on in the same columns. #}
-{% macro subart(n) -%}
-<figure class="subclass-art" style="--ratio: {{ n.art.ratio }}"><img src="{{ n.art.src }}" alt="">
-{% if n.art.credit %}<figcaption>Art: {{ n.art.credit }}</figcaption>{% endif %}</figure>
-{%- endmacro %}
-{# One place a subclass's art may go: its mark (only while pipeline.place_art probes the pages), then
-   the art when `art_at` is this place. #}
-{% macro artslot(n, at) -%}
-{% if n.get("art_marks") %}<img class="art-mark" src="{{ n.art_marks[at] }}" alt="">{% endif %}
-{%- if n.get("art") and (n.get("art_at") or 0) == at %}{{ subart(n) }}{% endif %}
-{%- endmacro %}
 {% macro subclass(n) -%}
+{% if subclass_template is defined %}{% include subclass_template %}{% else %}
 {% if n.get("group") %}<h2 class="subclass-group" id="{{ n.sid }}">{{ n.title }}</h2>{% else %}
 <h2 id="{{ n.sid }}">{{ n.title | inline }}</h2>
 {% if n.subtitle %}<p class="subtitle">{{ n.subtitle | inline }}</p>{% endif %}
-{{ artslot(n, 0) }}
 {{ blocks(n.content) }}
-{% for c in n.children %}{{ artslot(n, loop.index) }}{{ tree(c) }}{% endfor %}
-{{ artslot(n, n.children | length + 1) }}{% endif %}
+{% for c in n.children %}{{ tree(c) }}{% endfor %}
+{% endif %}{% endif %}
 {%- endmacro %}
 
 {# A stat block inside a feature or spell (views.books.statblock): a sidebar box. Object stat blocks

@@ -27,17 +27,7 @@
 {% endfor %}
 {% endmacro %}
 
-{# The art panel (views._common.art): a framed image whose height follows the image's aspect
-   (clamped by the theme). fit.js shrinks it, then drops it (`--art auto`) before it shrinks text;
-   continuation cards never show it. `fit`: contain (cut-out items) or cover (paintings). Weapon and
-   armour art carries a layout (views._common.item_art): `art-band` (a strip under the header),
-   `art-side` (beside the hero), `art-tall` (a column beside hero and stats), `art-rot` (an upright
-   weapon turned to lie flat). #}
-{% macro art(c, fit="contain", extra="") %}
-{% if c.art %}<figure class="c-art art-{{ fit }}{{ extra }}{{ ' art-' ~ c.art.layout if c.art.get('layout') }}{{ ' art-rot' if c.art.get('rot') }}" style="--art-ratio: {{ c.art.ratio }}{% if c.art.get('style') %}; {{ c.art.style }}{% endif %}"><div class="art-frame"><img src="{{ c.art.src }}" alt="{{ c.art.title or '' }}"></div>{% if c.art.credit %}<figcaption class="art-credit">{{ c.art.credit }}</figcaption>{% endif %}</figure>{% endif %}
-{% endmacro %}
-
-{# The source label: `PHB 274`, `EFA 112`, or just `DMG` when the entity has no printed page. #}
+{# The loaded book label, followed by its page when present. #}
 {% macro src(c) %}{{ c.book }}{% if c.page is not none %} {{ c.page }}{% endif %}{% endmacro %}
 
 {% macro foot(c, left="") %}

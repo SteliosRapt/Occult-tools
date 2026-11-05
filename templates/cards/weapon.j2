@@ -1,13 +1,13 @@
 {% import "cards/_blocks.j2" as k %}
-<article class="card item weapon size-{{ c.size }}{{ ' has-art' if c.art }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+<article class="card item weapon size-{{ c.size }}{% block extension_0 %}{% endblock %}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
   <header class="c-head">
     <div class="c-titles">{{ k.tag("Weapon") }}<h2 class="c-title">{{ c.title }}</h2><div class="c-type"><span class="c-type-text">{{ c.type_line }}</span><span class="c-cont-note">continued</span></div></div>
   </header>
-  {% if c.art and c.art.layout == "band" %}{{ k.art(c) }}{% endif %}
-  <div class="c-meta c-item-meta{{ ' tall' if c.art and c.art.layout == 'tall' }}">
+  {% block extension_2 %}{% endblock %}
+  <div class="c-meta c-item-meta{% block extension_1 %}{% endblock %}">
   <div class="c-item-main">
   <div class="c-hero-row">
-  {% if c.art and c.art.layout == "side" %}{{ k.art(c) }}{% endif %}
+  {% block extension_3 %}{% endblock %}
   <div class="c-hero">
     <div class="hero-big"><span class="hero-n">{{ c.damage }}</span><span class="hero-u">{{ c.damage_type }}</span></div>
     {% if c.versatile %}<div class="hero-alt"><b>{{ c.versatile }}</b> two-handed</div>{% endif %}
@@ -20,7 +20,7 @@
     <div class="st"><dt>Weight · Cost</dt><dd>{{ c.weight }} · {{ c.cost }}</dd></div>
   </dl>
   </div>
-  {% if c.art and c.art.layout == "tall" %}{{ k.art(c) }}{% endif %}
+  {% block extension_4 %}{% endblock %}
   </div>
   <div class="c-body">
     <div class="c-upcast c-mastery"><p><b class="lab">Mastery: {{ c.mastery }}.</b> {{ c.mastery_html | safe }}</p></div>

@@ -121,8 +121,7 @@ class SRD(unittest.TestCase):
         self.assertEqual(tables.advancement()[5], (6500, 3))
         self.assertEqual(tables.cr_xp()['1/4'], 50)
         self.assertIn('8', self.cli('calc', 'slots', 'wizard=5', 'cleric=3'))
-        with self.assertRaises(tables.TableMissing):
-            tables.table('treasure_hoard', self.ix)
+        self.assertNotIn('treasure_hoard', tables.SOURCES)
 
     def test_collections(self):
         self.cli('make', 'md', '--check')
@@ -176,7 +175,7 @@ class SRD(unittest.TestCase):
 
     def test_skill_ids_exist(self):
         paths=list((ROOT / '.claude/skills').rglob('SKILL.md'))
-        self.assertEqual(len(paths),5)
+        self.assertEqual(len(paths),3)
         for path in paths:
             for ref in re.findall(r'\b(?:class|subclass|spell|creature|term|species|background|magic-item):[a-z0-9/-]+', path.read_text()):
                 with self.subTest(path=path, ref=ref):
@@ -195,3 +194,91 @@ class SRD(unittest.TestCase):
             pdfs = list((ROOT / 'dist' / folder).glob('*.pdf'))
             self.assertTrue(pdfs, folder)
             self.assertTrue(all(p.read_bytes().startswith(b'%PDF-') for p in pdfs))
+
+
+class Surface(unittest.TestCase):
+    """Every advertised verb, output and filter is executable on the shipped data."""
+    @classmethod
+    def setUpClass(cls):
+        cls.ix = data.load()
+
+    def cli(self, *args):
+        result = subprocess.run([str(ROOT / 'occult'), *map(str, args)], cwd=ROOT,
+                                text=True, capture_output=True)
+        output = result.stdout + result.stderr
+        self.assertEqual(result.returncode, 0, output)
+        self.assertNotIn('not in this data set', output)
+        return output
+
+    def test_advertised_commands(self):
+        from occult import cli
+        commands = set(cli.COMMANDS) | set(cli.RULES_COMMANDS) | set(cli.EXTRA_COMMANDS) | {'make'}
+        advertised = set(re.findall(r'^  ([a-z]+)\b', self.cli('--help'), re.M))
+        self.assertEqual(advertised, commands)
+        smoke = {'types': [], 'toc': ['--depth', '1', '--limit', '5'], 'find': ['fireball'],
+                 'show': ['spell:fireball', '--brief'], 'list': ['spells', '--limit', '1'],
+                 'make': ['--list'], 'character': ['characters/examples/rowan-fighter-1.json'],
+                 'encounter': ['--party', '4x3', 'goblin-warrior', 'x4'],
+                 'calc': ['cr', '1/4'], 'roll': ['1d6', '--seed', '1'], 'table': ['--list']}
+        self.assertEqual(commands, set(smoke))
+        for name, args in smoke.items():
+            with self.subTest(command=name):
+                self.cli(name, *args)
+                self.cli(name, '--help')
+        # The calc operations and table execution have their own input grammars.
+        for args in [('mod', '14'), ('pb', '3'), ('level', '6500'), ('slots', 'wizard=5', 'cleric=3'),
+                     ('point-buy', '15', '15', '15', '8', '8', '8'), ('budget', '4x3')]:
+            with self.subTest(calc=args):
+                self.cli('calc', *args)
+        self.cli('table', 'Potion Miscibility', '--seed', '2')
+        self.cli('character', 'characters/examples/sel-wizard-3.json', '--json')
+        self.cli('character', 'characters/examples/rowan-fighter-1.json', '--level-up', 'fighter')
+
+    def test_outputs(self):
+        import tempfile
+        from occult.outputs import CATALOGUE
+        browser_args = {'cards': ['spell:fireball', '--check-fit'], 'spellbook': ['--class', 'cleric'],
+                        'class': ['--class', 'fighter', '--level', '3'],
+                        'equipment': [], 'quickref': [], 'glossary': []}
+        advertised = {line.split()[0] for line in self.cli('make', '--list').splitlines()}
+        self.assertEqual(advertised, set(CATALOGUE))
+        self.assertEqual(advertised, set(browser_args) | {'md', 'pwa'})
+        with tempfile.TemporaryDirectory() as tmp:
+            self.cli('make', 'md', '--check')
+            self.cli('make', 'pwa', '--out', str(Path(tmp) / 'pwa'))
+        for name in advertised:
+            with self.subTest(output=name):
+                self.cli('make', name, '--help')
+                if name in browser_args and os.environ.get('OCCULT_BROWSER_TESTS') == '1':
+                    self.cli('make', name, *browser_args[name])
+
+    def test_types_and_all_filters(self):
+        from occult import query
+        from occult.types import TYPES
+        listed = set(re.findall(r'^([a-z][a-z-]*)\s+\d+\s+', self.cli('types'), re.M))
+        self.assertEqual(listed, {t for t in TYPES if self.ix.all(t)})
+        # A shipped type registration must have a real entity; the data controls the surface.
+        self.assertEqual(set(TYPES), listed)
+        self.assertNotIn('--book', self.cli('types'))
+        for kind in listed:
+            self.cli('list', kind, '--limit', '1')
+            self.cli('list', kind, '--ids', '--limit', '1')
+            self.cli('list', kind, '--json', '--limit', '1')
+            for name, spec in query.listed_filters(kind, self.ix).items():
+                if spec.op == 'flag':
+                    args = []
+                else:
+                    values = query.known_values(self.ix, kind, name)
+                    if not values:
+                        # A free-text filter still accepts a query when no value is populated.
+                        values = ['1' if spec.op in ('range', 'cr') else 'a']
+                    args = [str(values[0])]
+                with self.subTest(kind=kind, filter=name):
+                    self.cli('list', kind, '--' + name, *args, '--limit', '1')
+                    if '|' in spec.metavar and spec.metavar == spec.metavar.lower():
+                        for value in spec.metavar.split('|'):
+                            self.cli('list', kind, '--' + name, value, '--limit', '1')
+
+    def test_reference_graph(self):
+        from occult.references import unreferenced
+        self.assertEqual(unreferenced(ROOT), [])

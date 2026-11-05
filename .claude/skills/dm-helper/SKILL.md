@@ -17,8 +17,10 @@ Use the SRD data and rules engine for each number. Cite ids without page numbers
 ./occult show creature:goblin-warrior --full
 ./occult show term:grappled term:cover term:concentration
 ./occult find difficulty class
+./occult list magic-items --rarity uncommon
+./occult list creatures --cr 0-2
 ./occult calc cr 7
 ./occult roll 1d20+5 --times 4
 ```
 
-Get party size, levels, habitat and intended difficulty. Rate a proposed mix; pass on warnings about numbers, CR and complexity. Read every chosen stat block before summarizing tactics. Offer terrain and a clearly labeled ruling when necessary. Print a handout with --pdf and optional creature cards. Search traps, hazards and languages through `list`; never assume a commercial setting, deity, Bastion or monster is present. For treasure, use the loot skill. For session outlines use session-prep.
+Get party size, levels, habitat and intended difficulty. Rate a proposed mix; pass on warnings about numbers, CR and complexity. Read every chosen stat block before summarizing tactics. Offer terrain and a clearly labeled ruling when necessary. Print a handout with --pdf and optional creature cards. Search traps, hazards and languages through `list`; never assume a commercial setting, deity, Bastion or monster is present. For rewards, choose manually with `./occult list magic-items --rarity uncommon` and read candidates with `show`. For NPCs, choose a role with `./occult list creatures --cr 0-2`, read the stat block, and invent the name, motives and location. Label those story details as original. For session outlines use session-prep.

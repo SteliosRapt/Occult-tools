@@ -1,18 +1,12 @@
 """Magic-item card view model: category tag, the subtitle line as printed, rarity / attunement /
 charges badges, then the entry's text (paragraphs, run-ins, lists, tables) like a spell body.
 
-Long entries (Deck of Many More Things, Figurine of Wondrous Power) continue on the next card via the
+Long entries continue on the next card via the
 fit contract (tools/render/fit.js); tables split by row there.
 """
-import re
-
-from ._common import body_blocks, key
+from ._common import body_blocks, key, slug
 
 RARITIES = ["Common", "Uncommon", "Rare", "Very Rare", "Legendary", "Artifact", "Varies"]
-
-
-def slug(s):
-    return re.sub(r"[^a-z0-9]+", "-", (s or "").lower()).strip("-")
 
 
 def rarity_id(r):

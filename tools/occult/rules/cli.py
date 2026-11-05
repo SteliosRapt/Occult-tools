@@ -10,8 +10,8 @@ import re
 import sys
 from pathlib import Path
 
-from .. import data
-from . import character, core, dice, encounter, generate, loot, rolltables, sheet, tables
+from .. import components, data
+from . import character, core, dice, encounter, rolltables, sheet, tables
 
 PROG = "./occult"
 
@@ -40,7 +40,7 @@ characters/examples/). Rule problems in the spec are listed under "Check".
   --paper letter    US Letter (default a4)
   --png             also write one PNG per page (needs pdftoppm)
   --html            also print the built HTML path
-e.g. {PROG} character characters/examples/brakka-fighter-5.json · {PROG} character spec.json --level-up wizard
+e.g. {PROG} character characters/examples/rowan-fighter-1.json · {PROG} character spec.json --level-up wizard
      {PROG} character characters/examples/sel-wizard-3.json --pdf --mode bw
      {PROG} character characters/examples/sel-wizard-3.json --cards --backs category
      {PROG} character characters/examples/sel-wizard-3.json --form""",
@@ -48,12 +48,12 @@ e.g. {PROG} character characters/examples/brakka-fighter-5.json · {PROG} charac
        {PROG} encounter --party P --suggest [--difficulty D] [creature filters] [--habitat H] [--group G] [--n N] [--seed S] [--strong]
        {PROG} encounter [--party P] creature[xN]... --pdf [PATH] [--cards [PATH]] [--title T] [--mode bw] [--paper letter]
        {PROG} encounter --party P --suggest ... --pdf [--pick N]
-Rate a combat encounter by the DMG XP budget (DMG p114), or suggest some, and print its stat blocks.
+Rate a combat encounter by the XP budget, or suggest some, and print its stat blocks.
   --party P         character levels: 5,5,5,4 or 4x5 or 3x5,1x4
   creature[xN]      a creature id or name, times N: goblin-warrior x6 is also accepted (`goblin-warrior*6`)
   --lair            use lair XP for creatures that have it
   --suggest         propose encounters for --difficulty (low|moderate|high, default moderate)
-  --type --cr --size --book   creature filters, as in `list creatures`
+  --type --cr --size{{book_filter}}   creature filters, as in `list creatures`
   --habitat H --group G       creature habitat (forest, underdark ...) or group (goblinoids ...)
   --n N --seed S    how many suggestions and the random seed (default 5, random)
   --strong          allow creatures above the party's level
@@ -64,8 +64,8 @@ Rate a combat encounter by the DMG XP budget (DMG p114), or suggest some, and pr
                     default dist/cards/<creatures>-cards.<paper>[.bw].pdf
   --pick N          with --suggest: which suggestion to print (default 1)
   --title T         the handout's title and file name (default: the creatures)
-  --mode bw --paper letter --png --html --art off   as for `make`
-e.g. {PROG} encounter --party 4x3 nothic x2 stirge x9 · {PROG} encounter --party 4x5 --suggest --type undead
+  --mode bw --paper letter --png --html{{extra_flags}}   as for `make`
+e.g. {PROG} encounter --party 4x3 wolf x2 stirge x9 · {PROG} encounter --party 4x5 --suggest --type undead
      {PROG} encounter --party 4x5 goblin-boss goblin-warrior x6 --pdf --mode bw
      {PROG} encounter --party 4x5 --suggest --type undead --seed 3 --pick 2 --pdf --cards""",
     "calc": f"""usage: {PROG} calc <what> [args]
@@ -83,53 +83,14 @@ Roll dice: 2d6+3, 1d20+5, 4d6kh3 (keep highest 3), 2d20kl1 (disadvantage), 8d6.
   --times N   roll each expression N times
   --seed N    reproducible rolls
 e.g. {PROG} roll 1d20+7 2d6+4 · {PROG} roll 4d6kh3 --times 6""",
-    "loot": f"""usage: {PROG} loot individual --cr CR [--count N]
-       {PROG} loot hoard --cr CR [--theme T] [--level L] [--double] [--details] [--dmg-tables | --weighted]
-       {PROG} loot items N [--level L | --rarity R] [--theme T] [--details] [--dmg-tables | --weighted]
-       {PROG} loot for creature[xN]... [--level L] [--details] [--dmg-tables | --weighted]
-Treasure by the DMG tables: Random Individual Treasure and Random Treasure Hoard (DMG p120), money in
-the theme's forms (gemstones, art objects, trade bars and goods, DMG p213-215), magic item rarity by
-level (DMG p218), then an item of that rarity from every book, or from the Arcana / Armaments /
-Implements / Relics tables (DMG p326) with a theme or --dmg-tables.
-  individual        one creature's pocket money (times --count: the DMG rolls once for a group)
-  hoard             a hoard for a creature of --cr; its magic items too
-  items N           N random magic items
-  for CREATURES     an encounter's treasure from the creatures' Treasure entries (MM): Individual
-                    Treasure for those marked Individual, one hoard for the strongest hoard keeper
-  --theme T         arcana|armaments|implements|relics: items roll on that DMG table (DMG items only); default
-                    any: each item is drawn from every book's items of its rarity, each entry equally likely
-  --dmg-tables      without a theme, roll each item on a DMG table picked by 1d4 (DMG p326), as the DMG does
-  --weighted        every book, but a DMG item rolls the DMG tables, so it comes up as often as they give it
-                    (Potion of Healing more than a one-row item); other books' items keep their chance
-  --level L         party level for item rarity (default: the band of the hoard's CR)
-  --rarity R        fix the rarity of `items` (common ... legendary)
-  --double          roll the hoard twice (a dragon or another hoarder, DMG p120)
-  --details         roll each item's creator, history, minor property and quirk (DMG p222)
-  --avg             use the tables' averages for money instead of rolling
-  --seed S  --json
-e.g. {PROG} loot hoard --cr 7 --theme arcana · {PROG} loot for goblin-boss goblin-warrior x6 --seed 2""",
-    "npc": f"""usage: {PROG} npc [--n N] [--names STYLE] [--creature C] [--seed S] [--json]
-NPCs from the books' tables: a name (DMG p84), appearance and secret (DMG p86), a personality trait for the
-highest and lowest ability (PHB p40), an initial attitude (DMG p116) and a trinket (PHB).
-  --names STYLE     common|guttural|lyrical|monosyllabic|sinister|whimsical (default: roll 1d6)
-  --creature C      a stat block (priest, bandit-captain ...): its scores decide the personality, and the
-                    lore tables printed with it are rolled too (Priest Roles, Bandit Motivations ...)
-e.g. {PROG} npc --n 3 · {PROG} npc --creature mage --names sinister""",
-    "settlement": f"""usage: {PROG} settlement [--size village|town|city] [--seed S] [--json]
-A settlement from the DMG's tables (DMG p93): size, defining trait, claim to fame, calamity, leader,
-tavern names and shops.""",
-    "tavern": f"""usage: {PROG} tavern [--level L] [--patrons N] [--names STYLE] [--seed S] [--json]
-A tavern: its name (DMG p93), a keeper (a full NPC), patrons, a hook (DMG p110) and, with --level, a
-rumour from the Adventure Situations table of the party's tier (DMG p106).""",
     "table": f"""usage: {PROG} table <table> [--times N] [--n VALUE] [--seed S] [--json]
        {PROG} table --list [TEXT]
-Roll on any die table printed in the books (351: weather, chase complications, dungeon quirks, wild
-magic, hooks, MM lore tables ...). <table> is a title ("Tavern Names"), a table id from --list
-(section:settlement-tables-and-tracker#tavern-names), or an entity with one table (magic-item:bag-of-beans).
+Roll on any of the {{table_count}} die tables in the loaded data. Pass a caption, a table id from
+--list, or an entity holding one table (magic-item:bag-of-beans).
   --times N   roll N times
   --n VALUE   read the row for VALUE instead of rolling
   --list      list the tables (and ids) whose title or entity matches TEXT
-e.g. {PROG} table "Dungeon Quirks" · {PROG} table "Wild Magic Surge" --seed 4 · {PROG} table --list hooks""",
+e.g. {PROG} table "{{table_example}}" --seed 4 · {PROG} table --list""",
 }
 
 
@@ -142,7 +103,18 @@ class _Parser(argparse.ArgumentParser):
         raise Usage(message)
 
     def print_help(self, file=None):
-        print(HELP[self.prog])
+        print(help_text(self.prog))
+
+
+def help_text(cmd):
+    value = HELP[cmd]
+    if cmd == "encounter":
+        value = value.replace("{book_filter}", " --book" if len(data.load().books) > 1 else "")
+        value = value.replace("{extra_flags}", "".join(components.values("encounter_help")))
+    if cmd == "table":
+        tables = rolltables.all_tables()
+        value = value.replace("{table_count}", str(len(tables))).replace("{table_example}", tables[0].title if tables else "TITLE")
+    return components.transform("rules_help", value, cmd)
 
 
 def parser(name):
@@ -277,7 +249,7 @@ def cmd_encounter(argv):
     p.add_argument("--json", action="store_true")
     p.add_argument("--suggest", action="store_true")
     p.add_argument("--difficulty", default="moderate")
-    for f in ("type", "cr", "size", "book", "habitat", "group"):
+    for f in ("type", "cr", "size", *( ("book",) if len(data.load().books) > 1 else () ), "habitat", "group"):
         p.add_argument(f"--{f}")
     p.add_argument("--n", type=int, default=5)
     p.add_argument("--seed", type=int)
@@ -290,11 +262,11 @@ def cmd_encounter(argv):
     p.add_argument("--paper", choices=("a4", "letter"))
     p.add_argument("--png", action="store_true")
     p.add_argument("--html", action="store_true")
-    p.add_argument("--art", choices=("auto", "on", "off"))
+    components.apply("encounter_flags", p)
     a = p.parse_args(argv)
     printing = a.pdf is not None or a.cards is not None
-    if not printing and (a.title or a.mode or a.paper or a.png or a.html or a.art):
-        raise Usage("--title, --mode, --paper, --png, --html and --art go with --pdf or --cards")
+    if not printing and (a.title or a.mode or a.paper or a.png or a.html or components.values("encounter_options", a)):
+        raise Usage(components.transform("encounter_usage", "--title, --mode, --paper, --png and --html go with --pdf or --cards"))
     if a.pick is not None and not (a.suggest and printing):
         raise Usage("--pick goes with --suggest and --pdf or --cards")
     if printing and a.json:
@@ -306,31 +278,7 @@ def cmd_encounter(argv):
         return handout(ix, a, parse_monsters(ix, a.creatures), None)
     levels = encounter.party(a.party)
     if a.suggest:
-        if a.creatures:
-            raise Usage("--suggest proposes creatures; leave the creature list out")
-        filters = {k: getattr(a, k) for k in ("type", "cr", "size", "book") if getattr(a, k)}
-        res = encounter.suggest(levels, a.difficulty.lower(), filters, a.habitat, a.group, a.n, a.seed, a.strong, ix)
-        if a.json:
-            print(json.dumps(res, indent=1, ensure_ascii=False))
-        elif not res:
-            print("no encounter fits that budget with these creatures; widen the filters or try --strong")
-        else:
-            b = encounter.budget(levels)
-            print(f"Party: {len(levels)} character{'s' * (len(levels) != 1)}, levels {', '.join(map(str, levels))}; "
-                  f"{a.difficulty.title()} budget {b[a.difficulty.lower()]:,} XP ({tables.cite('xp_budget')})")
-            for i, ev in enumerate(res, 1):
-                parts = " + ".join(f"{c['count']} × {c['title']} `{c['id']}` (CR {c['cr']})" for c in ev["creatures"])
-                print(f"{i}. {parts}: {ev['total_xp']:,} XP")
-                for w in ev["warnings"]:
-                    print(f"   warning: {w}")
-        if printing and res:
-            k = a.pick or 1
-            if not 1 <= k <= len(res):
-                raise Usage(f"--pick {k}: there are {len(res)} suggestions")
-            mons = [(ix.get(c["id"]), c["count"]) for c in res[k - 1]["creatures"]]
-            print(f"printing suggestion {k}")
-            return handout(ix, a, mons, encounter.evaluate(levels, mons, a.lair))
-        return 0
+        return suggest_encounters(ix, a, levels, printing)
     if not a.creatures:
         b = encounter.budget(levels)
         print(f"Party: {len(levels)} character{'s' * (len(levels) != 1)}, levels {', '.join(map(str, levels))}")
@@ -342,10 +290,39 @@ def cmd_encounter(argv):
     return handout(ix, a, mons, ev) if printing else 0
 
 
+
+def suggest_encounters(ix, a, levels, printing):
+    if a.creatures:
+        raise Usage("--suggest proposes creatures; leave the creature list out")
+    filters = {k: getattr(a, k) for k in ("type", "cr", "size", "book") if getattr(a, k, None)}
+    res = encounter.suggest(levels, a.difficulty.lower(), filters, a.habitat, a.group, a.n, a.seed, a.strong, ix)
+    if a.json:
+        print(json.dumps(res, indent=1, ensure_ascii=False))
+    elif not res:
+        print("no encounter fits that budget with these creatures; widen the filters or try --strong")
+    else:
+        b = encounter.budget(levels)
+        print(f"Party: {len(levels)} character{'s' * (len(levels) != 1)}, levels {', '.join(map(str, levels))}; "
+              f"{a.difficulty.title()} budget {b[a.difficulty.lower()]:,} XP ({tables.cite('xp_budget')})")
+        for i, ev in enumerate(res, 1):
+            parts = " + ".join(f"{c['count']} × {c['title']} `{c['id']}` (CR {c['cr']})" for c in ev["creatures"])
+            print(f"{i}. {parts}: {ev['total_xp']:,} XP")
+            for w in ev["warnings"]:
+                print(f"   warning: {w}")
+    if printing and res:
+        k = a.pick or 1
+        if not 1 <= k <= len(res):
+            raise Usage(f"--pick {k}: there are {len(res)} suggestions")
+        mons = [(ix.get(c["id"]), c["count"]) for c in res[k - 1]["creatures"]]
+        print(f"printing suggestion {k}")
+        return handout(ix, a, mons, encounter.evaluate(levels, mons, a.lair))
+    return 0
+
+
 def handout(ix, a, mons, ev):
     """--pdf: the stat block handout (pipeline.run_encounter); --cards: creature cards (`make cards`)."""
     from .. import pipeline
-    opts = {"mode": a.mode, "paper": a.paper, "png": a.png, "html": a.html, "art": a.art, "title": a.title}
+    opts = {"mode": a.mode, "paper": a.paper, "png": a.png, "html": a.html, **components.mapping("encounter_options_dict", a), "title": a.title}
     code = 0
     try:
         if a.pdf is not None:
@@ -448,107 +425,16 @@ def cmd_roll(argv):
     return 0
 
 
-def cmd_loot(argv):
-    p = parser("loot")
-    p.add_argument("mode", choices=("individual", "hoard", "items", "for"))
-    p.add_argument("args", nargs="*")
-    p.add_argument("--cr")
-    p.add_argument("--count", type=int, default=1)
-    p.add_argument("--theme")
-    p.add_argument("--level", type=int)
-    p.add_argument("--rarity")
-    p.add_argument("--double", action="store_true")
-    p.add_argument("--details", action="store_true")
-    p.add_argument("--dmg-tables", action="store_true")
-    p.add_argument("--weighted", action="store_true")
-    p.add_argument("--avg", action="store_true")
-    p.add_argument("--seed", type=int)
-    p.add_argument("--json", action="store_true")
-    a = p.parse_args(argv)
-    rng = random.Random(a.seed)
-    if a.dmg_tables and a.weighted:
-        raise Usage("give --dmg-tables or --weighted, not both")
-    if a.level is not None and not 1 <= a.level <= 20:
-        raise Usage("--level is a character level, 1-20")
-    if a.mode in ("individual", "hoard"):
-        if a.cr is None or a.args:
-            raise Usage(f"loot {a.mode} takes --cr CR")
-        _check_cr(a.cr)
-        r = (loot.individual(a.cr, a.count, rng, a.avg) if a.mode == "individual" else
-             loot.hoard(a.cr, a.theme, a.level, rng, a.avg, a.double, a.details, a.dmg_tables, a.weighted))
-    elif a.mode == "items":
-        if len(a.args) != 1 or not a.args[0].isdigit():
-            raise Usage("loot items takes a number of items, e.g. loot items 3 --level 5")
-        if a.rarity and a.level:
-            raise Usage("give --level or --rarity, not both")
-        rar = _rarity(a.rarity) if a.rarity else None
-        items = loot.magic_items(int(a.args[0]), level=a.level, theme=a.theme, rarity_=rar, rng=rng, details=a.details,
-                                 dmg_tables=a.dmg_tables, weighted=a.weighted)
-        r = {"kind": "items", "level": a.level, "rarity": rar, "theme": loot._theme(a.theme), "items": items,
-             "source": tables.cite("item_rarity")}
-    else:
-        if not a.args:
-            raise Usage("loot for takes creatures, e.g. loot for goblin-boss goblin-warrior x6")
-        r = loot.for_creatures(parse_monsters(data.load(), a.args), rng, a.level, a.avg, a.details, a.dmg_tables, a.weighted)
-    print(json.dumps(r, indent=1, ensure_ascii=False) if a.json else sheet.loot_md(r))
-    return 0
 
 
-def _check_cr(cr):
-    try:
-        ok = tables.cr_key(cr) in tables.cr_xp()
-    except (ValueError, ZeroDivisionError):
-        ok = False
-    if not ok:
-        raise Usage(f"'{cr}' is not a challenge rating (0, 1/8, 1/4, 1/2, 1-30)")
 
 
-def _rarity(r):
-    hit = [x for x in loot.RARITIES if x.replace(" ", "-").startswith(r.lower().replace(" ", "-"))]
-    if not hit:
-        raise Usage(f"unknown rarity '{r}'; one of {', '.join(loot.RARITIES)}")
-    return hit[0]
 
 
-def cmd_npc(argv):
-    p = parser("npc")
-    p.add_argument("--n", type=int, default=1)
-    p.add_argument("--names")
-    p.add_argument("--creature")
-    p.add_argument("--seed", type=int)
-    p.add_argument("--json", action="store_true")
-    a = p.parse_args(argv)
-    rng = random.Random(a.seed)
-    cr = parse_monsters(data.load(), [a.creature])[0][0] if a.creature else None
-    res = [generate.npc(rng, a.names, cr) for _ in range(max(1, a.n))]
-    print(json.dumps(res, indent=1, ensure_ascii=False) if a.json else "\n\n".join(sheet.npc_md(n) for n in res))
-    return 0
 
 
-def cmd_settlement(argv):
-    p = parser("settlement")
-    p.add_argument("--size")
-    p.add_argument("--seed", type=int)
-    p.add_argument("--json", action="store_true")
-    a = p.parse_args(argv)
-    s = generate.settlement(random.Random(a.seed), a.size)
-    print(json.dumps(s, indent=1, ensure_ascii=False) if a.json else sheet.settlement_md(s))
-    return 0
 
 
-def cmd_tavern(argv):
-    p = parser("tavern")
-    p.add_argument("--level", type=int)
-    p.add_argument("--patrons", type=int, default=2)
-    p.add_argument("--names")
-    p.add_argument("--seed", type=int)
-    p.add_argument("--json", action="store_true")
-    a = p.parse_args(argv)
-    if a.level is not None and not 1 <= a.level <= 20:
-        raise Usage("--level is a character level, 1-20")
-    t = generate.tavern(random.Random(a.seed), a.level, max(0, a.patrons), a.names)
-    print(json.dumps(t, indent=1, ensure_ascii=False) if a.json else sheet.tavern_md(t))
-    return 0
 
 
 def cmd_table(argv):
@@ -588,7 +474,9 @@ def cmd_table(argv):
 
 
 COMMANDS = {"character": cmd_character, "encounter": cmd_encounter, "calc": cmd_calc, "roll": cmd_roll,
-            "loot": cmd_loot, "npc": cmd_npc, "settlement": cmd_settlement, "tavern": cmd_tavern, "table": cmd_table}
+            "table": cmd_table}
+
+components.apply("register_rules", COMMANDS, HELP)
 
 
 def main(cmd, argv):
@@ -600,7 +488,7 @@ def main(cmd, argv):
         err(str(x))
         print(f"usage: see `{PROG} {cmd} --help`", file=sys.stderr)
         return 2
-    except (character.SpecError, encounter.EncounterError, loot.LootError, ValueError) as x:
+    except (character.SpecError, encounter.EncounterError, ValueError, *components.values("errors")) as x:
         err(str(x))
         return 2
     except LookupError as x:

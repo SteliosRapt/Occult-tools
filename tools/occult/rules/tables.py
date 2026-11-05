@@ -4,22 +4,20 @@ Every number the engine looks up comes from a table printed in data/, found by t
 and the table's title. Nothing is copied into code, so a re-import that changes a table changes the
 engine, and a table that moves or disappears fails loudly (`TableMissing`) instead of going stale.
 
-    tables.xp_budget()          # {level: {"low": 50, "moderate": 75, "high": 100}}   DMG p114
-    tables.multiclass_slots()   # {caster level: {spell level: slots}}               PHB p44
-    tables.advancement()        # {level: (xp, proficiency bonus)}                   PHB p41
-    tables.cr_xp()              # {"1/4": 50, ...}                                   MM p8
-    tables.cr_pb()              # [(lo, hi, pb)] by challenge rating                MM p8
-    tables.point_costs()        # {8: 0, ..., 15: 9}                                 PHB p38
-    tables.standard_array()     # {"barbarian": {"str": 15, ...}}                    PHB p38
-    tables.carrying()           # {"Small/Medium": (15, 30), ...}: carry, drag x Str  PHB p362
-    tables.table("treasure_hoard")   # the raw tables `loot` reads: individual_treasure, treasure_hoard,
-                                     # treasure_themes, item_rarity (DMG p120, p213, p218)
+    tables.xp_budget()          # {level: {"low": 50, "moderate": 75, "high": 100}}
+    tables.multiclass_slots()   # {caster level: {spell level: slots}}
+    tables.advancement()        # {level: (xp, proficiency bonus)}
+    tables.cr_xp()              # {"1/4": 50, ...}
+    tables.cr_pb()              # [(lo, hi, pb)] by challenge rating
+    tables.point_costs()        # {8: 0, ..., 15: 9}
+    tables.standard_array()     # {"barbarian": {"str": 15, ...}}
+    tables.carrying()           # {"Small/Medium": (15, 30), ...}: carry, drag x Str
 """
 import functools
 import re
 from fractions import Fraction
 
-from .. import data, text
+from .. import components, data, text
 
 ABILITIES = ("str", "dex", "con", "int", "wis", "cha")
 ABILITY_NAMES = {"str": "Strength", "dex": "Dexterity", "con": "Constitution",
@@ -36,12 +34,9 @@ SOURCES = {
     "point_costs": ("section:generate-your-scores", "Ability Score Point Costs"),
     "standard_array": ("section:assign-ability-scores", "Standard Array by Class"),
     "carrying": ("term:carrying-capacity", "Carrying Capacity"),
-    "individual_treasure": ("section:individual-treasure", "Random Individual Treasure"),
-    "treasure_hoard": ("section:treasure-hoards", "Random Treasure Hoard"),
-    "treasure_themes": ("section:treasure-themes", "Treasure Themes"),
-    "item_rarity": ("section:random-magic-item-rarity", "Magic Item Rarities"),
-    "settlement_sizes": ("section:settlements", "Settlements by Size"),
 }
+
+components.apply("register_sources", SOURCES)
 
 
 class TableMissing(LookupError):

@@ -3,26 +3,22 @@
 Adding an output means adding one Output row here plus its template; `pipeline.run` does the rest.
 """
 import hashlib
-import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, Optional
 
-from . import query, views
+from . import components, query, views
 from .types import TYPES
 from .views import books
+from .views._common import slug
 
-PLURAL = {"armor": "armor", "deity": "deities", "facility": "facilities", "card": "cards"}            # filename and report nouns; default: the type's first alias
+PLURAL = {"armor": "armor"}            # filename and report nouns; default: the type's first alias
 
 
 def noun(t, n=2):
     if n == 1:
         return t
     return PLURAL.get(t) or next((a for a in TYPES[t].get("aliases", []) if a.endswith("s")), t + "s")
-
-
-def slug(s):
-    return re.sub(r"[^a-z0-9]+", "-", str(s).lower()).strip("-")
 
 
 def selector_stem(terms, filters, sid=None):
@@ -47,7 +43,7 @@ def selector_stem(terms, filters, sid=None):
 
 
 CARD_TYPES = ["spells", "weapons", "armor", "conditions", "actions", "terms", "creatures", "feats", "options",
-              "magic-items", "deities", "facilities", "cards"]
+              "magic-items", *components.values("card_types")]
 
 
 def select_cards(ix, terms, filters):
@@ -61,8 +57,6 @@ def select_cards(ix, terms, filters):
     return ents
 
 
-# Probe deck for `make proof` (visual regression; tools/tests/visual/).
-PROBE = ["spell:fireball", "spell:wish", "spell:shield", "weapon:longsword", "term:grappled", "creature:wolf"]
 
 
 @dataclass
@@ -79,12 +73,11 @@ class Output:
     priority: str = "P0"
     select: Callable = select_cards    # (ix, terms, filters) -> [Entity]
     group: Optional[Callable] = None   # books: (ix, **variant) -> the template context (views/books.py)
-    fixed: list = field(default_factory=list)   # a fixed selection (proof)
     variant: Optional[str] = None      # books: the flag that picks one book per value (`--class`; `all` = each)
 
 
 CARD_FLAGS = {"mode": ("color", "bw"), "paper": ("a4", "letter"), "theme": "NAME", "png": True,
-              "check-fit": True, "html": True, "backs": ("none", "category"), "art": ("auto", "on", "off")}
+              "check-fit": True, "html": True, "backs": ("none", "category")}
 BOOK_FLAGS = {"mode": ("color", "white", "bw"), "paper": ("a4", "letter"), "theme": "NAME", "png": True, "html": True,
               "compact": True}
 
@@ -110,7 +103,7 @@ class Choices:
 
 
 def classes():
-    """Every loaded class, by slug (PHB and other books alike)."""
+    """Every loaded class, by slug ."""
     from . import data
     return tuple(sorted(e.slug for e in data.load().all("class")))
 
@@ -129,34 +122,19 @@ BOOK_COMMON = """  --mode bw        ink-saver (default color); white: every colo
   --html           also print the built HTML path (dist/.build/)"""
 
 CATALOGUE = {o.name: o for o in [
-    Output("cards", "cards", "cards/deck.html.j2", "<selector>", "Card sheets, 67×96 3×3 on A4 (creatures, deck cards: tarot 2×2)",
-           """Card sheets in dist/cards/: 3×3 on A4 with crop marks (creatures and Deck of Many More Things cards:
-tarot 70×120, 2×2). A selector is one or more types (spells, weapons, armor, conditions, actions, creatures,
-terms, feats, options, magic-items, deities, facilities, cards), ids or @file (ids, one per line), with the
-same filters as `list`. Long text continues on the next card. Items, creatures, deities, facilities and deck
-cards show their art from img/ (`./occult fetch images`); a missing file only drops the art.
+    Output("cards", "cards", "cards/deck.html.j2", "<selector>", "Card sheets, 67×96 3×3 on A4; tarot 2×2",
+           """Card sheets in dist/cards/: 3×3 on A4 with crop marks (tarot: 70×120, 2×2).
+A selector is types, ids or @file (one id per line), with the same filters as `list`.
+Long text continues on the next card; `./occult types` lists the available types.
   --mode bw        ink-saver (default color)
   --paper letter   US Letter, 63×88 cards (default a4)
   --theme NAME     a folder in style/themes/ (default grimoire)
   --png            also write one PNG per sheet
-  --check-fit      render only (no PDF); report the run histogram; exit 1 if any card is clipped
-  --html           also print the built HTML path (dist/.build/)
-  --backs category a mirrored back sheet after each sheet (school, class, rarity or category; long-edge duplex)
-  --art auto|on|off  auto (default): art when the file is in img/, shrunk then dropped before text shrinks;
-                   on: keep the art (text shrinks and continues instead); off: no art
-Exit 1 if any card is clipped at the 6pt floor.
-e.g. ./occult make cards spells --class wizard --level 3 --mode bw · ./occult make cards conditions actions
-     ./occult make cards feats --category origin · ./occult make cards options --class warlock --backs category
-     ./occult make cards magic-items --rarity legendary --book dmg · ./occult make cards deities --book frhof
-     ./occult make cards facilities --level 5 · ./occult make cards cards --backs category""",
+  --check-fit      render without a PDF; exit 1 if a card is clipped
+  --html           print the built HTML path
+  --backs category mirrored duplex back sheets
+Exit 1 if a card is clipped at the 6pt floor.""",
            "cards", CARD_FLAGS, selector=True),
-    Output("proof", "cards", "cards/deck.html.j2", "[--accept]", "Visual regression: probe deck + book page PNGs vs tools/tests/visual/",
-           """Render the probe deck (Fireball, Wish, Shield, Longsword, Grappled, Wolf) in colour and B&W
-and page 1 of five books (paladin spellbook, equipment, quickref, warlock booklet, glossary)
-to dist/proof/, and diff each PNG against tools/tests/visual/; fail above 0.5% changed pixels
-(a diff PNG is written next to the render).
-  --accept   copy the renders over the baselines (after reviewing them)""",
-           "proof", {"accept": True}, fixed=PROBE),
     Output("md", "md", None, "[--check]", "Committed .md collections in collections/ (no render)",
            """Write the committed Markdown collections (collections/: spells by class and level, equipment,
 classes, feats, rules, magic items ...) from every book in data/ through templates/md/. Deterministic: a second run
@@ -168,7 +146,7 @@ The pre-commit hook runs --check: enable it once with `git config core.hooksPath
     Output("spellbook", "book", "book/spellbook.html.j2", "--class C|all", "Spellbook PDF per caster class (A4 or Letter, 2 columns)",
            f"""A spellbook in dist/books/: the class spell list (cantrip to level 9), then every description
 by level, A-Z within a level. `--class all` writes one per caster class.
-  --class C        a class with a spell list (artificer bard cleric ... wizard), or all
+  --class C        a class with a spell list (`./occult list classes`), or all
   --level N        only the spells the class casts at class level N (1-20): dist/books/spellbook-C-lN.pdf
   --list-only      the spell list alone, no descriptions (files gain .list)
 {BOOK_COMMON}
@@ -193,14 +171,14 @@ level, option menus and the spell list as printed, then the subclasses. `--class
                    subclass art together on one page, then the spells the class casts by then in full
                    (dist/books/class-C-lN.pdf)
   --subclass S     only that subclass of the class (`./occult list subclasses --class C`), any book:
-                   its features and art, no class chapters (dist/books/class-C-S.pdf)
+                   its features, no class chapters (dist/books/class-C-S.pdf)
   --class-features N  with --subclass: the class features to level N (and those progression rows)
                    first (dist/books/class-C-S-cfN.pdf)
   --add ID,ID      backgrounds, species and feats in full at the end, under Character Options
-                   (`--add background:investigator,feat:sharp-eye,species:changeling`; stem gains -plus)
+                   (`--add background:acolyte,species:elf`; stem gains -plus)
 {BOOK_COMMON}
 e.g. ./occult make class --class warlock · ./occult make class --class warlock --level 5
-     ./occult make class --class warlock --subclass undead-patron --class-features 3""",
+     ./occult make class --class warlock --subclass fiend-patron --class-features 3""",
            "book", {"class": Choices(classes), "level": "N", "subclass": "S", "class-features": "N", "add": "ID,ID", **BOOK_FLAGS}, priority="P1", group=books.booklet, variant="class"),
     Output("glossary", "book", "book/glossary.html.j2", "[--mode bw]", "Rules glossary PDF: every term A-Z",
            f"""The rules glossary in dist/books/: the conventions, then all 154 terms A-Z with their tags and
@@ -215,3 +193,5 @@ folder from any static host (Netlify: it includes _headers), or locally: python3
   --out DIR   another target directory (default dist/pwa/)""",
            "pwa", {"out": "DIR"}, priority="P1"),
 ]}
+
+components.apply("register_outputs", CATALOGUE)

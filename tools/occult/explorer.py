@@ -37,11 +37,11 @@ ENTRY = """{% import "book/_blocks.j2" as k %}{{ k.spell(s) }}{% for n in kids %
 
 
 def page_ref(e):
-    """`PHB p274`, `AU p5`, `FRHoF` (no page)."""
+    """A book abbreviation and optional page number."""
     return f"{book_abbr(e.book)} p{e.page}" if e.page is not None else book_abbr(e.book)
 
 
-def row(ix, e, entry):
+def row(e, entry):
     d = e.data
     kids = [c for c in e.children if c.type == "creature"]
     words = [e.title]                     # the rules text first: search snippets quote it
@@ -77,10 +77,10 @@ def build(ix, env, theme_name="grimoire"):
     """{relative path: bytes | str} of the whole site."""
     entry = env.from_string(ENTRY)
     spells = sorted(ix.all("spell"), key=lambda e: (e.data["level"], text.fold(e.title)))
-    rows = [row(ix, e, entry) for e in spells]
+    rows = [row(e, entry) for e in spells]
     classes = sorted({c for r in rows for c in r["c"]})
     schools = sorted({r["s"] for r in rows})
-    bookset = sorted({e.book for e in spells}, key=lambda b: (b != "phb", b))
+    bookset = sorted({e.book for e in spells}, key=lambda b: (b != ix.books[0]["short"], b))
     meta = {"classes": classes, "schools": schools,
             "books": [{"id": b, "abbr": book_abbr(b)} for b in bookset]}
     files = {"spells.json": json.dumps({"meta": meta, "spells": rows}, ensure_ascii=False, separators=(",", ":"))}

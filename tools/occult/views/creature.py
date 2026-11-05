@@ -1,7 +1,7 @@
 """Creature (stat block) card view model: tarot size, 2x2 on a sheet.
 
 Formula stat blocks (summons, companions) print values such as `12 + your Intelligence modifier`;
-an Object stat block (EFA's Eldritch Cannon) has no abilities, speed, alignment or CR, so every
+an Object stat block  has no abilities, speed, alignment or CR, so every
 one of those is optional here and in `statblock_md`.
 
 Traits and actions are `{name, text, more?}`: `text` is the run-in paragraph, `more` the blocks

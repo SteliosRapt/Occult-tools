@@ -1,6 +1,4 @@
-"""Deck card view model (the Deck of Many More Things `card` children): tarot size, the face image
-full-bleed (it carries its own gold frame), the card's name and effect in a panel over its foot.
-Without a local face image the card falls back to the grimoire frame with the same text."""
+"""Deck face card models, with the deck title read from the data."""
 from ._common import body_blocks, key, slug
 
 

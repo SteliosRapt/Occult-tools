@@ -23,7 +23,7 @@ pip install -r requirements.txt
 python3 -m http.server -d dist/pwa 8000
 ```
 
-PDF output needs Node and Playwright Chromium. Configure `OCCULT_NODE`, `OCCULT_PLAYWRIGHT` (the Playwright module path) and `PLAYWRIGHT_BROWSERS_PATH` for your installation. Defaults are `/opt/node22/bin/node`, `/opt/node22/lib/node_modules/playwright` and `/opt/pw-browsers`. Install Playwright/Chromium separately; the tools never download a browser. Optional: Pillow for `make proof`, poppler/pdftoppm for book `--png`, pypdf and a separately supplied official blank sheet for `character --form` (see forms/README.md).
+PDF output needs Node and Playwright Chromium. Configure `OCCULT_NODE`, `OCCULT_PLAYWRIGHT` (the Playwright module path) and `PLAYWRIGHT_BROWSERS_PATH` for your installation. Defaults are `/opt/node22/bin/node`, `/opt/node22/lib/node_modules/playwright` and `/opt/pw-browsers`. Install Playwright/Chromium separately; the tools never download a browser. Optional: poppler/pdftoppm for book `--png`, pypdf and a separately supplied official blank sheet for `character --form` (see forms/README.md).
 
 ```sh
 ./occult make cards spells --class wizard --level 1 --backs category
@@ -37,9 +37,9 @@ PDF output needs Node and Playwright Chromium. Configure `OCCULT_NODE`, `OCCULT_
 ./occult encounter --party 4x3 goblin-warrior x4 --pdf
 ```
 
-`./occult make --list` lists outputs and `./occult types` lists selectors. `find`, `show`, `list`, `toc` and `types` work without Jinja2. Each entity has a short id, such as `spell:arcane-hand`, `subclass:life-domain` or `term:prone`; pass it to `show` or `make cards`. `--book srd` selects the single book. Output goes to `dist/`. `OCCULT_DATA` can select another data root.
+`./occult make --list` lists outputs and `./occult types` lists selectors. `find`, `show`, `list`, `toc` and `types` work without Jinja2. Each entity has a short id, such as `spell:arcane-hand`, `subclass:life-domain` or `term:prone`; pass it to `show` or `make cards`. Output goes to `dist/`. `OCCULT_DATA` can select another data root.
 
-The SRD has 12 classes, one subclass per class, 9 species and 4 backgrounds. Tables absent from the SRD are unavailable: some `loot`, `npc`, `settlement` and `tavern` operations report that the required table is not in this data set. `table --list` shows the available roll tables. AI workflows in `.claude/skills/` use these same commands and state these limits.
+The SRD has 12 classes, one subclass per class, 9 species and 4 backgrounds. `table --list` shows the available roll tables. The three AI workflows in `.claude/skills/` use the same command surface.
 
 ## Validation and credits
 

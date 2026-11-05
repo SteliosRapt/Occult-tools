@@ -6,7 +6,7 @@
 <section class="spellbook-list{{ ' page-break' if brk }}">
 {{ k.opener(book.kicker, book.title) }}
 <div class="columns-2">
-<p class="drop-cap">The {{ book.count }} {{ book['class'] }} spells of {% for t in book.books %}{{ '' if loop.first else (' and ' if loop.last else ', ') }}{{ 'the ' if t == "System Reference Document 5.2.1" }}<i>{{ t }}</i>{% endfor %}{% if book.class_level %} that a level {{ book.class_level }} {{ book['class'] }} can cast{% endif %}, from {{ 'cantrips' if book.levels[0].level == 0 else 'level ' ~ book.levels[0].level }} to level {{ book.levels[-1].level }}{% if book.get('list_only') %}, grouped by level and alphabetical within each level.{% else %}: first the spell list, then every description, grouped by level and alphabetical within each level.{% endif %}</p>
+<p class="drop-cap">The {{ book.count }} {{ book['class'] }} spells of {% for t in book.books %}{{ '' if loop.first else (' and ' if loop.last else ', ') }}{{ 'the ' if t == book.source_title }}<i>{{ t }}</i>{% endfor %}{% if book.class_level %} that a level {{ book.class_level }} {{ book['class'] }} can cast{% endif %}, from {{ 'cantrips' if book.levels[0].level == 0 else 'level ' ~ book.levels[0].level }} to level {{ book.levels[-1].level }}{% if book.get('list_only') %}, grouped by level and alphabetical within each level.{% else %}: first the spell list, then every description, grouped by level and alphabetical within each level.{% endif %}</p>
 {% if book.note %}{{ k.para(book.note) }}{% endif %}
 {% for g in book.levels %}{{ k.table(g.index, "spell-index") }}{% endfor %}
 </div>

@@ -1,10 +1,47 @@
 {
+  "book": [
+    "../../fonts/fonts.css",
+    "page.css",
+    "book.css"
+  ],
+  "bw": {
+    "book": [
+      "page-bw.css"
+    ],
+    "character": [
+      "page-bw.css"
+    ],
+    "encounter": [
+      "page-bw.css"
+    ]
+  },
+  "cards": [
+    "../../fonts/fonts.css",
+    "../../base/cards.css",
+    "cards.css",
+    "deck-cards.css"
+  ],
+  "character": [
+    "../../fonts/fonts.css",
+    "page.css",
+    "book.css",
+    "character.css"
+  ],
+  "encounter": [
+    "../../fonts/fonts.css",
+    "page.css",
+    "book.css",
+    "character.css",
+    "encounter.css"
+  ],
   "name": "Grimoire",
-  "cards": ["../../fonts/fonts.css", "../../base/cards.css", "cards.css"],
-  "book": ["../../fonts/fonts.css", "page.css", "book.css"],
-  "character": ["../../fonts/fonts.css", "page.css", "book.css", "character.css"],
-  "encounter": ["../../fonts/fonts.css", "page.css", "book.css", "character.css", "encounter.css"],
-  "bw": { "book": ["page-bw.css"], "character": ["page-bw.css"], "encounter": ["page-bw.css"] },
-  "white": { "book": ["page-white.css"] },
-  "preload": ["Alegreya-400", "footer-swash.svg"]
+  "preload": [
+    "Alegreya-400",
+    "footer-swash.svg"
+  ],
+  "white": {
+    "book": [
+      "page-white.css"
+    ]
+  }
 }

@@ -88,34 +88,16 @@ body.bw .title-rule { filter: grayscale(1); }
   border-bottom: 0.6px solid var(--gold, #c2a466); }
 .bw .statblock .sb-section { color: #000; border-color: #888; }
 
-/* Subclass art (class booklets): the subclasses run on in two columns; each one's art floats a
-   column wide, whole (the PHB strips have a frame), up to --subclass-art-h tall, about a third of the
-   page. A float that does not fit moves to the next column while the text fills the room it leaves. */
-.subclass-art { --subclass-art-h: 6.4in; float: left; width: 100%; margin: 2pt 0 6pt; break-inside: avoid; }
-.subclass-art img { display: block; width: min(100%, calc(var(--subclass-art-h) / var(--ratio)));
-  aspect-ratio: calc(1 / var(--ratio)); }
 .subclass-group { font-size: 15pt; margin-top: 0.22in; padding-bottom: 2pt; border-bottom: 1.2pt solid var(--gold, #c2a466); }
 .bw .subclass-group { border-color: #888; }
-/* The art gallery of a booklet to a level: every subclass's art on one page under the title, in rows
-   of --per-row at --art-h tall (views.books.gallery picks both to fill the page; a short last row is centred). */
-.art-gallery .gallery { display: flex; flex-direction: column; justify-content: space-evenly; height: 9.1in; }
-.art-gallery .g-row { display: flex; justify-content: center; gap: 0.15in; }
-.art-gallery img { flex: 0 0 calc((100% - (var(--per-row) - 1) * 0.15in) / var(--per-row)); min-width: 0;
-  height: var(--art-h); object-fit: contain; display: block; }
-.bw .art-gallery img { filter: grayscale(1) contrast(1.05); }
-.art-mark { position: absolute; width: 0.5pt; height: 0.5pt; }   /* out of the flow: probing moves nothing */
-.subclass-art figcaption { font: italic 6pt/1.2 var(--font-body, serif); color: #7a6a55; margin-top: 2pt; }
-.bw .subclass-art img { filter: grayscale(1) contrast(1.05); }
-/* A table beside the art narrows to fit (a block formatting context) instead of dropping below it. */
 .class-sec .table-wrap { display: flow-root; }
-
 /* Core Traits box with no intro beside it (subclass booklet with --class-features): one full-width table */
 .traits-solo .traits-table { break-inside: avoid; }
 .traits-solo .traits-table th { width: 22%; }
 
 /* --compact: about nine tenths of the type, for fewer pages */
 body.compact {
-  --size-body: 8.7pt; --size-table: 7.8pt; --size-small: 7.3pt;
+  --size-body: 8.7pt; --size-table: 7.8pt;
   --size-h1: 21pt; --size-h2: 14.4pt; --size-h3: 11.2pt; --size-h4: 9.8pt;
 }
 body.compact .columns-2 h2 { font-size: 12.6pt; }

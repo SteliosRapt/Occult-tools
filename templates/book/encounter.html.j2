@@ -6,7 +6,7 @@
 {% macro monster(s) -%}
 <article class="sb" id="{{ s.sid }}">
 <header class="sb-head">
-  {% if s.token %}<img class="sb-token" src="{{ s.token.src }}" alt="">{% endif %}
+  {% if encounter_token_template is defined %}{% include encounter_token_template %}{% endif %}
   <div class="sb-titles">
     <h3 class="sb-name">{{ s.title }}{% if s.count > 1 %} <span class="sb-count">×{{ s.count }}</span>{% endif %}</h3>
     <p class="sb-type">{{ s.type_line }}</p>

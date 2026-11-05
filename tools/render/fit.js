@@ -1,13 +1,10 @@
 /* Card fitting and sheet imposition. Runs in the page; works the same for every theme.
-   0. Art first: a .c-art panel grows into spare room (--art-grow), or shrinks to --art-min, then
-      is dropped unless keeping it costs no extra card and at most --art-cost pt of text size
-      (always kept with deck[data-art=on]).
    1. Shrink: step the body font size from --fs-max down to --fs-min (pt, unitless vars on .card).
    2. Trim: elements with data-short swap to their short form.
    3. Continue: if it still overflows, move trailing blocks to a continuation card (a clone with
       class .cont), splitting the boundary block by list item, table row or word. A run keeps one
       font size; if its last card is under 25% full, the run is re-split 0.1pt smaller (floor 6pt).
-   Before 0, items of a .seps list that wrap onto a new line are marked .line-start.
+   Before fitting, items of a .seps list that wrap onto a new line are marked .line-start.
    4. Number runs ("1/2"), then impose each .deck[data-size] onto sheets of cols x rows with crop marks
       (plus a mirrored back sheet after each front when the deck is followed by .back-designs).
    When done it sets window.__occultStats and body[data-ready] (render.mjs waits for it).
@@ -18,85 +15,8 @@
   const num = (el, name, dflt) => parseFloat(getComputedStyle(el).getPropertyValue(name)) || dflt;
   const HARD_MIN = 6.0, WIDOW = 0.25;
 
-  // Art: wait until every image has decoded; an image that cannot load takes its panel with it
-  // (the card falls back to its layout without art, never fails).
-  // (load events, not img.decode(): Chromium rejects decode() under memory pressure on big decks)
-  const imgs = [...document.images];
-  await Promise.all(imgs.map((img) => (img.complete ? null : new Promise((ok) => {
-    img.addEventListener('load', ok, { once: true });
-    img.addEventListener('error', ok, { once: true });
-  }))));
-  imgs.filter((img) => !img.naturalWidth).forEach((img) => {
-    const card = img.closest('.card');
-    (img.closest('.c-art') || img).remove();
-    card?.classList.remove('has-art', 'has-face');
-  });
-
-  // 0. Art gives way first: with the body at --fs-max, shrink the .c-art panel in steps down to
-  //    --art-min (px), then drop it (`--art on`, deck[data-art=on]: keep it at --art-min instead).
-  const artStats = { panels: 0, shown: 0, shrunk: 0, dropped: 0 };
-  function fitArt(card) {
-    const fig = card.querySelector('.c-art'), body = card.querySelector('.c-body');
-    if (!fig || !body) return;
-    artStats.panels++;
-    const keep = card.closest('.deck')?.dataset.art === 'on';
-    body.style.fontSize = num(card, '--fs-max', 7.5) + 'pt';
-    if (!over(body)) {
-      // room to spare: let the art grow (to --art-grow px, and no taller than the image is at the
-      // panel's width) while the text, at --fs-max, still leaves a tenth of the body free
-      artStats.shown++;
-      const g0 = fig.getBoundingClientRect().height;
-      const cap = Math.min(num(fig, '--art-grow', 0), fig.clientWidth * num(fig, '--art-ratio', 0));
-      for (let h = g0 + 3; h <= cap; h += 3) {
-        fig.style.height = h + 'px';
-        if (over(body) || fill(card) > 0.9) { fig.style.height = (h - 3) + 'px'; break; }
-      }
-      return;
-    }
-    const h0 = fig.getBoundingClientRect().height, floor = Math.min(h0, num(fig, '--art-min', 44));
-    let h = h0;
-    while (over(body) && h > floor + 0.5) { h = Math.max(floor, h - h0 * 0.06); fig.style.height = h + 'px'; }
-    if (!over(body) || keep) { artStats.shown++; artStats.shrunk++; card.classList.add('art-shrunk'); return; }
-    return 'drop';
-  }
-
-  // Fit a card, art first. When the art at --art-min still crowds the text, the card is fitted
-  // both ways; the art is dropped unless keeping it costs no extra card and at most --art-cost pt
-  // of text size (default 0.3; a long entry that continues anyway keeps its art), and never takes the
-  // text below --fs-min.
-  function fitWithArt(card) {
-    if (fitArt(card) !== 'drop') return fitCard(card);
-    const fig = card.querySelector('.c-art'), body = card.querySelector('.c-body');
-    const parent = fig.parentNode, next = fig.nextSibling, orig = body.innerHTML;
-    const result = () => {
-      const run = runOf(card);
-      return { n: run.length, fs: parseFloat(card.dataset.fs), clipped: run.some((c) => c.dataset.clipped === '1' || over(c.querySelector('.c-body'))) };
-    };
-    const reset = () => {
-      runOf(card).slice(1).forEach((c) => c.remove());
-      body.innerHTML = orig;
-      delete card.dataset.clipped;
-      card.classList.remove('trimmed');
-    };
-    fitCard(card);
-    const kept = result();
-    reset();
-    fig.remove();
-    card.classList.remove('has-art');
-    fitCard(card);
-    const bare = result();
-    if (!kept.clipped && kept.n <= bare.n && bare.fs - kept.fs <= num(card, '--art-cost', 0.3) + 1e-6
-        && kept.fs >= num(card, '--fs-min', 6.4) - 1e-6) {
-      reset();
-      parent.insertBefore(fig, next);
-      card.classList.add('has-art', 'art-shrunk');
-      fitCard(card);
-      artStats.shown++; artStats.shrunk++;
-      return;
-    }
-    card.classList.add('art-dropped');
-    artStats.dropped++;
-  }
+  const extension = window.occultCardExtension
+    ? await window.occultCardExtension({ over, num, fitCard, runOf, fill }) : null;
 
   function fitCard(card, start, fixed = false) {
     const body = card.querySelector('.c-body');
@@ -340,7 +260,9 @@
     });
   });
 
-  [...document.querySelectorAll('.card')].forEach(fitWithArt);
+  [...document.querySelectorAll('.card')].forEach((card) => {
+    if (extension) extension.fit(card); else fitCard(card);
+  });
   const all = runs();
   numberRuns(all);
   const hist = {};
@@ -357,7 +279,7 @@
     minFs: sizes.length ? Math.min(...sizes) : null,
     sheets: 0,
     backs: 0,
-    art: artStats,
+    ...(extension ? extension.stats() : {}),
   };
   [stats.sheets, stats.backs] = paginate();
   window.__occultStats = stats;

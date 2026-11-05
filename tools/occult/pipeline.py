@@ -2,7 +2,7 @@
 
     code = pipeline.run_cards(ix, outputs.CATALOGUE["cards"], ["spells"], {"class": "wizard"}, {"mode": "bw"})
 
-Each catalogue row names its runner (run_cards, run_proof, run_md); `make` (make.py) calls it. Jinja2 is imported here (only `make` needs it). Rendering runs tools/render/render.mjs once per
+Each catalogue row names its runner (run_cards, run_md); `make` (make.py) calls it. Jinja2 is imported here (only `make` needs it). Rendering runs tools/render/render.mjs once per
 call with a batch of jobs; Node and Chromium are found via OCCULT_NODE and PLAYWRIGHT_BROWSERS_PATH.
 """
 import json
@@ -14,8 +14,7 @@ from collections import Counter
 from pathlib import Path
 from types import SimpleNamespace
 
-from . import images, query, views
-from .views.books import walk_nodes
+from . import components, query, views
 from .outputs import noun, selector_stem
 from .types import resolve_type
 
@@ -24,7 +23,6 @@ STYLE = ROOT / "style"
 TEMPLATES = ROOT / "templates"
 RENDER = ROOT / "tools" / "render"
 DIST = ROOT / "dist"
-VISUAL = ROOT / "tools" / "tests" / "visual"
 DEFAULT_THEME = "grimoire"
 SIZES = {"poker": (3, 3), "tarot": (2, 2)}      # cols x rows per sheet, A4 and Letter alike
 PAPERS = ("a4", "letter")
@@ -47,6 +45,8 @@ def theme(name, layout, mode="color", paper="a4"):
     files = list(spec.get(layout, []))
     if mode != "color":
         files += spec.get(mode, {}).get(layout, [])
+    enabled = {m.__name__.rsplit(".", 1)[-1] for m in components.installed()}
+    files = [file for entry in files for file in ([entry] if isinstance(entry, str) else entry["files"] if entry["component"] in enabled and set(entry.get("requires", ())) <= enabled else [])]
     files.append(f"../../base/paper-{paper}.css")
     return {"name": name, "mode": mode, "css": [(d / f).resolve().as_uri() for f in files]}
 
@@ -92,6 +92,7 @@ def env():
         _ENV = Environment(loader=FileSystemLoader(str(TEMPLATES)), autoescape=True, trim_blocks=True,
                            lstrip_blocks=True, undefined=StrictUndefined)
         _ENV.filters["inline"] = lambda s: Markup(text.inline(s, "html"))   # stored markup -> HTML (books)
+        components.apply("template_globals", _ENV.globals)
         _ENV.globals["book_table"] = book_table                       # a JSON table block -> rows + .num flags
     return _ENV
 
@@ -108,11 +109,11 @@ def decks(models):
     return out
 
 
-def html_for(out, models, mode, paper, theme_name=DEFAULT_THEME, title="", backs=False, art="auto"):
-    th = theme(theme_name, out.layout, mode, paper)
-    return env().get_template(out.template).render(
-        title=title, theme=th, paper=paper, sprite=sprite(), decks=decks(models), backs=backs, art_mode=art,
-        body_class="sheet", scripts=[(RENDER / "fit.js").as_uri()])
+def html_for(out, models, mode, paper, theme_name=DEFAULT_THEME, title="", backs=False, **options):
+    ctx = dict(title=title, theme=theme(theme_name, out.layout, mode, paper), paper=paper,
+               sprite=sprite(), decks=decks(models), backs=backs, body_class="sheet",
+               scripts=[(RENDER / name).as_uri() for name in [*components.values("card_scripts"), "fit.js"]])
+    return env().get_template(out.template).render(**components.transform("card_context", ctx, options))
 
 
 # ---------------------------------------------------------------- render
@@ -142,170 +143,11 @@ def write_build(stem, html, out=None):
     return page
 
 
-# One artwork per page (class booklets): the subclasses run on, so two subclasses' art can land on one
-# page. The booklet is first rendered with marks: a tiny image of a unique height at every place a
-# subclass's art may go (`art_at` 0: under its title; n: before its n-th child; last: at its end).
-# The PDF says which page each art and each mark is on; the later art on a shared page moves to its
-# subclass's first place on a later page (or is left out when there is none), and the book renders
-# again, up to ART_PASSES times; the last render has no marks.
-ART_PASSES = 12
-ART_MIN_PX = 150                    # page images at least this big on both sides are art, not ornaments
-
-
-def mark_png(h):
-    """A 1×h px PNG (opaque parchment), as a data URI: its height tells the marks apart in the PDF."""
-    import base64
-    import struct
-    import zlib
-
-    def chunk(t, b):
-        return struct.pack(">I", len(b)) + t + b + struct.pack(">I", zlib.crc32(t + b) & 0xffffffff)
-    raw = b"".join(b"\x00\xf5\xee\xe1" for _ in range(h))
-    png = (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", 1, h, 8, 2, 0, 0, 0))
-           + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
-    return "data:image/png;base64," + base64.b64encode(png).decode()
-
-
-def pdf_page_images(pdf):
-    """[[(w, h) of each image the page draws], ...] in page order, from a Chromium (Skia) PDF: plain
-    objects, no object streams; images inside form XObjects count for the page."""
-    d = Path(pdf).read_bytes()
-    objs = {int(m.group(1)): m.group(2) for m in re.finditer(rb"(\d+) 0 obj\s*(.*?)endobj", d, re.S)}
-
-    def xobjects(v, seen):
-        m = re.search(rb"/XObject\s*<<(.*?)>>", v, re.S)
-        out = []
-        for n in map(int, re.findall(rb"(\d+) 0 R", m.group(1) if m else b"")):
-            o = objs.get(n, b"")
-            if n in seen:
-                continue
-            seen.add(n)
-            if re.search(rb"/Subtype\s*/Image", o):
-                w, h = (re.search(rb"/" + k + rb"\s+(\d+)", o) for k in (b"Width", b"Height"))
-                if w and h:
-                    out.append((int(w.group(1)), int(h.group(1))))
-            elif re.search(rb"/Subtype\s*/Form", o):
-                out += xobjects(o, seen)
-        return out
-
-    def pages(n):
-        v = objs.get(n, b"")
-        if re.search(rb"/Type\s*/Pages\b", v):
-            kids = re.search(rb"/Kids\s*\[(.*?)\]", v, re.S)
-            return [p for k in re.findall(rb"(\d+) 0 R", kids.group(1) if kids else b"") for p in pages(int(k))]
-        return [n]
-
-    cat = next((v for v in objs.values() if re.search(rb"/Type\s*/Catalog", v)), b"")
-    root = re.search(rb"/Pages\s+(\d+) 0 R", cat)
-    return [xobjects(objs[p], set()) for p in (pages(int(root.group(1))) if root else [])]
-
-
-def art_subclasses(ctx):
-    return [n for s in ctx.get("sections") or [] if s.get("break") for n in s["children"] if n.get("art")]
-
-
-def set_marks(ctx, on):
-    """Give each subclass with art its marks (`art_marks`: one data URI per place, heights 2, 3, …), or
-    take them away. -> {mark height: (subclass, place)}."""
-    where, h = {}, 2
-    for i, n in enumerate(art_subclasses(ctx)):
-        n["art_marks"] = []
-        for at in range(len(n.get("children") or []) + 2):
-            if on:
-                n["art_marks"].append(mark_png(h))
-                where[h] = (i, at)
-            h += 1
-        if not on:
-            del n["art_marks"]
-    return where
-
-
-def place_art(ctx, pdf, where):
-    """Read the pages of the arts and marks back from `pdf`. An art that floated past the end of its
-    subclass's text (alone on a page) starts its subclass on a new page instead. Then move each art that shares a page with an
-    earlier one to its subclass's first place on a later page; failing that, move the earlier one back
-    to its last place on an earlier page without art; failing that, its subclass starts a page with
-    the art under its title (art_break: the book grows rather than lose the art), and only if that
-    still fails leave it out (art_dropped).
-    -> whether anything moved."""
-    subs = art_subclasses(ctx)
-    pages = pdf_page_images(pdf)
-    page_of_art, marks = [], {}
-    for p, imgs in enumerate(pages):
-        for w, h in imgs:
-            if min(w, h) >= ART_MIN_PX:
-                page_of_art.append(p)
-            elif w == 1 and h in where:
-                marks[where[h]] = p
-    moved, last = False, None
-    for i, (n, p) in enumerate(zip(subs, page_of_art)):      # art past its text, alone on a page
-        end = marks.get((i, len(n.get("children") or []) + 1))
-        if end is not None and p > end and not n.get("art_break"):
-            n["art_break"], n["art_at"], moved = True, 0, True
-    if moved:
-        return True
-    for i, (n, p) in enumerate(zip(subs, page_of_art)):
-        if p != last:
-            last = p
-            continue
-        later = [at for at in range(len(n.get("children") or []) + 1)   # not its end: art alone on a page
-                 if at > (n.get("art_at") or 0) and marks.get((i, at), -1) > p]
-        prev = subs[i - 1]                           # the earlier art on this page
-        free = set(range(len(pages))) - set(page_of_art)
-        earlier = [at for at in range(prev.get("art_at") or 0)
-                   if marks.get((i - 1, at), -1) in free and marks.get((i - 1, at)) < p]
-        if later:
-            n["art_at"] = later[0]
-        elif earlier:                                # it can go back to a page without art instead
-            prev["art_at"] = earlier[-1]
-        elif not n.get("art_break"):                 # else its subclass starts a page
-            n["art_break"], n["art_at"] = True, 0
-        else:
-            n["art"], n["art_dropped"] = None, True
-        moved = True
-    return moved
-
-
 # ---------------------------------------------------------------- run
-def variant_suffix(paper, mode, theme_name, backs=False, art="auto"):
-    """`.a4`, `.a4.bw`, `.a4.white`, `.letter.quill.bw.backs`, `.a4.noart`: every option that changes the file is in its name."""
-    return (f".{paper}" + (f".{theme_name}" if theme_name != DEFAULT_THEME else "")
-            + (f".{mode}" if mode in ("bw", "white") else "") + (".backs" if backs else "")
-            + {"off": ".noart", "on": ".arton"}.get(art, ""))
-
-
-def chosen_variants(ix, terms):
-    """{sid: variant title} for id terms that name a magic item by one of its variants
-    (`"Potion of Greater Healing"`), so the card can show that variant's art."""
-    from .data import slugify
-    out = {}
-    for t in terms:
-        if t.startswith("@") or resolve_type(t):
-            continue
-        lk = ix.resolve(t)
-        e = lk.entity if lk else None
-        s = slugify(t.partition(":")[2] if ":" in t else t)
-        if e is not None and e.type == "magic-item" and e.slug != s and e in ix.by_variant.get(s, []):
-            out[e.sid] = next(v.get("title") for v in e.data.get("variants") or []
-                              if s in (slugify(v.get("title") or ""), slugify(v.get("record") or "")))
-    return out
-
-
-def art_line(models):
-    """`art: N of M cards have art (run ./occult fetch images)` when the data names images that are
-    not in img/; None when nothing is missing."""
-    if not any(m.get("art_missing") for m in models):
-        return pillow_line(any(views.has_art(m) for m in models))
-    have = sum(1 for m in models if views.has_art(m))
-    return f"art: {have} of {len(models)} cards have art (run ./occult fetch images)"
-
-
-def pillow_line(has_art):
-    """`art: full-size originals …` when there is art but no Pillow to make print-sized copies
-    (images.derived), else None."""
-    if not has_art or images.have_pillow():
-        return None
-    return "art: full-size originals, a larger PDF (pip install pillow for print-sized copies)"
+def variant_suffix(paper, mode, theme_name, backs=False, **options):
+    value = (f".{paper}" + (f".{theme_name}" if theme_name != DEFAULT_THEME else "")
+             + (f".{mode}" if mode in ("bw", "white") else "") + (".backs" if backs else ""))
+    return components.transform("suffix", value, options)
 
 
 def clear_pngs(folder, stem):
@@ -339,11 +181,9 @@ def summary(ents, st):
     runs = ", ".join(f"{m['key'].split(':', 1)[-1]} ×{m['n']}" for m in multi[:3]) + (", …" if len(multi) > 3 else "")
     clipped = len(st["clipped"])
     mfs = f"min {st['minFs']:.1f}pt" if st.get("minFs") is not None else "min -"
-    a = st.get("art") or {}
-    extra = [f"{a[k]} {k}" for k in ("shrunk", "dropped") if a.get(k)]
-    art = (f" · art {a.get('shown', 0)}" + (f" ({', '.join(extra)})" if extra else "")) if a.get("panels") else ""
+    detail = components.transform("card_summary", f" · {mfs}", st)
     return (f"{counts(ents)} → {st['cards']} card{'' if st['cards'] == 1 else 's'}" + (f" ({runs})" if runs else "")
-            + f" · {mfs}{art} · {clipped} clipped")
+            + f"{detail} · {clipped} clipped")
 
 
 def histogram(st):
@@ -362,9 +202,9 @@ def run_cards(ix, out, terms, filters, opts):
     ents = out.select(ix, terms, filters)
     if not ents:
         raise PipelineError("the selector matches nothing")
-    art = opts.get("art") or "auto"
-    chosen = chosen_variants(ix, terms)
-    models = [views.for_(ix, e, art, chosen.get(e.sid)) for e in ents]
+    options = components.mapping("selection_options", ix, terms, opts)
+    models = [views.for_(ix, e, **options.get(e.sid, {})) for e in ents]
+    render_options = components.mapping("render_options", opts)
     canon = {}                                      # `--class wiz` names the file like `--class wizard`
     for t in filter(None, map(resolve_type, terms)):
         canon.update(query.prepare(ix, t, {k: v for k, v in filters.items() if k in query.filters_of(t)})[1])
@@ -372,8 +212,8 @@ def run_cards(ix, out, terms, filters, opts):
     theme_name = opts.get("theme") or DEFAULT_THEME
     stem = ((opts.get("stem") or selector_stem(terms, {k: canon.get(k, v) for k, v in filters.items()},
                                                lambda t: ix.get(t).sid))
-            + variant_suffix(paper, mode, theme_name, backs, art))
-    page = write_build(stem, html_for(out, models, mode, paper, theme_name, stem, backs, art), out)
+            + variant_suffix(paper, mode, theme_name, backs, **render_options))
+    page = write_build(stem, html_for(out, models, mode, paper, theme_name, stem, backs, **render_options), out)
     job = {"html": str(page)}
     pdf = Path(opts["pdf"]).resolve() if opts.get("pdf") else DIST / out.name / f"{stem}.pdf"
     if not opts.get("check-fit"):
@@ -397,15 +237,14 @@ def run_cards(ix, out, terms, filters, opts):
                      f"{rel(pngs[0])} … {Path(pngs[-1]).name}   {len(pngs)} PNGs")
     if opts.get("html"):
         lines.append(rel(page))
-    if art_line(models):
-        lines.append(art_line(models))
+    lines += components.values("card_lines", models)
     if st["clipped"]:
         lines.append("clipped: " + " ".join(st["clipped"]))
     return report(lines, not st["clipped"])
 
 
 def pdftoppm():
-    """poppler's pdftoppm (optional; only book PNGs and `make proof` need it), or a one-line error."""
+    """poppler's pdftoppm (optional; only book PNGs need it), or a one-line error."""
     exe = os.environ.get("OCCULT_PDFTOPPM") or shutil.which("pdftoppm")
     if not exe or not Path(exe).exists():
         raise PipelineError("book PNGs need pdftoppm (poppler-utils, e.g. apt install poppler-utils), "
@@ -471,34 +310,6 @@ def book_html(out, ctx, mode, paper, theme_name=DEFAULT_THEME):
         body_class="book" + (" compact" if ctx.get("compact") else ""), scripts=[(RENDER / "book.js").as_uri()])
 
 
-def run_art_passes(out, items, jobs, mode, paper, theme_name):
-    """Class booklets: render with marks, move clashing art (place_art), repeat; then render the
-    booklets with art again without marks. -> the render results."""
-    res = [None] * len(items)
-    def again(ks, marks):
-        wheres = {}
-        for k in ks:
-            stem, ctx, page, pdf = items[k]
-            wheres[k] = set_marks(ctx, marks)
-            write_build(stem, book_html(out, ctx, mode, paper, theme_name), out)
-        for k, r in zip(ks, render([jobs[k] for k in ks])):
-            res[k] = r
-        return wheres
-
-    arts = [k for k, (_, ctx, _, _) in enumerate(items) if art_subclasses(ctx)]
-    plain = [k for k in range(len(items)) if k not in arts]
-    if plain:
-        again(plain, False)
-    ks = arts
-    wheres = again(ks, True) if ks else {}
-    for _ in range(ART_PASSES):
-        ks = [k for k in ks if place_art(items[k][1], items[k][3], wheres[k])]
-        if not ks:
-            break
-        wheres.update(again(ks, True))
-    if arts:
-        again(arts, False)
-    return res
 
 
 def run_book(ix, out, terms, filters, opts):
@@ -534,16 +345,14 @@ def run_book(ix, out, terms, filters, opts):
         pdf = DIST / "books" / f"{stem}.pdf"
         items.append((stem, ctx, page, pdf))
         jobs.append({"html": str(page), "pdf": str(pdf)})
-    res = render(jobs) if out.name != "class" else run_art_passes(out, items, jobs, mode, paper, theme_name)
+    res = components.transform("book_render", None, out, items, jobs, mode, paper, theme_name)
+    if res is None:
+        res = render(jobs)
     lines = []
     w = max(len(rel(p)) for *_, p in items)
     for (stem, ctx, page, pdf), r in zip(items, res):
         lines.append(f"{rel(pdf).ljust(w)}   {r['pages']} page{'' if r['pages'] == 1 else 's'} · {ctx['stats']}")
-        dropped = sum(1 for s in ctx.get("sections") or [] for n in walk_nodes(s) if n.get("art_dropped"))
-        if dropped:
-            lines.append(f"art: {dropped} subclass art{'' if dropped == 1 else 's'} left out (one artwork per page)")
-        if pillow_line(any(n.get("art") for s in ctx.get("sections") or [] for n in walk_nodes(s))):
-            lines.append(pillow_line(True))
+        lines += components.values("book_lines", ctx)
         if opts.get("png"):
             pngs = pdf_pngs(pdf, DIST / "books" / stem)
             lines.append(rel(pngs[0]) if len(pngs) == 1 else f"{rel(pngs[0])} … {pngs[-1].name}   {len(pngs)} PNGs")
@@ -646,7 +455,7 @@ def run_encounter(ix, monsters, ev, opts):
     the summary and trackers, the stat blocks, then the conditions and spells they name. Default path
     dist/encounters/<creatures>.<paper>[.bw].pdf; prints path and pages."""
     from .views import encounter
-    ctx = encounter.context(ix, monsters, ev, opts.get("title"), opts.get("art") or "auto")
+    ctx = encounter.context(ix, monsters, ev, opts.get("title"), **{k: v for k, v in opts.items() if k != "title"})
     return run_sheet("encounter", "book/encounter.html.j2", ctx, encounter_stem(monsters, opts.get("title")), opts)
 
 
@@ -686,73 +495,6 @@ def run_sheet(name, template, ctx, stem, opts):
     if r.get("errors"):
         lines.append("page errors: " + "; ".join(r["errors"]))
     return report(lines, not r.get("errors"))
-
-
-# Book pages in the visual baselines: (row, variant args), page 1 of each, colour and B&W.
-PROOF_BOOKS = [("spellbook", ("paladin",)), ("equipment", ()), ("quickref", ()),
-               ("class", ("warlock",)), ("glossary", ())]
-
-
-def run_proof(ix, out, terms, filters, opts):
-    """Render the probe deck (colour and B&W) to PNG and diff it against tools/tests/visual/."""
-    try:
-        from PIL import Image, ImageChops
-    except ImportError:
-        raise PipelineError("make proof needs Pillow (optional: pip install pillow)") from None
-    pdftoppm()
-    ents = [ix.get(r) for r in out.fixed]
-    models = [views.for_(ix, e) for e in ents]
-    jobs = []
-    for mode in MODES:
-        page = write_build(f"proof.{mode}", html_for(out, models, mode, "a4", DEFAULT_THEME, f"proof {mode}"), out)
-        jobs.append({"html": str(page), "png": {"path": str(DIST / "proof" / f"cards-{mode}-p{{n}}.png"),
-                                                "selector": ".sheet-page", "scale": 1}})
-    from .outputs import CATALOGUE
-    books = []
-    for name, args in PROOF_BOOKS:
-        row = CATALOGUE[name]
-        for mode in MODES:
-            stem = f"book-{name}-{mode}"
-            page = write_build(f"proof.{stem}", book_html(row, row.group(ix, *args), mode, "a4"), out)
-            pdf = DIST / "proof" / f"{stem}.pdf"
-            jobs.append({"html": str(page), "pdf": str(pdf)})
-            books.append((pdf, DIST / "proof" / stem))
-    res = render(jobs)
-    lines, ok = [], True
-    pngs = []
-    for r in res:
-        if r["stats"] and r["stats"].get("clipped"):
-            ok = False
-            lines.append("clipped: " + " ".join(r["stats"]["clipped"]))
-        pngs += map(Path, r["pngs"])
-    for pdf, prefix in books:
-        pngs += pdf_pngs(pdf, prefix, 1, 1, dpi=50)
-    for p in pngs:
-        base = VISUAL / p.name
-        if opts.get("accept"):
-            VISUAL.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(p, base)
-            lines.append(f"accepted {rel(base)}")
-            continue
-        if not base.exists():
-            ok = False
-            lines.append(f"missing baseline {rel(base)} (run `make proof --accept`)")
-            continue
-        a, b = Image.open(p).convert("RGB"), Image.open(base).convert("RGB")
-        if a.size != b.size:
-            ok = False
-            lines.append(f"FAIL {p.name}: size {a.size} != baseline {b.size}")
-            continue
-        d = ImageChops.difference(a, b).convert("L").point(lambda v: 255 if v > 24 else 0)
-        frac = sum(d.histogram()[255:]) / (a.size[0] * a.size[1])
-        if frac > 0.005:
-            ok = False
-            diff = p.with_name(p.stem + "-diff.png")
-            d.save(diff)
-            lines.append(f"FAIL {p.name}: {frac:.2%} of pixels changed; see {rel(diff)}")
-        else:
-            lines.append(f"ok   {p.name}: {frac:.2%} changed")
-    return report(lines, ok)
 
 
 def run_md(ix, out, terms, filters, opts):

@@ -15,7 +15,7 @@ import re
 from dataclasses import dataclass
 from typing import Callable, Union
 
-from . import text
+from . import components, text
 
 
 @dataclass(frozen=True)
@@ -164,7 +164,7 @@ def _rated(d):
 
 def _creature_brief(e):
     d = {k: text.inline(v, "md") if isinstance(v, str) else v for k, v in e.data.items()}     # stat values hold links
-    # an Object stat block (EFA's Eldritch Cannon) prints no alignment, speed or CR: leave them out
+    # an Object stat block  prints no alignment, speed or CR: leave them out
     xp = f"XP {d.get('xp')}" + (f", or {d['xp_lair']} in lair" if d.get("xp_lair") else "")
     cr = (f" · CR {d['cr']}" + (f" ({xp}; PB {d['proficiency_bonus']})" if d.get("xp") else "")) if _rated(d) else ""
     init = f" · Initiative {d['initiative']}" if d.get("initiative") else ""
@@ -184,8 +184,6 @@ def _term_brief(e):
 
 
 # ---------------------------------------------------------------- 5e.tools rules & misc types
-def _joined(v):
-    return ", ".join(str(x) for x in v) if isinstance(v, list) else v
 
 
 def _language_brief(e):
@@ -198,23 +196,8 @@ def _language_brief(e):
     return [" · ".join(b for b in bits if b)]
 
 
-def _deity_brief(e):
-    d = e.data
-    head = ", ".join(x for x in (d.get("epithet"), d.get("rank")) if x)
-    alt = f" · Also: {', '.join(d['alt_names'])}" if d.get("alt_names") else ""
-    lines = [f"{d.get('pantheon') or '?'} deity" + (f" · {head}" if head else "") + alt,
-             " · ".join(x for x in (f"Plane: {d['plane']}" if d.get("plane") else "",
-                                     f"Worshipers: {d['worshipers']}" if d.get("worshipers") else "",
-                                     f"Symbol: {d['symbol']}" if d.get("symbol") else "") if x)]
-    return lines
 
 
-def _facility_brief(e):
-    d = e.data
-    kind = f"Level {d['level']} special facility" if d.get("level") else f"{(d.get('facility_type') or '').title()} facility"
-    bits = [kind, "Space: " + (_joined(d.get("space")) or "—"), f"Hirelings: {d.get('hirelings') or '—'}",
-            "Order: " + (_joined(d.get("orders")) or "—")]
-    return [" · ".join(bits), f"Prerequisite: {d.get('prerequisite') or 'None'}" if d.get("level") else ""]
 
 
 def _hazard_brief(e):
@@ -225,30 +208,10 @@ def _hazard_brief(e):
     return out
 
 
-def _reward_brief(e):
-    d = e.data
-    bits = [d.get("category") or "Reward"]
-    if d.get("spells"):
-        bits.append("Spells: " + ", ".join(d["spells"]))
-    if d.get("facility"):
-        bits.append("Facility: " + d["facility"].rsplit("/", 1)[-1])
-    return [" · ".join(bits)]
 
 
-def _object_brief(e):
-    d = e.data
-    head = " ".join(x for x in (d.get("size"), d.get("object_type") or "Object") if x)
-    imm = f" · Immunities: {', '.join(d['immunities'])}" if d.get("immunities") else ""
-    return [head, f"AC {d.get('ac')} · HP {d.get('hp')}{imm}"]
 
 
-def _vehicle_brief(e):
-    d = e.data
-    hull = d.get("hull") or {}
-    return [" · ".join(x for x in (d.get("vehicle_type"), d.get("speed"), d.get("pace")) if x),
-            f"Hull AC {hull.get('ac')} · HP {hull.get('hp')}" + (f" · DT {hull['dt']}" if hull.get("dt") else "")
-            + f" · Crew {d.get('crew')} · Passengers {d.get('passengers')} · Cargo {d.get('cargo_tons')} tons"
-            + (f" · {d['cost_gp']:,} GP" if isinstance(d.get("cost_gp"), (int, float)) else "")]
 
 
 def _feat_brief(e):
@@ -388,8 +351,6 @@ TYPES = {
                        row=lambda e: [" ".join(ABIL.get(a, a) for a in e.data["ability_scores"]), e.data["feat"]]),
     "weapon-property": dict(aliases=["property", "properties", "weapon-properties"], sort=lambda e: e.order),
     "mastery-property": dict(aliases=["mastery", "masteries", "mastery-properties"], sort=lambda e: e.order),
-    "plane": dict(aliases=["planes"], cols=["group"], row=lambda e: [e.data.get("group") or "-"], sort=lambda e: e.order,
-                  filters={"group": Filter("group", "contains", "GROUP")}),
     "section": dict(aliases=["sections"], sort=lambda e: e.order),
     "chapter": dict(aliases=["chapters", "appendix", "appendices"], sort=lambda e: e.order),
 }
@@ -398,50 +359,26 @@ for _t in ("condition", "action"):
 
 # Types from the 5e.tools import (docs/architecture.md §3.2), registered generically: their family
 # converters will add filters and columns. JSON type -> extra aliases (the plural is always one).
-NEW_TYPES = {"legendary-group": ["lair", "lairs"], "deity": ["god", "gods"], "facility": ["bastion"], "hazard": [],
-             "trap": [], "reward": ["boon", "boons", "blessing"], "card": [], "deck": [], "language": [], "object": [],
-             "vehicle": [], "disease": []}
+NEW_TYPES = {'hazard': [], 'trap': [], 'language': [], 'disease': []}
 for _t, _extra in NEW_TYPES.items():
-    _plural = _t[:-1] + "ies" if _t.endswith("y") else _t + "s"
-    TYPES[_t] = dict(aliases=sorted({_plural, *_extra}), sort=lambda e: e.order)
-# legendary groups (lair effects): the creatures that use them
-TYPES["legendary-group"].update(cols=["creatures"], row=lambda e: [short(", ".join(
-    c.rsplit("/", 1)[-1].replace("-", " ").title() for c in e.data.get("creatures") or []), 40)])
+    TYPES[_t] = dict(aliases=sorted({_t + "s", *_extra}), sort=lambda e: e.order)
 
-# Rules & misc types (scripts/import/fivetools/convert/rules.py): columns, briefs and filters.
 _HAZARD = dict(cols=["category", "rating"], brief=_hazard_brief, sort=lambda e: e.order,
                row=lambda e: [short(dash(e.data.get("category")), 20),
                               short(dash(", ".join(f"{r['threat']} {r['levels']}" for r in e.data.get("ratings") or [])), 34)],
                filters={"category": Filter("category", "eq", "CAT"), "tier": Filter(lambda e: [r["tier"] for r in e.data.get("ratings") or []], "in", "1-4")})
 for _t, _spec in {
-    "language": dict(cols=["category", "origin"], brief=_language_brief, sort=lambda e: (e.book, e.title),
+    'language': dict(cols=["category", "origin"], brief=_language_brief, sort=lambda e: (e.book, e.title),
                      row=lambda e: [dash(e.data.get("category")), short(dash(e.data.get("origin")), 28)],
                      filters={"category": Filter("category", "eq", "standard|rare")}),
-    "deity": dict(cols=["pantheon", "epithet"], brief=_deity_brief, sort=lambda e: (e.data.get("pantheon") or "", e.title),
-                  row=lambda e: [dash(e.data.get("pantheon")), short(dash(e.data.get("epithet")), 34)],
-                  filters={"pantheon": Filter("pantheon", "eq", "PANTHEON"), "rank": Filter("rank", "eq", "RANK"),
-                           "plane": Filter("plane", "contains", "PLANE")}),
-    "facility": dict(cols=["lvl", "space", "order"], brief=_facility_brief,
-                     sort=lambda e: (e.data.get("level") or 0, e.title),
-                     row=lambda e: [dash(e.data.get("level")), short(dash(_joined(e.data.get("space"))), 20),
-                                    short(dash(_joined(e.data.get("orders"))), 12)],
-                     filters={"level": Filter("level", "range", "N|N-M"), "type": Filter("facility_type", "eq", "basic|special"),
-                              "order": Filter("orders", "in", "ORDER"), "space": Filter("space", "in", "SPACE")}),
-    "hazard": _HAZARD, "trap": _HAZARD,
-    "reward": dict(cols=["category", "facility"], brief=_reward_brief, sort=lambda e: e.order,
-                   row=lambda e: [dash(e.data.get("category")), short(dash((e.data.get("facility") or "").rsplit("/", 1)[-1]), 24)],
-                   filters={"category": Filter("category", "eq", "Blessing|Charm")}),
-    "object": dict(cols=["type", "size", "AC", "HP"], brief=_object_brief, sort=lambda e: e.order,
-                   row=lambda e: [dash(e.data.get("object_type")), dash(e.data.get("size")), dash(e.data.get("ac")),
-                                  short(dash(e.data.get("hp")), 20)],
-                   filters={"type": Filter("object_type", "eq", "TYPE"), "size": Filter("size", "eq", "SIZE")}),
-    "vehicle": dict(cols=["type", "speed"], brief=_vehicle_brief, sort=lambda e: e.order,
-                    row=lambda e: [dash(e.data.get("vehicle_type")), short(dash(e.data.get("speed")), 22)],
-                    filters={"type": Filter("vehicle_type", "eq", "TYPE")}),
-    "disease": dict(cols=["category"], brief=lambda e: [e.data.get("category") or "Disease"], sort=lambda e: e.order,
-                    row=lambda e: [dash(e.data.get("category"))]),
+    'hazard': _HAZARD,
+    'trap': _HAZARD,
+    'disease': dict(cols=['category'], brief=lambda e: [e.data.get('category') or 'Disease'], sort=lambda e: e.order, row=lambda e: [dash(e.data.get('category'))]),
 }.items():
-    TYPES[_t] = {**TYPES[_t], **_spec}
+    TYPES[_t].update(_spec)
+
+components.apply("register_types", TYPES)
+TYPES = components.transform("type_order", TYPES)
 
 # Every type takes --book (listed in `types` and hints only when several books are loaded).
 BOOK_FILTER = Filter(lambda e: e.book, "eq", "BOOK")
@@ -450,20 +387,18 @@ ALIAS = {a: t for t, r in TYPES.items() for a in [t, *r.get("aliases", [])]}
 
 # Ambiguity order: when a name matches several entities, candidates are listed in this order.
 RANK = ["spell", "condition", "action", "skill", "weapon", "armor", "item", "magic-item", "feat", "class", "subclass", "species", "background",
-        "creature", "term", "feature", "option", "weapon-property", "mastery-property", "plane",
-        "legendary-group", "deity", "facility", "hazard", "trap", "reward", "card", "deck", "language", "object",
-        "vehicle", "disease", "chapter", "section"]
+        "creature", "term", "feature", "option", "weapon-property", "mastery-property", "hazard", "trap", "card", "language", "disease", "chapter", "section"]
+RANK = components.transform("rank_order", RANK)
 
 
 # Types whose list row, brief and sort read `data`. The 5e.tools generic converter writes none yet:
 # such an entity lists with dashes and no brief (has_data), until its family converter fills it in.
 DATA_TYPES = {"spell", "weapon", "armor", "item", "magic-item", "creature", "term", "condition", "action", "feat",
-              "class", "species", "background", "skill", "language", "deity", "facility", "hazard", "trap", "reward",
-              "object", "vehicle", "disease"}
+              "class", "species", "background", "skill", "language", "hazard", "trap", "disease"}
 
 
 def has_data(e):
-    return bool(e.data) or e.type not in DATA_TYPES
+    return bool(e.data) or not TYPES.get(e.type, {}).get("requires_data", e.type in DATA_TYPES)
 
 
 def type_name(node_type):

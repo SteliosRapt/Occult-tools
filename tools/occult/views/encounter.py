@@ -8,12 +8,11 @@ per kind of creature, then the conditions and spells those stat blocks name.
 """
 import re
 
-from .. import text
-from ._common import art, page_ref
+from .. import components, text
+from ._common import page_ref
 from .books import spell_entry, statblock, term_entry
 from .creature import more_texts
 
-TOKEN_BOX = (16, 16)             # mm: the token disc beside a stat block's name
 MAX_TRACK = 40                   # HP tracker rows; more creatures than that get one row per kind
 
 
@@ -56,15 +55,16 @@ def refs(ix, e):
     return out
 
 
-def block(ix, e, n, art_mode="auto"):
+def block(ix, e, n, **options):
     """One stat block for the template's `monster` macro: books.statblock plus count, CR line and token."""
     d = e.data
     sb = statblock(e)
     rated = d.get("cr") not in (None, "None")
     cr = (f"{d['cr']} ({d.get('xp', 0):,} XP" + (f", or {d['xp_lair']:,} in lair" if d.get("xp_lair") else "")
           + f"; PB {d.get('proficiency_bonus')})") if rated else None
-    token = None if art_mode == "off" else art(e.images, ("token",), TOKEN_BOX)[0]
-    return {"sid": e.sid, "title": e.title, "count": n, "ref": _ref(e), "cr": cr, "token": token, **sb}
+    model = {"sid": e.sid, "title": e.title, "count": n, "ref": _ref(e), "cr": cr, **sb}
+    components.apply("encounter_model", model, e, options)
+    return model
 
 
 def roster(rows_in):
@@ -91,7 +91,7 @@ def title_of(monsters):
     return " + ".join((f"{n} × " if n > 1 else "") + e.title for e, n in monsters)
 
 
-def context(ix, monsters, ev=None, title=None, art_mode="auto"):
+def context(ix, monsters, ev=None, title=None, **options):
     """monsters: [(creature entity, count)] in order; ev: rules.encounter.evaluate's result, or None
     (a list of stat blocks without a party)."""
     seen, kinds = {}, []
@@ -121,7 +121,7 @@ def context(ix, monsters, ev=None, title=None, art_mode="auto"):
             "footer": f"Encounter | {name}" if len(name) <= 60 else "Encounter",
             "summary": summary, "roster": roster(kinds), "tracker": tracker(kinds),
             "tracker_grouped": count > MAX_TRACK, "pcs": len(ev["party"]) if ev else 0,
-            "blocks": [block(ix, e, n, art_mode) for e, n in kinds],
+            "blocks": [block(ix, e, n, **options) for e, n in kinds],
             "conditions": [term_entry(r) for r in conds], "spells": [spell_entry(r) for r in spells],
             "stats": f"{count} creature{'' if count == 1 else 's'} · {len(kinds)} stat block{'' if len(kinds) == 1 else 's'}"
                      + (f" · {len(conds)} condition{'' if len(conds) == 1 else 's'}" if conds else "")

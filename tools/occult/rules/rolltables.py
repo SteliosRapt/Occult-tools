@@ -1,22 +1,13 @@
-"""Roll on any die table printed in the books (stdlib only).
+"""Roll on die tables in the loaded data (stdlib only).
 
-A table is rollable when its first column is a die (`1d20`, `d10`, `1d12*`, `1d100 (13-Card Deck)`) and every
-row's first cell is a number or a range (`7`, `01–02`, `98–00`; `00` is 100). Nothing is copied into code: the
-tables are found in data/ each time, so the generators (`loot`, `npc`, `settlement`, `tavern`) and
-`./occult table` roll exactly what the books print.
-
-    rolltables.all_tables()                     # every rollable table, in book order
-    rolltables.find("Tavern Names")             # by title, table id or entity id (when it holds one table)
-    rolltables.roll(t, rng)                     # Result(n=14, row=[...], text="Canals and bridges")
-
-A table's id is `<entity id>#<slug of its title>` (`section:settlement-tables-and-tracker#tavern-names`), or
-the entity id alone for an untitled table (`magic-item:bag-of-beans`).
+A die column and fully covered numeric ranges identify a rollable table. Tables are read from
+the data without copying their results into code; ids combine the owning entity and caption.
 """
 import functools
 import re
 from dataclasses import dataclass
 
-from .. import data, text
+from .. import components, data, text
 
 DIE = re.compile(r"^\s*(\d*)d(\d+)", re.I)
 RANGE = re.compile(r"(\d+)(?:\s*[–-]\s*(\d+))?")
@@ -110,8 +101,7 @@ def _blocks(e):
 
 
 @functools.lru_cache(maxsize=None)
-def _all(ix_id):
-    ix = data.load()
+def _all(ix):
     out, used = [], set()
     for e in ix.entities:
         if not e.sid:
@@ -130,13 +120,11 @@ def _all(ix_id):
 
 
 def all_tables(ix=None):
-    return _all(id(ix or data.load()))
+    return _all(ix or data.load())
 
 
 def find(ref, ix=None):
-    """A table by id (`section:x#tavern-names`), entity id (one table), or title (`Tavern Names`).
-
-    Several titles match: the DMG's first, then the PHB's, then the rest in book order."""
+    """Find by table id, entity id or caption; duplicate captions follow component preference."""
     ts = all_tables(ix)
     key = ref.strip()
     for t in ts:
@@ -159,8 +147,7 @@ def find(ref, ix=None):
         sug = ", ".join(f"'{t.title}'" for t in hits[:8])
         raise LookupError(f"no table '{ref}'" + (f"; did you mean: {sug}" if sug else
                                                  "; `./occult table --list` lists them"))
-    order = {"dmg": 0, "phb": 1}
-    return min(hits, key=lambda t: order.get(t.entity.book, 2))
+    return components.transform("table_choice", hits[0], hits)
 
 
 def under(sid, ix=None):

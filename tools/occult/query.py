@@ -9,10 +9,11 @@ Filter ops (declared per type in types.TYPES):
   cr        a challenge rating or a range of them: 5, 1/4, 10-12, 0-1/2 (unrated creatures never match)
   flag      no value; the field is truthy
   contains  case-insensitive substring
-Every type also takes --book (phb, dmg, mm, efa, frhof, au, rhw: the book short name).
+The --book filter uses the short names of the loaded books.
 """
 import difflib
 import re
+from dataclasses import replace
 from fractions import Fraction
 
 from .text import fold
@@ -40,12 +41,21 @@ def filters_of(t):
 
 
 def listed_filters(t, ix=None):
-    """The filters named in `types` and in hints: --book only when several books are loaded."""
+    """Offer filters with data values; show --book only for multiple loaded books."""
     if ix is None:
-        from .data import load          # data imports types, not query; keep the import local
+        from .data import load
         ix = load()
-    fs = filters_of(t)
-    return fs if len(ix.books) > 1 else {k: v for k, v in fs.items() if k != "book"}
+    entities = ix.all(t)
+    def populated(spec):
+        return any(spec.get(e) not in (None, "", []) and (spec.op != "flag" or bool(spec.get(e)))
+                   for e in entities)
+    def advertised(name, spec):
+        if "|" in spec.metavar and spec.metavar == spec.metavar.lower():
+            values = {str(v).lower() for v in known_values(ix, t, name)}
+            return replace(spec, metavar="|".join(v for v in spec.metavar.split("|") if v in values))
+        return spec
+    return {name: advertised(name, spec) for name, spec in filters_of(t).items()
+            if (len(ix.books) > 1 if name == "book" else populated(spec))}
 
 
 def known_values(ix, t, name):

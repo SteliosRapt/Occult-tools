@@ -1,6 +1,0 @@
-/* A4 (210 x 297 mm), the default paper. Linked after the theme CSS.
-   Book: margins stay as in page.css (A4 is 6 mm narrower and 18 mm taller than Letter).
-   Cards: 67 x 96 mm, the largest 3x3 that fits inside a 4.5 mm printer margin. */
-@page { size: 210mm 297mm; }
-@media screen { body { width: 210mm; } }
-:root { --paper-w: 210mm; --paper-h: 297mm; --poker-w: 67mm; --poker-h: 96mm; }

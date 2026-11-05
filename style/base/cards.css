@@ -53,7 +53,7 @@ h2, h3 { margin: 0; font-weight: inherit; }
 sup { font-size: 0.7em; line-height: 0; }
 
 /* parts most directions hide; layers opt in */
-.c-comp-icons, .c-classlist, .c-school-name, .c-cont-note, .st-conc { display: none; }
+.c-comp-icons, .c-classlist, .c-cont-note, .st-conc { display: none; }
 
 /* continuation cards: keep the identity (title, emblem), drop the stats */
 .card.cont .c-meta, .card.cont .c-material, .card.cont .c-stats, .card.cont .c-hero { display: none; }
@@ -65,25 +65,9 @@ p.cut { hyphens: none; }
 p.cut::after { content: " …"; }
 p.cont-p::before { content: "… "; }
 
-/* art panels (views._common.art). The height follows the image's aspect (--art-ratio = h/w,
-   set inline) between --art-lo and --art-hi; fit.js shrinks the panel to --art-min (px), then
-   drops it, before it touches the text, or lets it grow to --art-grow (px) on a card with room
-   to spare. Continuation cards never show it. */
-.c-art {
-  --art-wmm: 58mm; --art-lo: 14mm; --art-hi: 30mm; --art-min: 44; --art-grow: 160;
-  flex: none; position: relative; margin: 0; min-height: 0;
-  height: clamp(var(--art-lo), calc(var(--art-wmm) * var(--art-ratio, 0.6)), var(--art-hi));
-}
-.size-tarot .c-art { --art-wmm: 62mm; --art-hi: 40mm; --art-grow: 210; }
-.c-art .art-frame { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; }
-.c-art img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
-.c-art.art-cover img { object-fit: cover; }
-.card.cont .c-art { display: none; }
 .c-hero-row { flex: none; display: flex; align-items: center; }
 .c-hero-row .c-hero { flex: 1 1 auto; min-width: 0; }
-.c-token { flex: none; display: block; }
 .seps > .sep-break { flex-basis: 100%; height: 0; }   /* fit.js: a separated list's line break */
-.dk-face { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
 /* body tables (Teleport etc.) */
 .c-table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); font-size: 0.86em; line-height: 1.1; margin: 0.25em 0 0.35em; }

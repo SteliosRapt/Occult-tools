@@ -1,6 +1,0 @@
-/* US Letter (8.5 x 11 in). Linked after the theme CSS.
-   Cards: 67 x 96 mm does not fit 3x3 on Letter, so the standard card drops to
-   63 x 88 mm (poker size). Tarot cards (70 x 120 mm, 2x2) fit unchanged. */
-@page { size: 8.5in 11in; }
-@media screen { body { width: 8.5in; } }
-:root { --paper-w: 215.9mm; --paper-h: 279.4mm; --poker-w: 63mm; --poker-h: 88mm; }

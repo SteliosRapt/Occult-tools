@@ -1,11 +1,11 @@
 {% import "cards/_blocks.j2" as k %}
 {# A magic item: category tag, title, the subtitle line as printed, then a rarity / attunement /
    charges line (hidden on continuation cards, like every .c-meta) and the entry's text. #}
-<article class="card magic-item mi-{{ c.category_id }} rarity-{{ c.rarity_id }} size-{{ c.size }}{{ ' has-art' if c.art }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+<article class="card magic-item mi-{{ c.category_id }} rarity-{{ c.rarity_id }} size-{{ c.size }}{% block extension_0 %}{% endblock %}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
   <header class="c-head">
     <div class="c-titles">{{ k.tag(c.tag) }}<h2 class="c-title">{{ c.title }}</h2><div class="c-type"><span class="c-type-text">{{ c.subtitle }}</span><span class="c-cont-note">continued</span></div></div>
   </header>
-  {{ k.art(c) }}
+  {% block extension_1 %}{% endblock %}
   <div class="c-meta mi-badges seps">
     <span class="badge b-rarity">{{ c.rarity }}</span>
     {% if c.attunement %}<span class="badge b-att">{{ c.attunement }}</span>{% endif %}
