@@ -1,0 +1,45 @@
+{# Autoescaped: plain-text fields print escaped; view fields that are HTML (`html`, table rows,
+   material, trigger, prerequisite, cost, mastery_html) are marked `| safe`.
+   Macros shared by the card templates. One structure for every theme: each theme's
+   cards.css decides what to show, hide and where to place it. #}
+
+{% macro ico(id, cls="ico") %}<svg class="{{ cls }}" aria-hidden="true"><use href="#{{ id }}"/></svg>{% endmacro %}
+
+{# The kicker above a card's title: its category in letter-spaced caps between fading rules.
+   A card with an emblem (school, class, shield) shows it bare beside the titles, before them. #}
+{% macro tag(text) %}<div class="c-tag"><span class="c-tag-t">{{ text }}</span></div>{% endmacro %}
+
+{% macro blocks(body) %}
+{% for b in body %}
+{% if b.kind == "p" %}
+<p{% if b.label %} class="run"{% endif %}>{% if b.label %}<b class="lab">{{ b.label }}.</b> {% endif %}{{ b.html | safe }}</p>
+{% elif b.kind == "upcast" %}
+<div class="c-upcast"><p><b class="lab">{{ b.label }}.</b> {{ b.html | safe }}</p></div>
+{% elif b.kind == "sub" %}
+<h3 class="c-sub">{{ b.html | safe }}</h3>
+{% elif b.kind == "ul" %}
+<{{ 'ol' if b.ordered else 'ul' }} class="items">{% for i in b["items"] %}<li>{% if i.label %}<b class="lab">{{ i.label }}.</b> {% endif %}{{ i.html | safe }}</li>{% endfor %}</{{ 'ol' if b.ordered else 'ul' }}>
+{% elif b.kind == "table" %}
+<table class="c-table">{% if b.title %}<caption>{{ b.title }}</caption>{% endif %}
+<thead><tr>{% for c in b.columns %}<th>{{ c }}</th>{% endfor %}</tr></thead>
+<tbody>{% for r in b.rows %}<tr>{% for c in r %}<td>{{ c | safe }}</td>{% endfor %}</tr>{% endfor %}</tbody></table>
+{% endif %}
+{% endfor %}
+{% endmacro %}
+
+{# The art panel (views._common.art): a framed image whose height follows the image's aspect
+   (clamped by the theme). fit.js shrinks it, then drops it (`--art auto`) before it shrinks text;
+   continuation cards never show it. `fit`: contain (cut-out items) or cover (paintings). Weapon and
+   armour art carries a layout (views._common.item_art): `art-band` (a strip under the header),
+   `art-side` (beside the hero), `art-tall` (a column beside hero and stats), `art-rot` (an upright
+   weapon turned to lie flat). #}
+{% macro art(c, fit="contain", extra="") %}
+{% if c.art %}<figure class="c-art art-{{ fit }}{{ extra }}{{ ' art-' ~ c.art.layout if c.art.get('layout') }}{{ ' art-rot' if c.art.get('rot') }}" style="--art-ratio: {{ c.art.ratio }}{% if c.art.get('style') %}; {{ c.art.style }}{% endif %}"><div class="art-frame"><img src="{{ c.art.src }}" alt="{{ c.art.title or '' }}"></div>{% if c.art.credit %}<figcaption class="art-credit">{{ c.art.credit }}</figcaption>{% endif %}</figure>{% endif %}
+{% endmacro %}
+
+{# The source label: `PHB 274`, `EFA 112`, or just `DMG` when the entity has no printed page. #}
+{% macro src(c) %}{{ c.book }}{% if c.page is not none %} {{ c.page }}{% endif %}{% endmacro %}
+
+{% macro foot(c, left="") %}
+<footer class="c-foot"><span class="c-foot-l">{{ left }}</span><span class="c-cont"></span><span class="c-page">{{ src(c) }}</span></footer>
+{% endmacro %}

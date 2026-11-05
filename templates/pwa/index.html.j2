@@ -1,0 +1,118 @@
+{# The Spell Explorer shell (explorer.py, `make pwa`). app.js fills #list and #reader from spells.json;
+   the filter chips are printed here from the data so the page reads before the script runs. #}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spell Explorer</title>
+<meta name="description" content="Every D&amp;D 2024 spell in occult-lore ({{ count }}), by class, level and school, searchable offline.">
+<meta name="theme-color" content="#7b2316">
+<meta name="color-scheme" content="light dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Spells">
+<link rel="preload" href="spells.json" as="fetch" crossorigin>
+<link rel="stylesheet" href="style/fonts.css">
+<link rel="stylesheet" href="style/explorer.css">
+<script>try { var t = localStorage.getItem("occult-explorer-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body>
+{{ sprite | safe }}
+<div class="app" id="app">
+<header class="top">
+  <div class="brand">
+    <img class="brand-mark" src="icons/icon.svg" alt="" width="36" height="36">
+    <div class="brand-text"><div class="kicker">occult-lore · {{ count }} spells</div><h1>Spell Explorer</h1></div>
+    <div class="top-actions">
+      <button class="icon-btn" id="install" type="button" hidden>Install</button>
+      <button class="icon-btn" id="theme" type="button" aria-label="Colour theme" title="Colour theme"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
+    </div>
+  </div>
+  <div class="searchbar">
+    <label class="search" for="q">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="Search names and rules text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Search spells">
+    </label>
+    <button class="filters-toggle" id="filters-toggle" type="button" aria-controls="filters" aria-expanded="false">Filters<span class="badge" id="filter-badge" hidden></span></button>
+  </div>
+</header>
+
+<aside class="filters" id="filters" aria-label="Filters">
+  <section class="facet">
+    <h2>Class</h2>
+    <div class="chips chips-class" data-facet="c" role="group" aria-label="Class">
+    {% for c in meta.classes %}<button type="button" class="chip" data-v="{{ c }}" aria-pressed="false"><svg class="ic"><use href="#class-{{ c | lower }}"/></svg><span>{{ c }}</span><em></em></button>
+    {% endfor %}</div>
+  </section>
+  <section class="facet">
+    <h2>Level</h2>
+    <div class="chips chips-level" data-facet="l" role="group" aria-label="Level">
+    {% for l in range(10) %}<button type="button" class="chip" data-v="{{ l }}" aria-pressed="false" aria-label="{{ 'Cantrip' if l == 0 else 'Level ' ~ l }}"><span>{{ 'Cantrip' if l == 0 else l }}</span><em></em></button>
+    {% endfor %}</div>
+  </section>
+  <section class="facet">
+    <h2>School</h2>
+    <div class="chips chips-school" data-facet="s" role="group" aria-label="School">
+    {% for s in meta.schools %}<button type="button" class="chip" data-v="{{ s }}" aria-pressed="false"><svg class="ic"><use href="#school-{{ s | lower }}"/></svg><span>{{ s }}</span><em></em></button>
+    {% endfor %}</div>
+  </section>
+  <section class="facet">
+    <h2>Casting</h2>
+    <div class="chips" data-facet="f" role="group" aria-label="Casting">
+      <button type="button" class="chip" data-v="rit" aria-pressed="false"><svg class="ic"><use href="#ui-ritual"/></svg><span>Ritual</span><em></em></button>
+      <button type="button" class="chip" data-v="con" aria-pressed="false"><svg class="ic"><use href="#ui-concentration"/></svg><span>Concentration</span><em></em></button>
+      <button type="button" class="chip" data-v="nocon" aria-pressed="false"><span>No concentration</span><em></em></button>
+    </div>
+  </section>
+  <section class="facet">
+    <h2>Book</h2>
+    <div class="chips" data-facet="b" role="group" aria-label="Book">
+    {% for b in meta.books %}<button type="button" class="chip" data-v="{{ b.id }}" aria-pressed="false"><span>{{ b.abbr }}</span><em></em></button>
+    {% endfor %}</div>
+  </section>
+  <div class="filters-foot">
+    <button type="button" class="link-btn" id="clear">Clear all</button>
+    <button type="button" class="done-btn" id="filters-done">Show spells</button>
+  </div>
+</aside>
+
+<main class="results" id="results">
+  <div class="status">
+    <p id="count" aria-live="polite">Loading spells…</p>
+    <div class="sort" role="radiogroup" aria-label="Sort">
+      <button type="button" role="radio" data-sort="level" aria-checked="true">By level</button>
+      <button type="button" role="radio" data-sort="az" aria-checked="false">A–Z</button>
+      <button type="button" role="radio" data-sort="match" aria-checked="false" hidden>Best match</button>
+    </div>
+  </div>
+  <div class="active" id="active"></div>
+  <ol class="list" id="list"></ol>
+  <p class="empty" id="empty" hidden>No spell matches. <button type="button" class="link-btn" id="empty-clear">Clear the filters</button></p>
+</main>
+
+<article class="reader" id="reader" aria-label="Spell" hidden>
+  <div class="reader-bar">
+    <a class="back" href="#" id="back"><span aria-hidden="true">‹</span> Spells</a>
+    <span class="pos" id="pos"></span>
+    <a class="step" id="prev" href="#" aria-label="Previous spell">‹</a>
+    <a class="step" id="next" href="#" aria-label="Next spell">›</a>
+  </div>
+  <div class="reader-scroll" id="reader-scroll">
+    <div class="page" id="page"></div>
+  </div>
+</article>
+<div class="reader-empty" id="reader-empty">
+  <img src="icons/icon.svg" alt="" width="72" height="72">
+  <p>Choose a spell to read it.</p>
+  <p class="hint">Press <kbd>/</kbd> to search, <kbd>↑</kbd> <kbd>↓</kbd> to move through the list.</p>
+</div>
+</div>
+<div class="toast" id="toast" hidden></div>
+<script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,625 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Initiative Proficiency",
+              "text": "When you roll [Initiative](srd-5.2/08/rules-definitions/initiative), you can add your [Proficiency Bonus](srd-5.2/08/rules-definitions/proficiency) to the roll.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Initiative Swap",
+              "text": "Immediately after you roll [Initiative](srd-5.2/08/rules-definitions/initiative), you can swap your [Initiative](srd-5.2/08/rules-definitions/initiative) with the [Initiative](srd-5.2/08/rules-definitions/initiative) of one willing ally in the same combat. You can't make this swap if you or the ally has the [Incapacitated](srd-5.2/08/rules-definitions/incapacitated) condition.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": null,
+            "category": "Origin",
+            "prerequisite": null,
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/origin-feats/alert",
+          "origin": {
+            "name": "Alert",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Alert",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Two Cantrips",
+              "text": "You learn two cantrips of your choice from the Cleric, Druid, or Wizard spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat).",
+              "type": "paragraph"
+            },
+            {
+              "label": "Level 1 Spell",
+              "text": "Choose a level 1 spell from the same list you selected for this feat's cantrips. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest). You can also cast the spell using any spell slots you have.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Spell Change",
+              "text": "Whenever you gain a new level, you can replace one of the spells you chose for this feat with a different spell of the same level from the chosen spell list.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Repeatable",
+              "text": "You can take this feat more than once, but you must choose a different spell list each time.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": null,
+            "category": "Origin",
+            "prerequisite": null,
+            "repeatable": true
+          },
+          "id": "srd-5.2/05/origin-feats/magic-initiate",
+          "origin": {
+            "name": "Magic Initiate",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Magic Initiate",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": null,
+            "category": "Origin",
+            "prerequisite": null,
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/origin-feats/savage-attacker",
+          "origin": {
+            "name": "Savage Attacker",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Savage Attacker",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain proficiency in any combination of three [skills](srd-5.2/01/proficiency/skill-proficiencies/skill-list) or tools of your choice.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Repeatable",
+              "text": "You can take this feat more than once.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": null,
+            "category": "Origin",
+            "prerequisite": null,
+            "repeatable": true
+          },
+          "id": "srd-5.2/05/origin-feats/skilled",
+          "origin": {
+            "name": "Skilled",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Skilled",
+          "type": "feat"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/05/origin-feats",
+      "title": "Origin Feats",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "Increase one ability score of your choice by 2, or increase two ability scores of your choice by 1. This feat can't increase an ability score above 20.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Repeatable",
+              "text": "You can take this feat more than once.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": {
+              "abilities": [],
+              "amount": 2,
+              "text": "Increase one ability score of your choice by 2, or increase two ability scores of your choice by 1. This feat can't increase an ability score above 20."
+            },
+            "category": "General",
+            "prerequisite": "Level 4+",
+            "repeatable": true
+          },
+          "id": "srd-5.2/05/general-feats/ability-score-improvement",
+          "origin": {
+            "name": "Ability Score Improvement",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Ability Score Improvement",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Ability Score Increase",
+              "text": "Increase your Strength or Dexterity score by 1, to a maximum of 20.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Punch and Grab",
+              "text": "When you hit a creature with an [Unarmed Strike](srd-5.2/08/rules-definitions/unarmed-strike) as part of the [Attack](srd-5.2/08/rules-definitions/attack) action on your turn, you can use both the Damage and the Grapple option. You can use this benefit only once per turn.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Attack Advantage",
+              "text": "You have [Advantage](srd-5.2/08/rules-definitions/advantage) on attack rolls against a creature [Grappled](srd-5.2/08/rules-definitions/grappled) by you.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Fast Wrestler",
+              "text": "You don't have to spend extra movement to move a creature [Grappled](srd-5.2/08/rules-definitions/grappled) by you if the creature is your size or smaller.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": {
+              "abilities": [
+                "Strength",
+                "Dexterity"
+              ],
+              "amount": 1,
+              "maximum": 20,
+              "text": "Increase your Strength or Dexterity score by 1, to a maximum of 20."
+            },
+            "category": "General",
+            "prerequisite": "Level 4+, Strength or Dexterity 13+",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/general-feats/grappler",
+          "origin": {
+            "name": "Grappler",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Grappler",
+          "type": "feat"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/05/general-feats",
+      "title": "General Feats",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain a +2 bonus to attack rolls you make with Ranged weapons.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": null,
+            "category": "Fighting Style",
+            "prerequisite": "Fighting Style Feature",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/fighting-style-feats/archery",
+          "origin": {
+            "name": "Archery",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Archery",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "While you're wearing Light, Medium, or Heavy armor, you gain a +1 bonus to [Armor Class](srd-5.2/08/rules-definitions/armor-class).",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": null,
+            "category": "Fighting Style",
+            "prerequisite": "Fighting Style Feature",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/fighting-style-feats/defense",
+          "origin": {
+            "name": "Defense",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Defense",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "When you roll damage for an attack you make with a Melee weapon that you are holding with two hands, you can treat any 1 or 2 on a damage die as a 3. The weapon must have the [Two-Handed](srd-5.2/06/weapons/properties/two-handed) or [Versatile](srd-5.2/06/weapons/properties/versatile) property to gain this benefit.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": null,
+            "category": "Fighting Style",
+            "prerequisite": "Fighting Style Feature",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/fighting-style-feats/great-weapon-fighting",
+          "origin": {
+            "name": "Great Weapon Fighting",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Great Weapon Fighting",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "When you make an extra attack as a result of using a weapon that has the [Light](srd-5.2/06/weapons/properties/light) property, you can add your ability modifier to the damage of that attack if you aren't already adding it to the damage.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": null,
+            "category": "Fighting Style",
+            "prerequisite": "Fighting Style Feature",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/fighting-style-feats/two-weapon-fighting",
+          "origin": {
+            "name": "Two-Weapon Fighting",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Two-Weapon Fighting",
+          "type": "feat"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/05/fighting-style-feats",
+      "title": "Fighting Style Feats",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Ability Score Increase",
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Peerless Aim",
+              "text": "When you miss with an attack roll, you can hit instead. Once you use this benefit, you can't use it again until the start of your next turn.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": {
+              "abilities": [],
+              "amount": 1,
+              "maximum": 30,
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30."
+            },
+            "category": "Epic Boon",
+            "prerequisite": "Level 19+",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/epic-boon-feats/boon-of-combat-prowess",
+          "origin": {
+            "name": "Boon of Combat Prowess",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Boon of Combat Prowess",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Ability Score Increase",
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Blink Steps",
+              "text": "Immediately after you take the [Attack](srd-5.2/08/rules-definitions/attack) action or the [Magic](srd-5.2/08/rules-definitions/magic) action, you can teleport up to 30 feet to an unoccupied space you can see.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": {
+              "abilities": [],
+              "amount": 1,
+              "maximum": 30,
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30."
+            },
+            "category": "Epic Boon",
+            "prerequisite": "Level 19+",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/epic-boon-feats/boon-of-dimensional-travel",
+          "origin": {
+            "name": "Boon of Dimensional Travel",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Boon of Dimensional Travel",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Ability Score Increase",
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Improve Fate",
+              "text": "When you or another creature within 60 feet of you succeeds on or fails a [D20 Test](srd-5.2/08/rules-definitions/d20-test), you can roll 2d4 and apply the total rolled as a bonus or penalty to the d20 roll. Once you use this benefit, you can't use it again until you roll [Initiative](srd-5.2/08/rules-definitions/initiative) or finish a [Short](srd-5.2/08/rules-definitions/short-rest) or [Long Rest](srd-5.2/08/rules-definitions/long-rest).",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": {
+              "abilities": [],
+              "amount": 1,
+              "maximum": 30,
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30."
+            },
+            "category": "Epic Boon",
+            "prerequisite": "Level 19+",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/epic-boon-feats/boon-of-fate",
+          "origin": {
+            "name": "Boon of Fate",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Boon of Fate",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Ability Score Increase",
+              "text": "Increase your Strength or Dexterity score by 1, to a maximum of 30.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Overcome Defenses",
+              "text": "The Bludgeoning, Piercing, and Slashing damage you deal always ignores [Resistance](srd-5.2/08/rules-definitions/resistance).",
+              "type": "paragraph"
+            },
+            {
+              "label": "Overwhelming Strike",
+              "text": "When you roll a 20 on the d20 for an attack roll, you can deal extra damage to the target equal to the ability score increased by this feat. The extra damage's type is the same as the attack's type.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": {
+              "abilities": [
+                "Strength",
+                "Dexterity"
+              ],
+              "amount": 1,
+              "maximum": 30,
+              "text": "Increase your Strength or Dexterity score by 1, to a maximum of 30."
+            },
+            "category": "Epic Boon",
+            "prerequisite": "Level 19+",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/epic-boon-feats/boon-of-irresistible-offense",
+          "origin": {
+            "name": "Boon of Irresistible Offense",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Boon of Irresistible Offense",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Ability Score Increase",
+              "text": "Increase your Intelligence, Wisdom, or Charisma score by 1, to a maximum of 30.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Free Casting",
+              "text": "Whenever you cast a spell with a level 1-4 spell slot, roll 1d4. If the number you roll is the same as the slot's level, the slot isn't expended.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": {
+              "abilities": [
+                "Intelligence",
+                "Wisdom",
+                "Charisma"
+              ],
+              "amount": 1,
+              "maximum": 30,
+              "text": "Increase your Intelligence, Wisdom, or Charisma score by 1, to a maximum of 30."
+            },
+            "category": "Epic Boon",
+            "prerequisite": "Level 19+, Spellcasting Feature",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/epic-boon-feats/boon-of-spell-recall",
+          "origin": {
+            "name": "Boon of Spell Recall",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Boon of Spell Recall",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Ability Score Increase",
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Merge with Shadows",
+              "text": "While within [Dim Light](srd-5.2/08/rules-definitions/dim-light) or [Darkness](srd-5.2/08/rules-definitions/darkness), you can give yourself the [Invisible](srd-5.2/08/rules-definitions/invisible) condition as a [Bonus Action](srd-5.2/08/rules-definitions/bonus-action). The condition ends on you immediately after you take an action, a [Bonus Action](srd-5.2/08/rules-definitions/bonus-action), or a [Reaction](srd-5.2/08/rules-definitions/reaction).",
+              "type": "paragraph"
+            },
+            {
+              "label": "Shadowy Form",
+              "text": "While within [Dim Light](srd-5.2/08/rules-definitions/dim-light) or [Darkness](srd-5.2/08/rules-definitions/darkness), you have [Resistance](srd-5.2/08/rules-definitions/resistance) to all damage except Psychic and Radiant.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": {
+              "abilities": [],
+              "amount": 1,
+              "maximum": 30,
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30."
+            },
+            "category": "Epic Boon",
+            "prerequisite": "Level 19+",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/epic-boon-feats/boon-of-the-night-spirit",
+          "origin": {
+            "name": "Boon of the Night Spirit",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Boon of the Night Spirit",
+          "type": "feat"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the following benefits.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Ability Score Increase",
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30.",
+              "type": "paragraph"
+            },
+            {
+              "label": "Truesight",
+              "text": "You have [Truesight](srd-5.2/08/rules-definitions/truesight) with a range of 60 feet.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_increase": {
+              "abilities": [],
+              "amount": 1,
+              "maximum": 30,
+              "text": "Increase one ability score of your choice by 1, to a maximum of 30."
+            },
+            "category": "Epic Boon",
+            "prerequisite": "Level 19+",
+            "repeatable": false
+          },
+          "id": "srd-5.2/05/epic-boon-feats/boon-of-truesight",
+          "origin": {
+            "name": "Boon of Truesight",
+            "prop": "feat",
+            "source": "XPHB"
+          },
+          "title": "Boon of Truesight",
+          "type": "feat"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/05/epic-boon-feats",
+      "title": "Epic Boon Feats",
+      "type": "section"
+    }
+  ],
+  "content": [],
+  "id": "srd-5.2/05",
+  "title": "Chapter 5: Feats",
+  "type": "chapter"
+}

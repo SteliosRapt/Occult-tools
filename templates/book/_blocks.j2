@@ -1,0 +1,123 @@
+{# JSON content blocks -> page.css classes (style/themes/<theme>/page.css), shared by every book.
+
+   paragraph            <p>; with a label: p.run-in > b.run-in-title
+   list                 ul / ol (items may carry a label and nested items)
+   table                div.table-title + table.phb-table (.num columns, tr.group category rows);
+                        a <caption> would push the table to the next page inside a named page
+   sidebar              aside.sidebar > h4.sidebar-title + its blocks
+   dialogue             p.dialogue lines
+   heading              h4
+   caption              dropped (art labels)
+   Autoescaped: plain-text fields print escaped; the `inline` filter returns markup-safe HTML and
+   book_table cells (`.html`, `group`) are marked `| safe`. The `inline` filter converts stored markup (*italic*, **bold**) to HTML; `book_table` (a global)
+   turns a table block into rows and numeric-column flags. #}
+
+{% macro para(b) -%}
+{% if b.get('label') %}<p class="run-in"><b class="run-in-title">{{ b.label | inline }}.</b> {{ b.text | inline }}</p>
+{% else %}<p>{{ b.text | inline }}</p>
+{% endif %}
+{%- endmacro %}
+
+{% macro list(b) -%}
+<{{ 'ol' if b.get('ordered') else 'ul' }}{% if b.get('start') and b.start != 1 %} start="{{ b.start }}"{% endif %}>
+{% for i in b["items"] %}<li>{% if i.get('label') %}<b class="run-in-title">{{ i.label | inline }}.</b> {% endif %}{{ (i.get('text') or "") | inline }}{% if i.get('items') %}{{ list({"items": i["items"]}) }}{% endif %}</li>
+{% endfor %}</{{ 'ol' if b.get('ordered') else 'ul' }}>
+{%- endmacro %}
+
+{% macro table(t, cls="") -%}
+<div class="table-wrap{{ " keep" if t.rows | length <= 14 }}">{% if t.title %}<div class="table-title">{{ t.title | inline }}</div>{% endif %}
+<table class="phb-table {{ cls }}">
+<thead><tr>{% for c in t.cols %}<th{% if c.num %} class="num"{% endif %}>{{ c.html | safe }}</th>{% endfor %}</tr></thead>
+<tbody>{% for r in t.rows %}{% if r.get('group') %}<tr class="group"><td colspan="{{ r.span }}">{{ r.group | safe }}</td></tr>{% else %}<tr>{% for c in r.cells %}<td{% if c.num %} class="num"{% endif %}>{{ c.html | safe }}</td>{% endfor %}</tr>{% endif %}
+{% endfor %}</tbody></table></div>
+{%- endmacro %}
+
+{% macro blocks(content) -%}
+{% for b in content %}
+{% if b.type == "paragraph" %}{{ para(b) }}
+{% elif b.type == "list" %}{{ list(b) }}
+{% elif b.type == "table" %}{{ table(book_table(b)) }}
+{% elif b.type == "sidebar" %}<aside class="sidebar">{% if b.get('title') %}<h4 class="sidebar-title">{{ b.title | inline }}</h4>{% endif %}{{ blocks(b.get('content') or []) }}</aside>
+{% elif b.type == "dialogue" %}{% for ln in b.lines %}<p class="dialogue"><b class="run-in-title">{{ ln.speaker }}{% if ln.get('as') %} ({{ ln["as"] }}){% endif %}.</b> {{ ln.text | inline }}</p>{% endfor %}
+{% elif b.type == "heading" %}<h4>{{ (b.get('text') or "") | inline }}</h4>
+{% endif %}
+{% endfor %}
+{%- endmacro %}
+
+{# A subtree from views.books.node: depth 0 = h1, 1 = h2, 2 = h3, deeper = h4. #}
+{% macro tree(n) -%}
+{% if n.statblock %}{{ statblock(n) }}{% else %}
+{% set h = [n.depth + 1, 4] | min %}
+<h{{ h }} id="{{ n.sid }}">{{ n.title | inline }}</h{{ h }}>
+{% if n.subtitle %}<p class="subtitle">{{ n.subtitle | inline }}</p>{% endif %}
+{{ blocks(n.content) }}
+{% for c in n.children %}{{ tree(c) }}{% endfor %}
+{% endif %}
+{%- endmacro %}
+
+{# A subclass (class booklets), in the flow of the two columns: its art floats a column wide where
+   `art_at` puts it (0: under the title; n: before the n-th child, or at the end), so text fills any room the art leaves
+   at a column's foot. pipeline.place_art moves it later when two artworks share a page. A `group` node is
+   the heading of the subclasses other books print, run on in the same columns. #}
+{% macro subart(n) -%}
+<figure class="subclass-art" style="--ratio: {{ n.art.ratio }}"><img src="{{ n.art.src }}" alt="">
+{% if n.art.credit %}<figcaption>Art: {{ n.art.credit }}</figcaption>{% endif %}</figure>
+{%- endmacro %}
+{# One place a subclass's art may go: its mark (only while pipeline.place_art probes the pages), then
+   the art when `art_at` is this place. #}
+{% macro artslot(n, at) -%}
+{% if n.get("art_marks") %}<img class="art-mark" src="{{ n.art_marks[at] }}" alt="">{% endif %}
+{%- if n.get("art") and (n.get("art_at") or 0) == at %}{{ subart(n) }}{% endif %}
+{%- endmacro %}
+{% macro subclass(n) -%}
+{% if n.get("group") %}<h2 class="subclass-group" id="{{ n.sid }}">{{ n.title }}</h2>{% else %}
+<h2 id="{{ n.sid }}">{{ n.title | inline }}</h2>
+{% if n.subtitle %}<p class="subtitle">{{ n.subtitle | inline }}</p>{% endif %}
+{{ artslot(n, 0) }}
+{{ blocks(n.content) }}
+{% for c in n.children %}{{ artslot(n, loop.index) }}{{ tree(c) }}{% endfor %}
+{{ artslot(n, n.children | length + 1) }}{% endif %}
+{%- endmacro %}
+
+{# A stat block inside a feature or spell (views.books.statblock): a sidebar box. Object stat blocks
+   (Eldritch Cannon) have no abilities, speed or alignment; those parts are left out. #}
+{% macro statblock(n) -%}
+{% set s = n.statblock %}
+<aside class="sidebar statblock" id="{{ n.sid }}">
+<h4 class="sidebar-title">{{ n.title | inline }}</h4>
+<p class="sb-type">{{ s.type_line }}</p>
+<p class="sb-core">{% for k, v in s.core %}<b>{{ k }}</b> {{ v | inline }}{% if not loop.last %}<br>{% endif %}{% endfor %}</p>
+{% if s.abilities %}<table class="phb-table sb-abilities"><thead><tr><th></th><th class="num">Score</th><th class="num">Mod</th><th class="num">Save</th></tr></thead>
+<tbody>{% for a in s.abilities %}<tr><td>{{ a[0] }}</td><td class="num">{{ a[1] }}</td><td class="num">{{ a[2] }}</td><td class="num">{{ a[3] }}</td></tr>{% endfor %}</tbody></table>{% endif %}
+{% if s.lines %}<p class="sb-lines">{% for k, v in s.lines %}<b>{{ k }}</b> {{ v | inline }}{% if not loop.last %}<br>{% endif %}{% endfor %}</p>{% endif %}
+{% for title, items in s.sections %}<h5 class="sb-section">{{ title }}</h5>
+{% if s.intros.get(title) %}<p>{{ s.intros[title] | inline }}</p>{% endif %}
+{% for x in items %}<p class="run-in"><b class="run-in-title">{{ x.name | inline }}.</b> {{ x.text | inline }}</p>
+{% for m in x.more_texts %}<p class="run-in">{{ m | inline }}</p>
+{% endfor %}{% endfor %}{% endfor %}
+</aside>
+{%- endmacro %}
+
+{# A spell entry from views.books.spell_entry. #}
+{% macro spell(s) -%}
+<article class="spell" id="{{ s.sid }}">
+<h4 class="spell-name">{{ s.title }}</h4>
+<p class="spell-meta">{{ s.meta }}</p>
+<dl class="spell-stats">{% for k, v in s.stats %}<dt>{{ k }}:</dt> <dd>{{ v | inline }}</dd>{% endfor %}</dl>
+<div class="spell-text">{{ blocks(s.content) }}</div>
+</article>
+{%- endmacro %}
+
+{# A glossary entry (term) from views.books.term_entry. #}
+{% macro term(t, tag=True, name=True) -%}
+<article class="term-entry" id="{{ t.sid }}">
+{% if name %}<h4 class="term-name">{{ t.title }}{% if tag and t.tag %} <span class="term-tag">[{{ t.tag }}]</span>{% endif %}</h4>{% endif %}
+<div class="term-text">{{ blocks(t.content) }}
+{% if t.see_also %}<p class="see-also"><b class="run-in-title">See also.</b> {{ t.see_also | join(", ") | inline }}</p>{% endif %}</div>
+</article>
+{%- endmacro %}
+
+{% macro opener(kicker, title, subtitle=None) -%}
+<header class="chapter-opener"><div class="chapter-kicker">{{ kicker }}</div><h1 class="chapter-title">{{ title }}</h1><div class="title-rule"></div></header>
+{% if subtitle %}<p class="subtitle opener-subtitle">{{ subtitle }}</p>{% endif %}
+{%- endmacro %}

@@ -1,0 +1,11 @@
+{% import "cards/_blocks.j2" as k %}
+<article class="card term term-{{ c.tag | lower | replace(' ', '-') }} size-{{ c.size }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+  <header class="c-head">
+    <div class="c-titles">{{ k.tag(c.tag) }}<h2 class="c-title">{{ c.title }}</h2><div class="c-type"><span class="c-cont-note">continued</span></div></div>
+  </header>
+  <div class="c-body">
+    {{ k.blocks(c.body) }}
+    {% if c.see_also %}<p class="c-see">See also: {{ c.see_also | join(", ") }}</p>{% endif %}
+  </div>
+  {{ k.foot(c, "Rules Glossary") }}
+</article>

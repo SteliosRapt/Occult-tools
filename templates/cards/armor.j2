@@ -1,0 +1,30 @@
+{% import "cards/_blocks.j2" as k %}
+<article class="card item armor size-{{ c.size }}{{ ' has-art' if c.art }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+  <header class="c-head">
+    <span class="c-emblem" title="Armor">{{ k.ico("ui-shield", "gl") }}</span>
+    <div class="c-titles">{{ k.tag("Armor") }}<h2 class="c-title">{{ c.title }}</h2><div class="c-type"><span class="c-type-text">{{ c.type_line }}</span><span class="c-cont-note">continued</span></div></div>
+  </header>
+  {% if c.art and c.art.layout == "band" %}{{ k.art(c) }}{% endif %}
+  <div class="c-meta c-item-meta{{ ' tall' if c.art and c.art.layout == 'tall' }}">
+  <div class="c-item-main">
+  <div class="c-hero-row">
+  {% if c.art and c.art.layout == "side" %}{{ k.art(c) }}{% endif %}
+  <div class="c-hero">
+    <div class="hero-big"><span class="hero-k">AC</span><span class="hero-n">{{ c.ac }}</span></div>
+    <div class="hero-alt">{{ c.ac_note }}</div>
+  </div>
+  </div>
+  <dl class="c-stats c-stats-item">
+    <div class="st"><dt>Strength</dt><dd>{{ c.str_req }}</dd></div>
+    <div class="st"><dt>Stealth</dt><dd>{{ c.stealth }}</dd></div>
+    <div class="st"><dt>Don · Doff</dt><dd>{{ c.don_doff }}</dd></div>
+    <div class="st"><dt>Weight · Cost</dt><dd>{{ c.weight }} · {{ c.cost }}</dd></div>
+  </dl>
+  </div>
+  {% if c.art and c.art.layout == "tall" %}{{ k.art(c) }}{% endif %}
+  </div>
+  <div class="c-body">
+    {% for p in c.rules %}<p class="run"><b class="lab">{{ p.label }}.</b> {{ p.html | safe }}</p>{% endfor %}
+  </div>
+  {{ k.foot(c, "Armor") }}
+</article>

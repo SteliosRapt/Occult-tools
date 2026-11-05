@@ -1,0 +1,19 @@
+{% import "cards/_blocks.j2" as k %}
+{# A deity: pantheon tag, name, epithet; the holy symbol in a round medallion (a Cinzel initial when
+   there is no image); rank / plane / worshipers / symbol strip; the entry's first paragraph. #}
+<article class="card deity size-{{ c.size }} has-art" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+  <header class="c-head">
+    <div class="c-titles">{{ k.tag(c.tag) }}<h2 class="c-title">{{ c.title }}</h2><div class="c-type">{% if c.epithet %}<span class="c-type-text">{{ c.epithet }}</span>{% endif %}<span class="c-cont-note">continued</span></div></div>
+  </header>
+  {% if c.art %}{{ k.art(c, "contain", " art-medallion") }}{% else %}<figure class="c-art art-medallion art-initial"><div class="art-frame"><span class="art-init">{{ c.title[:1] }}</span></div></figure>{% endif %}
+  {% if c.stats %}
+  <dl class="c-stats c-stats-item c-stats-feat">
+    {% for s in c.stats %}<div class="st{{ ' st-wide' if s.wide }}"><dt>{{ s.label }}</dt><dd>{{ s.html | safe }}</dd></div>{% endfor %}
+  </dl>
+  {% endif %}
+  <div class="c-body">
+    {{ k.blocks(c.body) }}
+    {% if c.alt_names %}<p class="c-see">Also called {{ c.alt_names | join(", ") }}.</p>{% endif %}
+  </div>
+  {{ k.foot(c, "Deity") }}
+</article>

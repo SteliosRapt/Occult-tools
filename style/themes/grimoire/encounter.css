@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Grimoire encounter handout (templates/book/encounter.html.j2). Linked after
+   page.css, book.css and character.css (its boxes, labels and checkboxes).
+   Page 1 is the DM's summary; the stat blocks and the rules they name flow in
+   two columns. Stat blocks use cream and orange stat blocks.
+   Ink-saver = body.bw (+ page-bw.css for the margin boxes).
+   ========================================================================== */
+
+.book-encounter { --cs-line: var(--gold-deep); --cs-fill: rgba(255, 252, 244, .55); --cs-label: var(--heading);
+  --sb-bg: #fdf1dc; --sb-bar: #e69a28; --sb-name: #822000; }
+
+/* page 1: summary, roster, tracker ------------------------------------------ */
+.en-front { font-family: var(--font-sans); font-size: 8.4pt; line-height: 1.2; }
+.en-front p { text-indent: 0 !important; }
+.en-summary { display: grid; grid-template-columns: 1.6fr 1fr; gap: 0.08in; margin: 0 0 0.1in; }
+.en-budget { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4pt; margin-top: 3pt; text-align: center; }
+.en-budget div { border: 0.8pt solid var(--cs-line); border-radius: 4pt; padding: 2pt 0 1pt; background: #fffdf8; }
+.en-budget div.on { background: var(--heading); color: #fff; }
+.en-budget div.on .cs-label { color: #fff; }
+.en-budget b { display: block; font: 700 11pt/1.2 var(--font-body); }
+.en-rating { text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
+.en-rating .cs-big { margin: 4pt 0; }
+.en-warnings { margin: 0 0 0.1in; }
+.en-warnings p { margin: 0 0 2pt; }
+.en-roster { font-size: 8.2pt; margin: 0 0 0.1in; }
+.en-roster td:nth-child(2) { white-space: nowrap; }
+.en-tables { display: grid; grid-template-columns: 2.4fr 1fr; gap: 0.08in; align-items: start; }
+.en-tables table { width: 100%; border-collapse: collapse; font-size: 7.8pt; }
+.en-tables th { font: 700 6.4pt var(--font-sans-sc); letter-spacing: .05em; color: var(--cs-label);
+  text-transform: lowercase; text-align: left; padding: 0 3pt 1pt; border-bottom: 0.6pt solid var(--gold); }
+.en-tables td { padding: 0 3pt; height: 14pt; border-bottom: 0.5pt solid var(--gold-light); vertical-align: middle; }
+.en-tables .num { text-align: center; }
+.en-tracker td:first-child { font-weight: 700; white-space: nowrap; width: 34%; }
+.en-tracker td:nth-child(4) { width: 30%; }
+.en-tracker tr { break-inside: avoid; }
+.en-init td:first-child { width: 28%; border-right: 0.5pt solid var(--gold-light); }
+.en-init .cs-track { gap: 3pt; }
+
+/* stat blocks ------------------------------------------------------------- */
+.sb { background: var(--sb-bg); font-family: var(--font-sans); font-size: 8.2pt; line-height: 1.25; padding: 5pt 7pt 6pt;
+  margin: 0 0 0.12in; border-top: 2.4pt solid var(--sb-bar); border-bottom: 2.4pt solid var(--sb-bar);
+  box-shadow: 0 0 2pt rgba(0, 0, 0, .25); break-inside: avoid; }
+.sb p { text-indent: 0 !important; margin: 0 0 2pt; }
+.sb-head { display: flex; align-items: center; gap: 5pt; }
+.sb-titles { flex: 1; min-width: 0; }
+.sb-token { width: 0.42in; height: 0.42in; border-radius: 50%; object-fit: cover; }
+.sb-name { font: 700 13pt/1.1 var(--font-heading); color: var(--sb-name); margin: 0; font-variant: small-caps; }
+.sb-count { font: 700 9pt var(--font-sans); color: var(--ink-soft); font-variant: normal; }
+.sb-type { font-style: italic; margin: 0 0 2pt !important; }
+.sb-core, .sb-lines { padding: 2pt 0; border-top: 1pt solid var(--sb-bar); }
+.sb-core { display: flex; flex-wrap: wrap; gap: 0 9pt; }
+.sb b { color: var(--sb-name); }
+.sb .run-in-title { color: var(--ink); font-style: italic; }
+.sb-abilities { width: 100%; border-collapse: collapse; margin: 1pt 0 2pt; text-align: center; font-size: 7.8pt; }
+.sb-abilities th { font: 700 6.6pt var(--font-sans-sc); color: var(--sb-name); letter-spacing: .05em; }
+.sb-abilities td { padding: 0.5pt 0; }
+.sb-abilities td b { color: var(--ink); }
+.sb-abilities .sb-saves td { font-size: 6.6pt; color: var(--ink-soft); }
+.sb-section { font: 700 10pt/1.2 var(--font-heading); color: var(--sb-name); font-variant: small-caps; margin: 4pt 0 2pt;
+  border-bottom: 1pt solid var(--sb-name); }
+.sb-more { padding-left: 8pt; }
+.en-blocks .columns-2, .en-rules .columns-2 { column-gap: 0.22in; }
+.en-blocks > .level-title { margin-top: 0.18in; }
+.level-title .cs-note { float: none; margin-left: 6pt; font-size: 9pt; }
+
+/* ink-saver ---------------------------------------------------------------- */
+body.bw .book-encounter { --cs-line: #555; --cs-fill: #fff; --cs-label: #000; --sb-bg: #fff; --sb-bar: #888; --sb-name: #000; }
+body.bw .sb { box-shadow: none; }
+body.bw .en-budget div.on { background: #000; }
+body.bw .en-tables td { border-color: #bbb; }

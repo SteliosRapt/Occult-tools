@@ -1,0 +1,24 @@
+{% import "book/_blocks.j2" as k %}
+{# The spells of a spellbook context (views.books.spellbook): the class spell list, then every
+   description by level, A-Z within a level. The spellbook is this alone; a class booklet to a level
+   ends with it. #}
+{% macro spells(book, brk=False) -%}
+<section class="spellbook-list{{ ' page-break' if brk }}">
+{{ k.opener(book.kicker, book.title) }}
+<div class="columns-2">
+<p class="drop-cap">The {{ book.count }} {{ book['class'] }} spells of {% for t in book.books %}{{ '' if loop.first else (' and ' if loop.last else ', ') }}{{ 'the ' if t == "System Reference Document 5.2.1" }}<i>{{ t }}</i>{% endfor %}{% if book.class_level %} that a level {{ book.class_level }} {{ book['class'] }} can cast{% endif %}, from {{ 'cantrips' if book.levels[0].level == 0 else 'level ' ~ book.levels[0].level }} to level {{ book.levels[-1].level }}{% if book.get('list_only') %}, grouped by level and alphabetical within each level.{% else %}: first the spell list, then every description, grouped by level and alphabetical within each level.{% endif %}</p>
+{% if book.note %}{{ k.para(book.note) }}{% endif %}
+{% for g in book.levels %}{{ k.table(g.index, "spell-index") }}{% endfor %}
+</div>
+</section>
+{# --list-only: the list alone, no descriptions #}
+{% for g in book.levels if not book.get('list_only') %}
+<section class="spell-level{{ ' page-break' if loop.first }}">
+<h1 class="level-title">{{ g.name }}</h1>
+<div class="columns-2">
+{% for s in g.spells %}{{ k.spell(s) }}
+{% endfor %}
+</div>
+</section>
+{% endfor %}
+{%- endmacro %}

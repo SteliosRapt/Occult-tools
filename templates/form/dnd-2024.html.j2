@@ -1,0 +1,103 @@
+{# The official D&D 2024 character sheet's values (views.formsheet), printed on a transparent page of the
+   form's size; pipeline.run_form stamps them onto forms/dnd-2024-character-sheet.pdf. Positions: style/forms/dnd-2024.css. #}
+{% macro entries(items) %}
+{% for e in items %}
+<div class="entry"><span class="t">{{ e.title }}</span>{% if e.note %} <span class="n">({{ e.note }})</span>{% endif %}
+{% for lab, t in e.paras %}<p>{% if lab %}<span class="lab">{{ lab }}.</span> {% endif %}{{ t }}</p>{% endfor %}
+</div>
+{% endfor %}
+{% endmacro %}
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>{{ title }}</title>
+{% for href in css %}<link rel="stylesheet" href="{{ href }}">
+{% endfor %}
+</head>
+<body class="form{{ ' bw' if mode == 'bw' }}">
+<section class="form-page">
+  <div class="v f-name fit">{{ f.name }}</div>
+  <div class="v f-background fit">{{ f.background }}</div>
+  <div class="v f-class fit">{{ f.class }}</div>
+  <div class="v f-species fit">{{ f.species }}</div>
+  <div class="v f-subclass fit">{{ f.subclass }}</div>
+  <div class="v c f-level big">{{ f.level }}</div>
+  <div class="v c f-xp fit">{{ f.xp }}</div>
+  <div class="v c mid f-ac big">{{ f.ac }}</div>
+  {% if f.shield %}<span class="dia m-shield"></span>{% endif %}
+  <div class="v c f-hp-max">{{ f.hp_max }}</div>
+  <div class="v c f-hd-max fit">{{ f.hit_dice }}</div>
+
+  <div class="v c mid f-pb big">{{ f.pb }}</div>
+  <div class="v c mid f-initiative big fit">{{ f.initiative }}</div>
+  <div class="v c mid f-speed big fit">{{ f.speed }}</div>
+  <div class="v c mid f-size big fit">{{ f.size }}</div>
+  <div class="v c mid f-passive big">{{ f.passive }}</div>
+
+  {% for a, x in f.abilities.items() %}
+  <div class="v c mid mod big f-{{ a }}-mod">{{ x.mod }}</div>
+  <div class="v c mid score f-{{ a }}-score">{{ x.score }}</div>
+  {% set col = 'col-l' if a in ('str', 'dex', 'con') else 'col-r' %}
+  <div class="v c bonus {{ col }} b-{{ a }}-save">{{ x.save }}</div>
+  {% if x.prof %}<span class="dot {{ col }} d-{{ a }}-save"></span>{% endif %}
+  {% endfor %}
+  {% for k, x in f.skills.items() %}
+  {% set col = 'col-l' if k in ('athletics', 'acrobatics', 'sleight-of-hand', 'stealth') else 'col-r' %}
+  <div class="v c bonus {{ col }} b-{{ k }}">{{ x.bonus }}</div>
+  {% if x.prof %}<span class="dot {{ col }} d-{{ k }}{{ ' ex' if x.expertise }}"></span>{% endif %}
+  {% endfor %}
+
+  <div class="weapons">
+  {% for w in f.weapons %}
+    <div class="row">
+      <div class="v w-name fit">{{ w.name }}</div>
+      <div class="v w-hit fit">{{ w.hit }}</div>
+      <div class="v w-damage fit">{{ w.damage }}</div>
+      <div class="v wrap w-notes fit-box">{{ w.notes }}</div>
+    </div>
+  {% endfor %}
+  </div>
+
+  <div class="box box-features fit-box">{{ entries(f.class_features) }}</div>
+  <div class="box box-species fit-box">{{ entries(f.species_traits) }}</div>
+  <div class="box box-feats fit-box">{{ entries(f.feats) }}</div>
+
+  {% for t, on in f.armor_training.items() %}{% if on %}<span class="dia m-{{ t }}"></span>{% endif %}{% endfor %}
+  <div class="box box-weapons fit-box">{{ f.weapon_training }}</div>
+  <div class="box box-tools fit-box">{{ f.tools }}</div>
+</section>
+
+<section class="form-page">
+  <div class="v f-casting-ability fit">{{ f.casting_ability }}</div>
+  <div class="v c mid f-casting-mod big">{{ f.casting_mod }}</div>
+  <div class="v c mid f-casting-dc big">{{ f.casting_dc }}</div>
+  <div class="v c mid f-casting-attack big">{{ f.casting_attack }}</div>
+  {% for lvl, n in f.slots.items() %}<div class="v c slot s-{{ lvl }}">{{ n }}</div>{% endfor %}
+  <div class="v f-pact fit">{{ f.pact_note }}</div>
+
+  <div class="spells">
+  {% for x in f.spells %}
+    <div class="row">
+      <div class="v c sp-level">{{ x.level }}</div>
+      <div class="v sp-name fit">{{ x.name }}</div>
+      <div class="v wrap sp-time fit-box">{{ x.time }}</div>
+      <div class="v wrap sp-range fit-box">{{ x.range }}</div>
+      {% if x.c %}<span class="dia sp-c"></span>{% endif %}
+      {% if x.r %}<span class="dia sp-r"></span>{% endif %}
+      {% if x.m %}<span class="dia sp-m"></span>{% endif %}
+      <div class="v wrap sp-notes fit-box">{{ x.notes }}</div>
+    </div>
+  {% endfor %}
+  </div>
+
+  <div class="box box-appearance fit-box">{% if f.appearance %}<p>{{ f.appearance }}</p>{% endif %}</div>
+  <div class="box box-personality fit-box">
+  {% for lab, t in f.personality %}<p><span class="lab">{{ lab }}.</span> {{ t }}</p>{% endfor %}
+  </div>
+  <div class="v f-alignment fit">{{ f.alignment }}</div>
+  <div class="box box-languages fit-box">{{ f.languages }}</div>
+  <div class="box box-equipment fit-box"><ul>{% for x in f.equipment %}<li>{{ x }}</li>{% endfor %}</ul></div>
+  {% for k, n in f.coins.items() %}<div class="v c mid coin c-{{ k }}">{{ n }}</div>{% endfor %}
+</section>
+{% for src in scripts %}<script src="{{ src }}"></script>
+{% endfor %}
+</body></html>

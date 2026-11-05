@@ -1,0 +1,188 @@
+{% extends "book/_base.html.j2" %}
+{% import "book/_blocks.j2" as k %}
+{# A character sheet (views.charsheet.context): the front sheet on page 1, then the features, traits,
+   feats and options in full, then the spells. Blank boxes (current HP, spent dice, coins) are for pencil. #}
+{% macro ico(id, cls="ico") %}<svg class="{{ cls }}" aria-hidden="true"><use href="#{{ id }}"/></svg>{% endmacro %}
+{% macro boxes(n, cls="") %}<span class="cs-boxes {{ cls }}">{% for _ in range(n) %}<i></i>{% endfor %}</span>{% endmacro %}
+{% macro mark(m) %}<i class="cs-dot {{ m }}"></i>{% endmacro %}
+{% macro feature(n) -%}
+{% if n.get("bare") %}{{ k.blocks(n.content) }}{% for c in n.children %}{{ k.tree(c) }}{% endfor %}
+{% else %}
+<h3 id="{{ n.sid }}">{{ n.title | inline }}{% if n.ref %} <span class="cs-ref">{{ n.ref }}</span>{% endif %}</h3>
+{% if n.subtitle %}<p class="subtitle">{{ n.subtitle | inline }}</p>{% endif %}
+{{ k.blocks(n.content) }}
+{% for c in n.children %}{{ k.tree(c) }}{% endfor %}
+{% endif %}
+{%- endmacro %}
+{% block book %}
+{% set f = book.front %}
+<section class="cs-front">
+<header class="cs-head">
+  {{ ico(book.class_icon, "cs-emblem") }}
+  <div class="cs-name{{ ' long' if book.name | length > 11 }}{{ ' longer' if book.name | length > 17 }}"><div class="cs-label">Character Name</div><h1>{{ book.name }}</h1></div>
+  <dl class="cs-fields">{% for lab, v in book.fields %}<div{% if loop.first and v | length > 26 %} class="wide"{% endif %}><dd>{{ v }}</dd><dt>{{ lab }}</dt></div>{% endfor %}</dl>
+</header>
+
+<div class="cs-strip">
+  <div class="cs-stat cs-ac"><div class="cs-big">{{ f.ac.value }}</div><div class="cs-label">Armor Class</div></div>
+  <div class="cs-stat"><div class="cs-big">{{ f.initiative }}</div><div class="cs-label">Initiative{% if f.initiative_adv %} (Adv.){% endif %}</div></div>
+  <div class="cs-stat"><div class="cs-big">{{ f.speed }}<small> ft.</small></div><div class="cs-label">Speed</div></div>
+  <div class="cs-stat"><div class="cs-big">{{ f.pb }}</div><div class="cs-label">Proficiency Bonus</div></div>
+  <div class="cs-stat"><div class="cs-big">{{ f.passive }}</div><div class="cs-label">Passive Perception</div></div>
+  <div class="cs-stat"><div class="cs-big">{{ f.size[0] }}</div><div class="cs-label">Size ({{ f.size }})</div></div>
+  <div class="cs-stat cs-insp"><div class="cs-big"><i class="cs-check"></i></div><div class="cs-label">Heroic Inspiration</div></div>
+</div>
+
+<div class="cs-main">
+  <div class="cs-abilities">
+  {% for a in f.abilities %}
+    <div class="cs-ability">
+      <div class="cs-label">{{ a.name }}</div>
+      <div class="cs-mod">{{ a.mod }}</div>
+      <div class="cs-score">{{ a.score }}</div>
+      <div class="cs-save">{{ mark('proficient' if a.save_prof) }}<b>{{ a.save }}</b> Save</div>
+    </div>
+  {% endfor %}
+  </div>
+
+  <div class="cs-col">
+    <div class="cs-box cs-skills">
+      <div class="cs-title">Skills</div>
+      <ul>{% for x in f.skills %}<li>{{ mark(x.mark) }}<b>{{ x.bonus }}</b> {{ x.title }} <span class="cs-ab">{{ x.ability }}</span></li>{% endfor %}</ul>
+      <div class="cs-foot">{{ mark('proficient') }} proficient · {{ mark('expertise') }} Expertise</div>
+      <div class="cs-passives">Passive Insight <b>{{ f.passive_insight }}</b> · Investigation <b>{{ f.passive_investigation }}</b></div>
+    </div>
+    <div class="cs-box cs-profs">
+      <div class="cs-title">Training &amp; Proficiencies</div>
+      <p><b>Armor</b> {{ f.armor }}</p>
+      <p><b>Weapons</b> {{ f.weapons }}</p>
+      <p><b>Tools</b> {{ f.tools }}</p>
+      <p><b>Languages</b> {{ f.languages }}</p>
+      {% for lab, v in book.choices %}<p><b>{{ lab }}</b> {{ v }}</p>{% endfor %}
+      <p class="cs-small">AC: {{ f.ac.breakdown }}{% if f.stealth_disadvantage %}; Disadvantage on Dexterity (Stealth){% endif %}. HP: {{ f.hp_breakdown }}.</p>
+      {% for n in f.notes %}<p class="cs-small">{{ n }}</p>{% endfor %}
+    </div>
+  </div>
+
+  <div class="cs-right">
+    <div class="cs-vitals">
+      <div class="cs-box cs-hp">
+        <div class="cs-title">Hit Points</div>
+        <div class="cs-hp-row">
+          <div><div class="cs-big">{{ f.hp }}</div><div class="cs-label">Maximum</div></div>
+          <div class="cs-write"><div class="cs-label">Current</div></div>
+          <div class="cs-write cs-temp"><div class="cs-label">Temp</div></div>
+        </div>
+      </div>
+      <div class="cs-box cs-dice">
+        <div class="cs-title">Hit Dice</div>
+        {% for h in f.hit_dice %}<div class="cs-track"><b>{{ h.n }}{{ h.die }}</b> {{ boxes(h.n) }}</div>{% endfor %}
+        <div class="cs-title cs-sub">Death Saves</div>
+        <div class="cs-track"><span class="cs-ds">Successes</span> {{ boxes(3, "round") }}</div>
+        <div class="cs-track"><span class="cs-ds">Failures</span> {{ boxes(3, "round") }}</div>
+      </div>
+    </div>
+
+    <div class="cs-box cs-attacks">
+      <div class="cs-title">Weapons &amp; Damage Cantrips <span class="cs-note">{{ f.attacks_per_action }} attack{{ 's' if f.attacks_per_action > 1 }} per Attack action</span></div>
+      <table><thead><tr><th>Name</th><th class="num">Atk</th><th>Damage &amp; Type</th><th>Notes</th></tr></thead>
+      <tbody>{% for a in f.attacks %}<tr><td>{{ a.name }}</td><td class="num">{{ a.attack }}</td><td>{{ a.damage }}</td><td class="cs-small">{{ a.notes }}</td></tr>{% endfor %}
+      {% for _ in range([0, 6 - f.attacks | length] | max) %}<tr class="blank"><td></td><td></td><td></td><td></td></tr>{% endfor %}</tbody></table>
+    </div>
+
+    {% if f.casting %}
+    <div class="cs-box cs-casting">
+      <div class="cs-title">Spellcasting</div>
+      <table><thead><tr><th>Class</th><th>Ability</th><th class="num">Save DC</th><th class="num">Attack</th></tr></thead>
+      <tbody>{% for c in f.casting %}<tr><td>{{ c['class'] }}</td><td>{{ c.ability }}</td><td class="num">{{ c.dc }}</td><td class="num">{{ c.attack }}</td></tr>{% endfor %}</tbody></table>
+    </div>
+    {% endif %}
+
+    {% if f.trackers or f.counts %}
+    <div class="cs-box cs-resources">
+      <div class="cs-title">Class Resources</div>
+      {% for t in f.trackers %}<div class="cs-track"><span class="cs-res">{{ t.label }}</span> {% if t.value %}<b>{{ t.value }}</b> {% endif %}{{ boxes(t.boxes) }}</div>{% endfor %}
+      {% if f.counts %}<div class="cs-values">{% for v in f.counts %}<span><b>{{ v.label }}</b> {{ v.value }}</span>{% endfor %}</div>{% endif %}
+    </div>
+    {% endif %}
+
+    <div class="cs-box cs-glance{{ ' dense' if book.glance_count > 24 }}">
+      <div class="cs-title">Features &amp; Traits <span class="cs-note">in full from page 2</span></div>
+      {% for head, items in book.glance %}<p><b>{{ head }}.</b> {{ items | join(" · ") }}</p>{% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="cs-bottom">
+  <div class="cs-box cs-gear">
+    <div class="cs-title">Equipment <span class="cs-note">carry {{ f.carry }} · drag, lift, push {{ f.drag }}</span></div>
+    {% set rows = [8, (f.equipment | length + 1) // 2] | max %}
+    <ul class="cs-lines" style="--rows: {{ rows }}">{% for x in f.equipment %}<li>{{ x }}</li>{% endfor %}{% for _ in range(2 * rows - f.equipment | length) %}<li></li>{% endfor %}</ul>
+    <div class="cs-coins">{% for c, v in f.coins %}<div><div class="cs-coin">{{ v }}</div><div class="cs-label">{{ c }}</div></div>{% endfor %}</div>
+  </div>
+  <div class="cs-box cs-notes">
+    <div class="cs-title">Notes</div>
+    <ul class="cs-lines">{% for _ in range(9) %}<li></li>{% endfor %}</ul>
+  </div>
+</div>
+</section>
+
+<section class="cs-text page-break">
+{{ k.opener("Features & Traits", book.name) }}
+<div class="columns-2">
+{% for g in book.features %}
+<h2>{{ g.title }}{% if g.get("ref") %} <span class="cs-ref">{{ g.ref }}</span>{% endif %}</h2>
+{% for n in g["items"] %}{{ feature(n) }}{% endfor %}
+{% if g.intro %}<h3 class="cs-sub-head">{{ g.intro.title }} <span class="cs-ref">{{ g.intro.ref }}</span></h3>
+{{ k.blocks(g.intro.content) }}
+{% for n in g.sub_items %}{{ feature(n) }}{% endfor %}{% endif %}
+{% endfor %}
+{% if book.details %}
+<h2>Character</h2>
+{% for lab, v in book.details %}<p class="run-in"><b class="run-in-title">{{ lab }}.</b> {{ v }}</p>{% endfor %}
+{% endif %}
+</div>
+</section>
+
+{% set sp = book.spells %}
+{% if sp %}
+<section class="cs-spells page-break">
+{{ k.opener("Spellcasting", book.name) }}
+<div class="cs-spell-head">
+  {% for c in sp.casters %}
+  <div class="cs-box cs-caster">
+    <div class="cs-title">{{ c['class'] }}</div>
+    <div class="cs-caster-row">
+      <div><div class="cs-big">{{ c.dc }}</div><div class="cs-label">Save DC</div></div>
+      <div><div class="cs-big">{{ c.attack }}</div><div class="cs-label">Attack</div></div>
+      <div><div class="cs-mid">{{ c.ability }}</div><div class="cs-label">Ability</div></div>
+    </div>
+    <div class="cs-small">{{ c.cantrips or 0 }} cantrips · {{ c.prepared or 0 }} prepared · up to level {{ c.top }} · {{ c.list }} list</div>
+  </div>
+  {% endfor %}
+  <div class="cs-box cs-slots">
+    <div class="cs-title">Spell Slots{% if sp.multiclass %} <span class="cs-note">Multiclass Spellcaster, caster level {{ sp.caster_level }}</span>{% endif %}</div>
+    {% for x in sp.slots %}<div class="cs-track"><span class="cs-res">Level {{ x.level }}</span> {{ boxes(x.n) }}</div>{% endfor %}
+    {% if sp.pact %}<div class="cs-track"><span class="cs-res">Pact (level {{ sp.pact.level }})</span> {{ boxes(sp.pact.slots) }}</div>{% endif %}
+    {% if not sp.slots and not sp.pact %}<div class="cs-small">No spell slots yet.</div>{% endif %}
+    {% if sp.cantrip_dice and sp.cantrip_dice > 1 %}<div class="cs-small">Cantrip damage: ×{{ sp.cantrip_dice }} dice</div>{% endif %}
+  </div>
+</div>
+<table class="phb-table cs-spell-list">
+<thead><tr><th class="num">Prep.</th><th>Spell</th><th class="num">Level</th><th>Casting Time</th><th>Range</th><th class="num">C/R</th><th>Comp.</th><th>From</th><th class="num">Page</th></tr></thead>
+<tbody>
+{% for r in sp.rows %}<tr><td class="num">{% if r.cantrip or r.always %}<i class="cs-check on"></i>{% else %}<i class="cs-check{{ ' on' if r.prepared }}"></i>{% endif %}</td><td><b>{{ r.title }}</b></td><td class="num">{{ r.level }}</td><td>{{ r.time }}</td><td>{{ r.range }}</td><td class="num">{{ r.tags }}</td><td>{{ r.components }}</td><td>{{ r.via }}</td><td class="num">{{ r.page }}</td></tr>
+{% endfor %}
+{% for _ in range(sp.blank_rows) %}<tr class="blank"><td class="num"><i class="cs-check"></i></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+{% endfor %}
+</tbody></table>
+{% for g in sp.levels %}
+<h1 class="level-title">{{ g.name }}</h1>
+<div class="columns-2">
+{% for s in g.spells %}{{ k.spell(s) }}
+{% endfor %}
+</div>
+{% endfor %}
+</section>
+{% endif %}
+{% endblock %}

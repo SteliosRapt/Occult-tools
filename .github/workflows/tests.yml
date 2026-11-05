@@ -1,0 +1,38 @@
+name: tests
+
+# Browser-free checks: data invariants, CLI goldens, the data schema and the committed collections/
+# (make md --check). Browser render tests (OCCULT_BROWSER_TESTS=1) and `make proof` are left out:
+# they need Chromium, Pillow and pdftoppm, and their output drifts between machines.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install requirements
+        run: pip install -r requirements.txt jsonschema   # jsonschema: validate.py only (a build-time tool)
+      - name: Unit tests
+        run: python3 -m unittest discover -v tools/tests
+      - name: Data schema
+        run: python3 scripts/build/validate.py
+      - name: Smoke test the launcher
+        run: ./occult show spell:fireball --brief
+      - name: Collections are up to date
+        run: ./occult make md --check

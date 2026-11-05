@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 30" width="140" height="30">
+  <!-- Centre piece of the gold rule under a chapter title. The long side lines are drawn in CSS. -->
+  <g fill="none" stroke="#b99a5b" stroke-linecap="round">
+    <path d="M0 6 H44 C52 6 54 9 56 13 C59 21 63 25 70 25 C77 25 81 21 84 13 C86 9 88 6 96 6 H140" stroke-width="1.6"/>
+    <path d="M0 9.5 H42" stroke-width="0.6"/><path d="M98 9.5 H140" stroke-width="0.6"/>
+    <path d="M58 6 C62 6 64 10 66 14" stroke-width="1"/>
+    <path d="M82 6 C78 6 76 10 74 14" stroke-width="1"/>
+    <circle cx="70" cy="15" r="3.2" stroke-width="1.2"/>
+  </g>
+  <circle cx="70" cy="15" r="1.2" fill="#b99a5b"/>
+</svg>

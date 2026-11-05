@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Grimoire character sheet (templates/book/character.html.j2). Linked after
+   page.css and book.css; uses their tokens. Page 1 is one fixed sheet of boxes
+   (its height is the paper's content height); the features and spells flow.
+   Ink-saver = body.bw (+ page-bw.css for the margin boxes).
+   ========================================================================== */
+
+@page character { margin: 0.4in 0.45in 0.62in 0.45in; }       /* page 1 needs the room; mirrored in .cs-front */
+.book-character { --cs-line: var(--gold-deep); --cs-fill: rgba(255, 252, 244, .55); --cs-label: var(--heading); }
+
+/* shared pieces ------------------------------------------------------------ */
+.cs-front { display: flex; flex-direction: column; gap: 0.07in; height: calc(var(--paper-h) - 1.02in - 4pt);
+  font-family: var(--font-sans); font-size: 8.4pt; line-height: 1.2; break-after: page; }
+.cs-box { border: 0.9pt solid var(--cs-line); border-radius: 5pt; background: var(--cs-fill); padding: 3pt 6pt 4pt;
+  break-inside: avoid; position: relative; }
+.cs-title { font: 700 7.6pt/1.2 var(--font-sans-sc); letter-spacing: .07em; color: var(--cs-label); text-transform: lowercase;
+  border-bottom: 0.6pt solid var(--gold); margin: 0 0 3pt; padding-bottom: 1pt; }
+.cs-title.cs-sub { margin-top: 4pt; }
+.cs-label { font: 700 6.4pt/1.15 var(--font-sans-sc); letter-spacing: .06em; color: var(--cs-label); text-transform: lowercase; }
+.cs-note { font: italic 400 7pt var(--font-sans); letter-spacing: 0; text-transform: none; color: var(--ink-soft); float: right; }
+.cs-big { font: 700 17pt/1 var(--font-body); color: var(--ink); }
+.cs-big small { font-size: 8pt; font-weight: 400; }
+.cs-mid { font: 700 11pt/1.5 var(--font-body); }
+.cs-small { font-size: 7pt; color: var(--ink-soft); }
+.cs-ref { font: 400 7.4pt var(--font-sans); color: var(--ink-faint); letter-spacing: 0; }
+.cs-front p { text-indent: 0 !important; margin: 0 0 1.5pt; }
+
+/* proficiency marks: empty ring, filled dot, double ring for Expertise */
+.cs-dot { display: inline-block; width: 6pt; height: 6pt; border: 0.8pt solid var(--ink-soft); border-radius: 50%;
+  margin-right: 3pt; vertical-align: -0.5pt; box-sizing: border-box; }
+.cs-dot.proficient { background: var(--heading); border-color: var(--heading); }
+.cs-dot.expertise { background: var(--heading); border-color: var(--heading); box-shadow: 0 0 0 1pt var(--cs-fill), 0 0 0 1.7pt var(--heading); }
+.cs-boxes { display: inline-flex; flex-wrap: wrap; gap: 2pt; vertical-align: middle; }
+.cs-boxes i, .cs-check { display: inline-block; width: 7.5pt; height: 7.5pt; border: 0.8pt solid var(--ink-soft);
+  border-radius: 1.5pt; box-sizing: border-box; background: #fffdf8; }
+.cs-boxes.round i { border-radius: 50%; }
+.cs-check.on { background: var(--heading); border-color: var(--heading); }
+.cs-track { margin: 2pt 0; display: flex; align-items: center; gap: 4pt; flex-wrap: wrap; }
+.cs-res, .cs-ds { min-width: 0.95in; font-weight: 700; }
+.cs-ds { min-width: 0.6in; font-weight: 400; }
+
+/* header ------------------------------------------------------------------- */
+.cs-head { display: grid; grid-template-columns: 0.55in 2.6in 1fr; align-items: end; gap: 0.1in;
+  padding-bottom: 4pt; border-bottom: 1.4pt solid var(--gold); }
+.cs-emblem { width: 0.55in; height: 0.55in; fill: var(--heading); color: var(--heading); }
+.cs-name.long h1 { font-size: 16pt; }
+.cs-name.longer h1 { font-size: 13pt; }
+.cs-name h1 { font: 700 21pt/1.05 var(--font-display); color: var(--heading); margin: 0; letter-spacing: .01em; }
+.cs-name .cs-label { margin-bottom: 1pt; }
+.cs-fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3pt 8pt; margin: 0; }
+.cs-fields div { border-bottom: 0.6pt solid var(--cs-line); min-width: 0; }
+.cs-fields div.wide { grid-column: span 3; }
+.cs-fields dd { margin: 0; font: 600 9pt/1.25 var(--font-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cs-fields dt { font: 700 6.2pt/1.2 var(--font-sans-sc); letter-spacing: .06em; color: var(--cs-label); text-transform: lowercase; }
+
+/* the stat strip ------------------------------------------------------------ */
+.cs-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.06in; }
+.cs-stat { border: 0.9pt solid var(--cs-line); border-radius: 5pt; background: var(--cs-fill); text-align: center; padding: 4pt 2pt 3pt; }
+.cs-ac { border-radius: 5pt 5pt 50% 50% / 5pt 5pt 22% 22%; border-width: 1.4pt; }
+.cs-insp .cs-check { width: 14pt; height: 14pt; border-radius: 50%; margin-top: 1pt; }
+
+/* abilities | skills | the rest --------------------------------------------- */
+.cs-main { flex: 1; min-height: 0; display: grid; grid-template-columns: 0.98in 2.05in 1fr;
+  grid-template-rows: minmax(0, 1fr); gap: 0.07in; }
+.cs-abilities { display: flex; flex-direction: column; justify-content: space-between; gap: 0.05in; }
+.cs-col { display: flex; flex-direction: column; gap: 0.07in; min-width: 0; }
+.cs-col .cs-profs { flex: 1; min-height: 0; overflow: hidden; }
+.cs-ability { flex: 1; display: flex; flex-direction: column; justify-content: center; border: 0.9pt solid var(--cs-line);
+  border-radius: 6pt; background: var(--cs-fill); text-align: center; padding: 3pt 3pt 4pt; }
+.cs-ability .cs-score { align-self: center; }
+.cs-ability .cs-label { font-size: 6.6pt; }
+.cs-mod { font: 700 20pt/1.05 var(--font-body); color: var(--ink); }
+.cs-score { display: inline-block; min-width: 0.36in; border: 0.8pt solid var(--cs-line); border-radius: 8pt;
+  font: 700 9pt/1.35 var(--font-body); background: #fffdf8; margin: 0 0 2pt; }
+.cs-save { font-size: 7.4pt; border-top: 0.5pt solid var(--gold-light); padding-top: 2pt; }
+.cs-save b { font-family: var(--font-body); font-size: 8.6pt; }
+
+.cs-skills ul { list-style: none; margin: 0; padding: 0; }
+.cs-skills li { margin: 0; padding: 1.55pt 0; border-bottom: 0.5pt solid var(--gold-light); white-space: nowrap; }
+.cs-skills li b { display: inline-block; min-width: 0.24in; text-align: right; margin-right: 3pt; font-family: var(--font-body); font-size: 8.8pt; }
+.cs-ab { color: var(--ink-faint); font-size: 6.6pt; float: right; padding-top: 1pt; }
+.cs-foot { font-size: 6.6pt; color: var(--ink-soft); margin-top: 3pt; }
+.cs-passives { font-size: 7.2pt; margin-top: 2pt; }
+
+.cs-right { display: flex; flex-direction: column; gap: 0.07in; min-width: 0; min-height: 0; }
+.cs-right > .cs-box:not(.cs-glance) { flex: none; }
+.cs-glance.dense { font-size: 7.4pt; line-height: 10.5pt;
+  background-image: repeating-linear-gradient(to bottom, transparent 0 9.9pt, var(--gold-light) 9.9pt 10.5pt); }
+.cs-vitals { display: grid; grid-template-columns: 1.25fr 1fr; gap: 0.07in; }
+.cs-hp-row { display: grid; grid-template-columns: 0.62in 1fr 0.62in; gap: 4pt; text-align: center; }
+.cs-write { border: 0.8pt solid var(--cs-line); border-radius: 4pt; background: #fffdf8; min-height: 0.5in;
+  display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 1pt; }
+.cs-attacks table, .cs-casting table { width: 100%; border-collapse: collapse; font-size: 7.8pt; }
+.cs-attacks th, .cs-casting th { font: 700 6.4pt var(--font-sans-sc); letter-spacing: .05em; color: var(--cs-label);
+  text-transform: lowercase; text-align: left; padding: 0 3pt 1pt; border-bottom: 0.6pt solid var(--gold); }
+.cs-attacks td, .cs-casting td { padding: 1.6pt 3pt; border-bottom: 0.5pt solid var(--gold-light); vertical-align: top; }
+.cs-attacks td:first-child { font-weight: 700; white-space: nowrap; }
+.cs-attacks td:nth-child(3) { white-space: nowrap; }
+.cs-attacks .num, .cs-casting .num { text-align: center; }
+.cs-attacks tr.blank td { height: 10pt; }
+.cs-values { display: flex; flex-wrap: wrap; gap: 2pt 10pt; margin-top: 3pt; }
+
+.cs-profs b, .cs-glance b { color: var(--cs-label); font-weight: 700; }
+.cs-glance { flex: 1; min-height: 0.5in; overflow: hidden; line-height: 12pt;
+  background-image: repeating-linear-gradient(to bottom, transparent 0 11.4pt, var(--gold-light) 11.4pt 12pt);
+  background-origin: content-box; background-position: 0 14.5pt; }
+.cs-glance p { margin: 0 !important; }
+
+/* bottom: gear | notes ------------------------------------------------------ */
+.cs-bottom { display: grid; grid-template-columns: 2fr 1fr; gap: 0.07in; }
+.cs-gear .cs-lines { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10pt; grid-auto-flow: column;
+  grid-template-rows: repeat(var(--rows, 8), auto); }
+.cs-lines { list-style: none; margin: 0; padding: 0; }
+.cs-lines li { border-bottom: 0.5pt solid var(--gold-light); height: 11pt; padding: 1pt 0 0; margin: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cs-coins { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4pt; margin-top: 4pt; text-align: center; }
+.cs-coin { border: 0.8pt solid var(--cs-line); border-radius: 50%; height: 0.32in; line-height: 0.32in; background: #fffdf8;
+  font: 700 9pt/0.32in var(--font-body); }
+
+/* features and spells pages ------------------------------------------------ */
+.cs-text .columns-2 > h2 { font-size: 14pt; break-after: avoid; }
+.cs-text .columns-2 > h2:first-child { margin-top: 0; }
+.cs-text h3, .cs-sub-head { break-after: avoid; }
+.cs-sub-head { font-size: 12.4pt; margin-top: 0.14in; padding-bottom: 1pt; border-bottom: 0.8pt solid var(--gold); }
+.cs-spell-head { display: flex; gap: 0.08in; margin: 0 0 0.1in; font-family: var(--font-sans); font-size: 8.4pt; }
+.cs-spell-head .cs-box { flex: 1; }
+.cs-spell-head .cs-slots { flex: 1.4; }
+.cs-caster-row { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; margin-bottom: 2pt; }
+.cs-spell-list { font-size: 8pt; margin-bottom: 0.12in; }
+.cs-spell-list tr.blank td { height: 12pt; }
+.cs-spell-list .cs-check { vertical-align: -1pt; }
+
+/* ink-saver ---------------------------------------------------------------- */
+body.bw .book-character { --cs-line: #555; --cs-fill: #fff; --cs-label: #000; }
+body.bw .cs-title, body.bw .cs-head, body.bw .cs-sub-head { border-color: #888; }
+body.bw .cs-skills li, body.bw .cs-attacks td, body.bw .cs-casting td, body.bw .cs-lines li, body.bw .cs-save { border-color: #bbb; }
+body.bw .cs-dot.proficient, body.bw .cs-dot.expertise, body.bw .cs-check.on { background: #000; border-color: #000; }
+body.bw .cs-dot.expertise { box-shadow: 0 0 0 1pt #fff, 0 0 0 1.7pt #000; }
+body.bw .cs-name h1, body.bw .cs-emblem { color: #000; fill: #000; }

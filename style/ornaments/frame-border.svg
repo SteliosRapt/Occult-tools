@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+  <!-- 9-slice frame for border-image (slice 32). Concave "notched" corners, double gold line. -->
+  <g fill="none" stroke-linejoin="round">
+    <path d="M22 3 H74 A19 19 0 0 0 93 22 V74 A19 19 0 0 0 74 93 H22 A19 19 0 0 0 3 74 V22 A19 19 0 0 0 22 3 Z" stroke="#c7ab70" stroke-width="1.2"/>
+    <path d="M24 8 H72 A16 16 0 0 0 88 24 V72 A16 16 0 0 0 72 88 H24 A16 16 0 0 0 8 72 V24 A16 16 0 0 0 24 8 Z" stroke="#b28f52" stroke-width="2.6"/>
+    <path d="M25 11.5 H71 A13.5 13.5 0 0 0 84.5 25 V71 A13.5 13.5 0 0 0 71 84.5 H25 A13.5 13.5 0 0 0 11.5 71 V25 A13.5 13.5 0 0 0 25 11.5 Z" stroke="#d9c38f" stroke-width="0.8"/>
+  </g>
+</svg>

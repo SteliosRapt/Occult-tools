@@ -1,0 +1,18 @@
+{% extends "book/_base.html.j2" %}
+{% import "book/_blocks.j2" as k %}
+{# Conditions and actions quick reference: two pages, three columns each.
+   Page 1: the 15 conditions and the areas of effect; page 2: the 12 actions and cover. #}
+{% block book %}
+{% for p in book.pages %}
+<section class="qr-page{{ ' page-break' if not loop.first }}">
+<header class="qr-head"><div class="chapter-kicker">{{ book.kicker }}</div><h1 class="qr-title">{{ p.title }}</h1></header>
+<div class="qr-cols">
+{% for title, terms in p.groups %}
+{% if not loop.first %}<h2 class="qr-group">{{ title }}</h2>{% endif %}
+{% set solo = terms | length == 1 and terms[0].title == title %}
+{% for t in terms %}{{ k.term(t, tag=False, name=not solo) }}{% endfor %}
+{% endfor %}
+</div>
+</section>
+{% endfor %}
+{% endblock %}

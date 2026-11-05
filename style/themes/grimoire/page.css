@@ -1,0 +1,597 @@
+/* ==========================================================================
+   occult-lore / page-style / page.css
+   A print stylesheet that uses a classic fantasy rulebook look.
+   Framework-free. Targets headless Chromium (Playwright page.pdf()).
+
+   Contents
+     1. Fonts
+     2. Tokens (custom properties)
+     3. Page boxes (@page, size, margins, running footer)
+     4. Base text
+     5. Headings
+     6. Chapter opener, drop cap
+     7. Columns and flow helpers
+     8. Run-in headings, lists, class summary list
+     9. Tables and d-tables
+    10. Spell entries
+    11. Sidebars / callouts
+    12. Figures and art frame
+    13. Ink-saver variant (body.bw)
+    14. Screen preview
+
+   Note: custom properties do not reach @page or its margin boxes (they do
+   not inherit from :root), so the few values used there are literal and
+   mirrored in comments.
+   ========================================================================== */
+
+/* 1. Fonts ----------------------------------------------------------------
+   All SIL OFL 1.1, in style/fonts with their licence files. The @font-face rules
+   live in style/fonts/fonts.css, which every document links before this file. */
+
+/* 2. Tokens --------------------------------------------------------------- */
+:root {
+  /* paper */
+  --parchment:        #f5eee1;
+  --parchment-deep:   #ebdfc7;   /* edge tint, sidebar fill */
+  --parchment-edge:   #debe96;   /* warm vignette at page edges */
+  /* ink */
+  --ink:              #231d18;
+  --ink-soft:         #4b4037;
+  --ink-faint:        #8a7d70;   /* captions, art credits */
+  /* accents */
+  --heading:          #7b2316;   /* H1-H4, spell names, labels */
+  --heading-deep:     #5a160d;   /* chapter title gradient end */
+  --heading-light:    #9c4a33;   /* chapter kicker */
+  --gold:             #c2a466;   /* rules, ornaments */
+  --gold-deep:        #a5844a;   /* frame lines, drop cap shadow */
+  --gold-light:       #e4d5ac;
+  /* tables */
+  --table-head-ink:   #231d18;
+  --table-stripe:     #e0e0d2;   /* the PHB's cool sage stripe */
+  --table-rule:       #c9b991;
+  --table-group:      #ebe3cf;   /* category rows inside a table */
+  /* sidebar */
+  --sidebar-bg:       #e9e3d2;
+  --sidebar-rule:     #b9a477;
+
+  /* type */
+  --font-body:    "Alegreya", "Gelasio", Georgia, "Times New Roman", serif;
+  --font-heading: "Alegreya SC", "Alegreya", Georgia, serif;
+  --font-display: "Cinzel", "Alegreya SC", Georgia, serif;   /* chapter titles */
+  --font-sans:    "Alegreya Sans", "Fira Sans", "Gill Sans", Calibri, sans-serif;
+  --font-sans-sc: "Alegreya Sans SC", "Alegreya Sans", sans-serif;
+
+  --size-body:    9.6pt;
+  --leading:      1.23;
+  --size-table:   8.6pt;
+  --size-small:   8pt;
+  --size-h1:      23pt;
+  --size-h2:      16pt;
+  --size-h3:      12.4pt;
+  --size-h4:      10.8pt;
+  --size-chapter: 38pt;
+
+  --column-gap:   0.3in;
+  --indent:       1em;
+  --frame-notch:  15px;          /* radius of the art frame's concave corners */
+}
+
+/* 3. Page boxes ------------------------------------------------------------
+   Letter is the default. For A4, link page-a4.css after this file, or pass
+   { format: "A4", preferCSSPageSize: false } to Playwright.
+
+   Running footer: Chromium (>= 131) renders @page margin boxes, counters
+   and :left/:right pages, but not string-set() or running() elements. So the
+   chapter label is supplied per document or per named page, e.g.
+
+     .chapter-3 { page: ch3; }
+     @page ch3:right { @bottom-right { content: "Chapter 3 | Character Classes"; } }
+     @page ch3:left  { @bottom-left  { content: "Chapter 3 | Character Classes"; } }
+
+   (A generator emits one such pair per chapter.)
+
+   Gotcha: a margin box can only use a web font face that the document body
+   has already loaded. A face used only in a margin box (e.g. Alegreya 500)
+   silently renders nothing, so the footer sticks to Alegreya 400, which
+   every page uses for body text. */
+@page {
+  size: 8.5in 11in;
+  margin: 0.6in 0.62in 0.78in 0.62in;
+  background-color: #f5eee1;              /* --parchment */
+  background-image:
+    radial-gradient(ellipse 120% 110% at 50% 45%, rgba(222,190,150,0) 58%, rgba(222,190,150,.7) 100%),
+    url("../../ornaments/parchment-texture.svg");
+  background-size: 100% 100%, 400px 400px;
+
+  @bottom-right-corner {
+    content: counter(page);
+    font: 400 11pt "Alegreya", Georgia, serif;
+    color: #231d18;
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 4pt;
+    padding-top: 6pt;
+    background: linear-gradient(90deg, rgba(194,164,102,.95), rgba(194,164,102,0)) left 0 bottom 12.4pt / 80% 0.6pt no-repeat;
+  }
+  @bottom-right {
+    font: 400 9pt "Alegreya", Georgia, serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7b2316;                        /* --heading */
+    text-align: right;
+    vertical-align: middle;
+    padding-right: 46pt;                   /* room for the swash */
+    padding-top: 6pt;
+    background:
+      url("../../ornaments/footer-swash.svg") right 0 bottom 10pt / 36pt 30pt no-repeat,
+      linear-gradient(90deg, rgba(194,164,102,0), rgba(194,164,102,.95) 35%) left 0 bottom 12.4pt / calc(100% - 20pt) 1.1pt no-repeat;
+  }
+}
+@page :left {
+  @bottom-right-corner { content: none; }
+  @bottom-right { content: none; background: none; }
+  @bottom-left-corner {
+    content: counter(page);
+    font: 400 11pt "Alegreya", Georgia, serif;
+    color: #231d18;
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 4pt;
+    padding-top: 6pt;
+    background: linear-gradient(270deg, rgba(194,164,102,.95), rgba(194,164,102,0)) right 0 bottom 12.4pt / 80% 0.6pt no-repeat;
+  }
+  @bottom-left {
+    font: 400 9pt "Alegreya", Georgia, serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7b2316;
+    text-align: left;
+    vertical-align: middle;
+    padding-left: 46pt;
+    padding-top: 6pt;
+    background:
+      url("../../ornaments/footer-swash-left.svg") left 0 bottom 10pt / 36pt 30pt no-repeat,
+      linear-gradient(270deg, rgba(194,164,102,0), rgba(194,164,102,.95) 35%) right 0 bottom 12.4pt / calc(100% - 20pt) 1.1pt no-repeat;
+  }
+}
+
+/* A page that should carry no footer (title pages, full-bleed art). */
+@page bare {
+  @bottom-right { content: none; background: none; }
+  @bottom-right-corner { content: none; }
+  @bottom-left { content: none; background: none; }
+  @bottom-left-corner { content: none; }
+}
+.page-bare { page: bare; }
+
+/* 4. Base text ------------------------------------------------------------ */
+* { box-sizing: border-box; }
+/* In print the paper colour/texture comes from @page; html stays transparent
+   so it does not cover the texture inside the page area. */
+html { background: transparent; }
+/* Margin boxes and @page backgrounds only paint resources the document has
+   already loaded (same as fonts, see section 3). This invisible pixel loads
+   them. Keep the list in sync with the url()s used in @page. */
+body::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0.01;
+  background: url("../../ornaments/footer-swash.svg"), url("../../ornaments/footer-swash-left.svg"), url("../../ornaments/parchment-texture.svg");
+  pointer-events: none;
+}
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: var(--leading);
+  color: var(--ink);
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  hyphens: auto;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  orphans: 2;
+  widows: 2;
+}
+p { margin: 0; }
+/* PHB paragraphs: no gap, first-line indent on every following paragraph */
+p + p, p + .run-in, .run-in + p, .run-in + .run-in { text-indent: var(--indent); }
+em, i { font-style: italic; }
+strong, b { font-weight: 700; }
+.small { font-size: var(--size-small); }
+.sans { font-family: var(--font-sans); }
+
+/* Forced page structure */
+.page-break { break-before: page; }
+.keep { break-inside: avoid; }
+
+/* 5. Headings ------------------------------------------------------------- */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-heading);
+  color: var(--heading);
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 0;
+  break-after: avoid;
+  hyphens: manual;
+}
+/* H1: class name / big section title, e.g. "Bard Subclasses" */
+h1 { font-size: var(--size-h1); margin: 0 0 0.12in; letter-spacing: 0.01em; }
+/* H2: gold underline rule, e.g. "College of Lorem" */
+h2 {
+  font-size: var(--size-h2);
+  margin: 0.14in 0 0.05in;
+  padding-bottom: 2pt;
+  border-bottom: 1.2pt solid var(--gold);
+}
+/* H3: "Level 3: Ipsum Vivamus" */
+h3 { font-size: var(--size-h3); margin: 0.12in 0 0.02in; }
+/* H4: smallest titled block, e.g. a spell name or table title in body serif */
+h4 { font-size: var(--size-h4); margin: 0.1in 0 0.01in; }
+/* Italic subtitle under an H1/H2 ("A Fierce Warrior of Primal Rage") */
+.subtitle {
+  font-style: italic;
+  font-size: 1.06em;
+  margin: 0.02in 0 0.06in;
+  color: var(--ink);
+  text-indent: 0 !important;
+}
+h1 + p, h2 + p, h3 + p, h4 + p, .subtitle + p { text-indent: 0; }
+
+/* 6. Chapter opener, drop cap ------------------------------------------------
+   <header class="chapter-opener">
+     <div class="chapter-kicker">Chapter 3</div>
+     <h1 class="chapter-title">Character Classes</h1>
+     <div class="title-rule"></div>
+   </header> */
+.chapter-opener { text-align: center; margin: 0 0 0.16in; break-after: avoid; }
+.chapter-kicker {
+  display: flex; align-items: center; justify-content: center; gap: 8pt;
+  font: 600 13pt/1 var(--font-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--heading-light);
+}
+.chapter-kicker::before, .chapter-kicker::after {
+  content: ""; width: 1.3in; height: 0.16in;
+  background: url("../../ornaments/kicker-flourish.svg") center / 100% 100% no-repeat;
+}
+.chapter-kicker::after { transform: scaleX(-1); }
+.chapter-title {
+  font: 700 var(--size-chapter)/1.05 var(--font-display);
+  letter-spacing: 0.015em;
+  margin: 2pt 0 0;
+  border: 0; padding: 0;
+  color: var(--heading);
+  /* the PHB title has a soft emboss; a gradient via background-clip:text
+     prints with hairline box artefacts in Chromium PDFs, so fake it */
+  text-shadow: 0 0.6pt 0 rgba(255,248,235,.9), 0 -0.4pt 0 rgba(60,10,5,.35);
+}
+/* gold rule with a centred scroll; side lines fade toward the margins */
+.title-rule {
+  height: 22pt; margin-top: 2pt;
+  background:
+    url("../../ornaments/title-rule-center.svg") center top / 100pt 22pt no-repeat,
+    linear-gradient(90deg, rgba(194,164,102,0), var(--gold) 15%, var(--gold) 85%, rgba(194,164,102,0)) center 4.1pt / 100% 1.15pt no-repeat,
+    linear-gradient(90deg, rgba(194,164,102,0), var(--gold) 25%, var(--gold) 75%, rgba(194,164,102,0)) center 6.8pt / 92% 0.45pt no-repeat;
+}
+
+/* Drop cap: first letter in a pale gold, first line in small caps.
+   <p class="drop-cap">Character class provides ...</p> */
+.drop-cap { text-indent: 0 !important; }
+.drop-cap::first-letter {
+  float: left;
+  font: 700 3.55em/0.8 var(--font-display);
+  margin: 0.07em 0.07em 0 -0.02em;
+  color: var(--gold-deep);
+  /* no background-clip:text gradient: Chromium prints a hairline box around it */
+  text-shadow: 0.5pt 0.5pt 0 rgba(120,90,40,.35);
+}
+.drop-cap::first-line {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+/* 7. Columns --------------------------------------------------------------- */
+.columns-1 { column-count: 1; }
+.columns-2 {
+  column-count: 2;
+  column-gap: var(--column-gap);
+  column-fill: balance;
+}
+/* Fill column 1 to the bottom of the page before starting column 2 (PHB
+   style for long runs that continue onto the next page). Only use it on the
+   last block of a page: in print, "auto" ignores anything that follows. */
+.columns-2.fill { column-fill: auto; }
+.span-all { column-span: all; }
+.col-break { break-before: column; }
+.avoid-col-break { break-inside: avoid; }
+
+/* 8. Run-in headings, lists, class summary ---------------------------------
+   <p class="run-in"><b class="run-in-title">Damage Resistance.</b> You have ...</p> */
+.run-in-title { font-weight: 700; font-style: italic; color: var(--ink); }
+/* Sans, red run-in used on the chapter opener ("Barbarian. Storm with Rage") */
+.run-in-label { font-family: var(--font-sans); font-weight: 700; color: var(--heading); }
+
+ul, ol { margin: 0.04in 0 0.05in; padding-left: 1.15em; }
+li { margin: 0 0 0.02in; padding-left: 0.1em; }
+ul li::marker { color: var(--ink); font-size: 0.9em; }
+li .run-in-title { font-style: italic; }
+
+/* Chapter opener summary: emblem + label paragraph, then an italic sub-list
+   beside a thin vertical gold rule. */
+.summary { font-family: var(--font-sans); font-size: 9pt; line-height: 1.25; }
+.summary-item {
+  position: relative;
+  padding-left: 30pt;
+  margin: 0 0 0.07in;
+  break-inside: avoid;
+}
+.summary-item .emblem {
+  position: absolute; left: 0; top: 1pt;
+  width: 22pt; height: 22pt;
+  background: url("../../ornaments/class-emblem.svg") center / contain no-repeat;
+}
+.summary-item > p { text-indent: 0; }
+.summary-sublist {
+  list-style: none; margin: 0.04in 0 0; padding: 0;
+  position: relative;
+}
+.summary-sublist::before {           /* vertical gold rule with a tick cap */
+  content: ""; position: absolute; left: -19.5pt; top: -2pt; bottom: 2pt; width: 10pt;
+  background:
+    url("../../ornaments/section-tick.svg") center top / 10pt 10pt no-repeat,
+    linear-gradient(var(--gold), rgba(194,164,102,0)) center 8pt / 1.2pt calc(100% - 8pt) no-repeat;
+}
+.summary-sublist li { margin: 0; padding: 0; }
+.summary-sublist em { font-style: italic; }
+
+/* 9. Tables ------------------------------------------------------------------
+   <div class="table-title">Barbarian Features</div>
+   <table class="phb-table">
+     <thead><tr><th>Level</th>...</tr></thead>
+     <tbody><tr><td class="num">1</td>...</tr></tbody>
+   </table> */
+.phb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--size-table);
+  line-height: 1.16;
+  margin: 0.08in 0 0.12in;
+  break-inside: auto;
+}
+.phb-table caption {
+  caption-side: top;
+  text-align: left;
+  font: 700 10pt/1.1 var(--font-sans-sc);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  padding: 0 0 3pt 2pt;
+}
+.phb-table th {
+  font-weight: 700;
+  text-align: left;
+  vertical-align: bottom;
+  color: var(--table-head-ink);
+  padding: 2pt 5pt 2.5pt;
+}
+.phb-table td { padding: 1.5pt 5pt 1.3pt; vertical-align: top; }
+.phb-table tbody tr:nth-child(odd) td { background: var(--table-stripe); }
+.phb-table thead { display: table-header-group; }    /* repeats on page break */
+.phb-table tr { break-inside: avoid; }
+/* numeric / dice columns: centred, as in the PHB */
+.phb-table .num, .phb-table th.num { text-align: center; white-space: nowrap; font-variant-numeric: tabular-nums lining-nums; }
+.phb-table .right { text-align: right; }
+.phb-table .nowrap { white-space: nowrap; }
+/* category row inside a table ("Simple Melee Weapons") */
+.phb-table tr.group td {
+  background: none !important;
+  font-weight: 700;
+  font-style: italic;
+  padding-top: 4pt;
+  color: var(--ink);
+}
+.phb-table tr.group + tr td { }
+/* Table title. Use this div before the table rather than <caption>:
+   in Chromium a <caption> inside a named page (page: ch3) makes the whole
+   table jump to the next page, leaving the caption behind. */
+.table-title {
+  font: 700 10pt/1.1 var(--font-sans-sc); letter-spacing: .04em; color: var(--ink);
+  margin: 0.1in 0 0; padding-left: 2pt; break-after: avoid;
+}
+.table-title + .phb-table, .table-title + .traits-table { margin-top: 0.03in; }
+.traits-title { font: 700 10.5pt/1.1 var(--font-heading); color: var(--heading); margin: 0.06in 0 0.03in; break-after: avoid; }
+
+/* Two-column "key: value" trait table, e.g. Core Barbarian Traits */
+.traits-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--size-table);
+  line-height: 1.22;
+  margin: 0.06in 0 0.12in;
+  border-top: 1.4pt solid var(--gold);
+  border-bottom: 1.4pt solid var(--gold);
+}
+.traits-table caption {
+  caption-side: top; text-align: left;
+  font: 700 10.5pt/1.1 var(--font-heading); color: var(--heading);
+  padding: 0 0 3pt;
+}
+.traits-table th { text-align: left; font-weight: 700; width: 38%; vertical-align: top; padding: 2.5pt 6pt; }
+.traits-table td { padding: 2.5pt 6pt; vertical-align: top; }
+.traits-table tr:nth-child(odd) > * { background: var(--table-stripe); }
+
+/* d-table: a die-roll table, optionally with an emblem and gold stem on the left.
+   <div class="d-table-group">
+     <div class="d-table-icon"></div>
+     <div class="d-table-body"><div class="table-title">Strength</div>
+        <div class="d-table-pair"><table class="phb-table d-table">...</table>...</div>
+     </div>
+   </div> */
+.d-table-group { display: grid; grid-template-columns: 34pt 1fr; column-gap: 8pt; margin: 0.06in 0 0.1in; break-inside: avoid; }
+.d-table-icon {
+  background:
+    url("../../ornaments/class-emblem.svg") center 2pt / 26pt 26pt no-repeat,
+    url("../../ornaments/section-tick.svg") center 34pt / 10pt 10pt no-repeat,
+    linear-gradient(var(--gold), rgba(194,164,102,0)) center 42pt / 1.2pt 60% no-repeat;
+}
+.d-table-body > .table-title { margin-top: 0; }
+.d-table-pair { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10pt; }
+.d-table { margin: 0.02in 0 0; }
+.d-table th:first-child, .d-table td:first-child { width: 2.6em; text-align: center; padding-left: 2pt; padding-right: 2pt; }
+
+/* 10. Spell entries -----------------------------------------------------------
+   <article class="spell">
+     <h4 class="spell-name">Blight</h4>
+     <p class="spell-meta">Level 4 Necromancy (Druid, Sorcerer, Warlock, Wizard)</p>
+     <dl class="spell-stats"><dt>Casting Time:</dt><dd>Action</dd>...</dl>
+     <div class="spell-text"><p>...</p></div>
+   </article> */
+.spell { margin: 0 0 0.14in; }
+.spell-name {
+  font: 700 var(--size-h4)/1.1 var(--font-heading);
+  color: var(--heading);
+  margin: 0 0 1pt;
+  border: 0;
+}
+.spell-meta { font-style: italic; margin: 0 0 2pt; text-indent: 0 !important; }
+.spell-stats { margin: 0 0 3pt; }
+.spell-stats dt { display: inline; font-weight: 700; }
+.spell-stats dd { display: inline; margin: 0; }
+.spell-stats dd::after { content: ""; display: block; }   /* one field per line */
+.spell-text p + p { text-indent: var(--indent); }
+.spell-text .run-in-title { font-style: italic; }
+/* keep the header with the first lines of text */
+.spell-name, .spell-meta, .spell-stats { break-after: avoid; break-inside: avoid; }
+
+/* 11. Sidebar / callout -------------------------------------------------------
+   <aside class="sidebar"><h4 class="sidebar-title">Selling Equipment</h4><p>...</p></aside> */
+.sidebar {
+  position: relative;
+  background: var(--sidebar-bg);
+  font-family: var(--font-sans);
+  font-size: 8.8pt;
+  line-height: 1.24;
+  padding: 7pt 10pt 8pt;
+  margin: 0.1in 0 0.14in;
+  border-top: 1.6pt solid var(--sidebar-rule);
+  border-bottom: 1.6pt solid var(--sidebar-rule);
+  break-inside: avoid;
+}
+.sidebar::before, .sidebar::after {          /* small diamond studs on the rules */
+  content: ""; position: absolute; left: 50%; width: 6pt; height: 6pt; margin-left: -3pt;
+  background: var(--sidebar-rule); transform: rotate(45deg);
+}
+.sidebar::before { top: -3.8pt; }
+.sidebar::after { bottom: -3.8pt; }
+.sidebar-title {
+  font: 700 10pt/1.15 var(--font-sans-sc);
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin: 0 0 3pt;
+  border: 0; padding: 0;
+}
+.sidebar p + p { text-indent: var(--indent); }
+
+/* 12. Figures and art frame --------------------------------------------------
+   <figure class="art-frame" style="height:3in">
+     <div class="art">  <img ...> or empty for a placeholder  </div>
+     <figcaption class="art-caption">The heroes ...</figcaption>
+   </figure>
+   The frame is a 9-slice SVG (border-image), so corners never distort; the
+   art itself is masked with matching concave corners. */
+.art-frame {
+  position: relative;
+  margin: 0.1in 0 0.14in;
+  padding: 0;
+  border: 18px solid transparent;
+  border-image: url("../../ornaments/frame-border.svg") 32 / 24px / 4px stretch;
+  break-inside: avoid;
+}
+.art-frame .art {
+  position: relative;
+  width: 100%; height: 100%;
+  min-height: 1.4in;
+  --r: var(--frame-notch);
+  -webkit-mask:
+    radial-gradient(circle at 0 0, #0000 var(--r), #000 calc(var(--r) + .5px)) top left / 51% 51% no-repeat,
+    radial-gradient(circle at 100% 0, #0000 var(--r), #000 calc(var(--r) + .5px)) top right / 51% 51% no-repeat,
+    radial-gradient(circle at 0 100%, #0000 var(--r), #000 calc(var(--r) + .5px)) bottom left / 51% 51% no-repeat,
+    radial-gradient(circle at 100% 100%, #0000 var(--r), #000 calc(var(--r) + .5px)) bottom right / 51% 51% no-repeat;
+          mask:
+    radial-gradient(circle at 0 0, #0000 var(--r), #000 calc(var(--r) + .5px)) top left / 51% 51% no-repeat,
+    radial-gradient(circle at 100% 0, #0000 var(--r), #000 calc(var(--r) + .5px)) top right / 51% 51% no-repeat,
+    radial-gradient(circle at 0 100%, #0000 var(--r), #000 calc(var(--r) + .5px)) bottom left / 51% 51% no-repeat,
+    radial-gradient(circle at 100% 100%, #0000 var(--r), #000 calc(var(--r) + .5px)) bottom right / 51% 51% no-repeat;
+}
+.art-frame .art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Placeholder until real art exists */
+.art-frame .art:empty {
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(255,250,238,.55), rgba(255,250,238,0) 60%),
+    repeating-linear-gradient(45deg, rgba(123,35,22,.05) 0 8px, rgba(123,35,22,0) 8px 16px),
+    linear-gradient(160deg, #d8c39b, #b9946a 60%, #8f6a4b);
+}
+.art-frame .art:empty::after {
+  content: attr(data-label);
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font: 700 9pt var(--font-sans-sc); letter-spacing: .12em;
+  color: rgba(60,35,20,.55);
+}
+/* Caption overlaid on the art, PHB style (white small caps, top or bottom) */
+.art-caption {
+  position: absolute; left: 14pt; bottom: 12pt; max-width: 46%;
+  font: 500 8pt/1.2 var(--font-sans-sc);
+  letter-spacing: 0.03em;
+  color: #fffaf0;
+  text-shadow: 0 0 3px rgba(0,0,0,.55);
+}
+.art-caption.top { top: 12pt; bottom: auto; }
+/* Caption set under a plain figure */
+.figure-caption {
+  font: 500 8pt/1.2 var(--font-sans-sc); color: var(--ink-faint);
+  letter-spacing: .03em; margin-top: 3pt;
+}
+/* Vertical art credit along the frame edge */
+.art-credit {
+  position: absolute; right: -14pt; bottom: 8pt;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font: 500 6pt var(--font-sans-sc); letter-spacing: .12em; color: var(--ink-faint);
+}
+
+/* 13. Ink-saver / monochrome --------------------------------------------------
+   <body class="bw">: no paper tint or texture, black headings, grey rules,
+   outline-only stripes. Swap tokens, then strip decorative fills. */
+body.bw {
+  --parchment: #ffffff; --parchment-deep: #f2f2f2; --parchment-edge: #ffffff;
+  --ink: #000; --ink-soft: #333; --ink-faint: #666;
+  --heading: #000; --heading-deep: #000; --heading-light: #222;
+  --gold: #888; --gold-deep: #555; --gold-light: #ccc;
+  --table-stripe: #ededed; --table-rule: #999; --table-group: #fff;
+  --sidebar-bg: #fff; --sidebar-rule: #555;
+}
+body.bw .chapter-title, body.bw .drop-cap::first-letter {
+  background: none; -webkit-text-fill-color: currentColor; color: #000;
+}
+body.bw .art-frame .art:empty { background: repeating-linear-gradient(45deg, #eee 0 8px, #fff 8px 16px); }
+body.bw .art-caption { color: #000; text-shadow: none; }
+body.bw .summary-item .emblem, body.bw .d-table-icon, body.bw [class*="ornament"],
+body.bw .chapter-kicker::before, body.bw .chapter-kicker::after, body.bw .art-frame {
+  filter: grayscale(1);
+}
+/* Margin boxes can't see body classes; page-bw.css (link it in bw mode)
+   overrides the @page background and footer colours. */
+
+/* 14. Screen preview ------------------------------------------------------------
+   On screen, show each .sheet as a paper-sized card. In print these rules
+   are inert, so the same HTML works for both. */
+@media screen {
+  html { background: #6b625a; }
+  body { width: 8.5in; margin: 0.3in auto; padding: 0.6in 0.62in; background: var(--parchment); box-shadow: 0 2px 18px rgba(0,0,0,.4); }
+  .paper-a4 body, body.paper-a4 { width: 210mm; }
+}
+
+/* Small-caps lead-in that opens a class or section ("Barbarians are mighty warriors who") */
+.lead-in { font-family: var(--font-heading); font-weight: 500; letter-spacing: 0.03em; }

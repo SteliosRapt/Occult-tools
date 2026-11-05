@@ -1,0 +1,4 @@
+/* White-page companion (--mode white): every colour stays, only the parchment page goes, which saves
+   the ink of a full-page fill while keeping red headings, gold rules, table stripes and art. The page
+   background is outside the DOM, so @page needs its own override. Link after page.css. */
+@page { background-color: #fff; background-image: none; }

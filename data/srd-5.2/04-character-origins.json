@@ -1,0 +1,1055 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "label": "Ability Scores",
+              "text": "Intelligence, Wisdom, Charisma",
+              "type": "paragraph"
+            },
+            {
+              "label": "Feat",
+              "text": "[Magic Initiate](srd-5.2/05/origin-feats/magic-initiate) (Cleric)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Skill Proficiencies",
+              "text": "[Insight](srd-5.2/01/proficiency/skill-proficiencies/skill-list/insight), [Religion](srd-5.2/01/proficiency/skill-proficiencies/skill-list/religion)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Tool Proficiency",
+              "text": "[Calligrapher's Supplies](srd-5.2/06/tools/artisans-tools/calligraphers-supplies)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Equipment",
+              "text": "Choose A or B: (A) [Calligrapher's Supplies](srd-5.2/06/tools/artisans-tools/calligraphers-supplies), [Book (prayers)](srd-5.2/06/adventuring-gear/book), [Holy Symbol](srd-5.2/06/adventuring-gear/holy-symbol), [Parchment](srd-5.2/06/adventuring-gear/parchment) (10 sheets), [Robe](srd-5.2/06/adventuring-gear/robe), 8 GP; or (B) 50 GP",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_scores": [
+              "Intelligence",
+              "Wisdom",
+              "Charisma"
+            ],
+            "equipment": "Choose A or B: (A) Calligrapher's Supplies, Book (prayers), Holy Symbol, Parchment (10 sheets), Robe, 8 GP; or (B) 50 GP",
+            "feat": "Magic Initiate (Cleric)",
+            "skill_proficiencies": [
+              "Insight",
+              "Religion"
+            ],
+            "tool_proficiency": "Calligrapher's Supplies"
+          },
+          "id": "srd-5.2/04/background-descriptions/acolyte",
+          "origin": {
+            "name": "Acolyte",
+            "prop": "background",
+            "source": "XPHB"
+          },
+          "title": "Acolyte",
+          "type": "background"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "label": "Ability Scores",
+              "text": "Dexterity, Constitution, Intelligence",
+              "type": "paragraph"
+            },
+            {
+              "label": "Feat",
+              "text": "[Alert](srd-5.2/05/origin-feats/alert)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Skill Proficiencies",
+              "text": "[Sleight of Hand](srd-5.2/01/proficiency/skill-proficiencies/skill-list/sleight-of-hand), [Stealth](srd-5.2/01/proficiency/skill-proficiencies/skill-list/stealth)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Tool Proficiency",
+              "text": "[Thieves' Tools](srd-5.2/06/tools/other-tools/thieves-tools)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Equipment",
+              "text": "Choose A or B: (A) [2 Daggers](srd-5.2/06/weapons/dagger), [Thieves' Tools](srd-5.2/06/tools/other-tools/thieves-tools), [Crowbar](srd-5.2/06/adventuring-gear/crowbar), [2 Pouches](srd-5.2/06/adventuring-gear/pouch), [Traveler's Clothes](srd-5.2/06/adventuring-gear/clothes-travelers), 16 GP; or (B) 50 GP",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_scores": [
+              "Dexterity",
+              "Constitution",
+              "Intelligence"
+            ],
+            "equipment": "Choose A or B: (A) 2 Daggers, Thieves' Tools, Crowbar, 2 Pouches, Traveler's Clothes, 16 GP; or (B) 50 GP",
+            "feat": "Alert",
+            "skill_proficiencies": [
+              "Sleight of Hand",
+              "Stealth"
+            ],
+            "tool_proficiency": "Thieves' Tools"
+          },
+          "id": "srd-5.2/04/background-descriptions/criminal",
+          "origin": {
+            "name": "Criminal",
+            "prop": "background",
+            "source": "XPHB"
+          },
+          "title": "Criminal",
+          "type": "background"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "label": "Ability Scores",
+              "text": "Constitution, Intelligence, Wisdom",
+              "type": "paragraph"
+            },
+            {
+              "label": "Feat",
+              "text": "[Magic Initiate](srd-5.2/05/origin-feats/magic-initiate) (Wizard)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Skill Proficiencies",
+              "text": "[Arcana](srd-5.2/01/proficiency/skill-proficiencies/skill-list/arcana), [History](srd-5.2/01/proficiency/skill-proficiencies/skill-list/history)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Tool Proficiency",
+              "text": "[Calligrapher's Supplies](srd-5.2/06/tools/artisans-tools/calligraphers-supplies)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Equipment",
+              "text": "Choose A or B: (A) [Quarterstaff](srd-5.2/06/weapons/quarterstaff), [Calligrapher's Supplies](srd-5.2/06/tools/artisans-tools/calligraphers-supplies), [Book](srd-5.2/06/adventuring-gear/book) (history), [Parchment](srd-5.2/06/adventuring-gear/parchment) (8 sheets), [Robe](srd-5.2/06/adventuring-gear/robe), 8 GP; or (B) 50 GP",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_scores": [
+              "Constitution",
+              "Intelligence",
+              "Wisdom"
+            ],
+            "equipment": "Choose A or B: (A) Quarterstaff, Calligrapher's Supplies, Book (history), Parchment (8 sheets), Robe, 8 GP; or (B) 50 GP",
+            "feat": "Magic Initiate (Wizard)",
+            "skill_proficiencies": [
+              "Arcana",
+              "History"
+            ],
+            "tool_proficiency": "Calligrapher's Supplies"
+          },
+          "id": "srd-5.2/04/background-descriptions/sage",
+          "origin": {
+            "name": "Sage",
+            "prop": "background",
+            "source": "XPHB"
+          },
+          "title": "Sage",
+          "type": "background"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "label": "Ability Scores",
+              "text": "Strength, Dexterity, Constitution",
+              "type": "paragraph"
+            },
+            {
+              "label": "Feat",
+              "text": "[Savage Attacker](srd-5.2/05/origin-feats/savage-attacker)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Skill Proficiencies",
+              "text": "[Athletics](srd-5.2/01/proficiency/skill-proficiencies/skill-list/athletics), [Intimidation](srd-5.2/01/proficiency/skill-proficiencies/skill-list/intimidation)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Tool Proficiency",
+              "text": "Choose one kind of [Gaming Set](srd-5.2/06/tools/other-tools/gaming-set)",
+              "type": "paragraph"
+            },
+            {
+              "label": "Equipment",
+              "text": "Choose A or B: (A) [Spear](srd-5.2/06/weapons/spear), [Shortbow](srd-5.2/06/weapons/shortbow), [20 Arrows](srd-5.2/06/adventuring-gear/ammunition), [Gaming Set](srd-5.2/06/tools/other-tools/gaming-set) (same as above), [Healer's Kit](srd-5.2/06/adventuring-gear/healers-kit), [Quiver](srd-5.2/06/adventuring-gear/quiver), [Traveler's Clothes](srd-5.2/06/adventuring-gear/clothes-travelers), 14 GP; or (B) 50 GP",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "ability_scores": [
+              "Strength",
+              "Dexterity",
+              "Constitution"
+            ],
+            "equipment": "Choose A or B: (A) Spear, Shortbow, 20 Arrows, Gaming Set (same as above), Healer's Kit, Quiver, Traveler's Clothes, 14 GP; or (B) 50 GP",
+            "feat": "Savage Attacker",
+            "skill_proficiencies": [
+              "Athletics",
+              "Intimidation"
+            ],
+            "tool_proficiency": "Choose one kind of Gaming Set"
+          },
+          "id": "srd-5.2/04/background-descriptions/soldier",
+          "origin": {
+            "name": "Soldier",
+            "prop": "background",
+            "source": "XPHB"
+          },
+          "title": "Soldier",
+          "type": "background"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/04/background-descriptions",
+      "title": "Background Descriptions",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "label": "Creature Type",
+                  "text": "Humanoid",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Size",
+                  "text": "Medium (about 5–7 feet tall)",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Speed",
+                  "text": "30 feet",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As a Dragonborn, you have these special traits.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Draconic Ancestry",
+                  "text": "Your lineage stems from a dragon progenitor. Choose the kind of dragon from the Draconic Ancestors table. Your choice affects your Breath Weapon and [Damage](srd-5.2/08/rules-definitions/damage) [Resistance](srd-5.2/08/rules-definitions/resistance) traits as well as your appearance.",
+                  "type": "paragraph"
+                },
+                {
+                  "columns": [
+                    "Dragon",
+                    "Damage Type"
+                  ],
+                  "rows": [
+                    [
+                      "Black",
+                      "Acid"
+                    ],
+                    [
+                      "Blue",
+                      "Lightning"
+                    ],
+                    [
+                      "Brass",
+                      "Fire"
+                    ],
+                    [
+                      "Bronze",
+                      "Lightning"
+                    ],
+                    [
+                      "Copper",
+                      "Acid"
+                    ],
+                    [
+                      "Gold",
+                      "Fire"
+                    ],
+                    [
+                      "Green",
+                      "Poison"
+                    ],
+                    [
+                      "Red",
+                      "Fire"
+                    ],
+                    [
+                      "Silver",
+                      "Cold"
+                    ],
+                    [
+                      "White",
+                      "Cold"
+                    ]
+                  ],
+                  "title": "Draconic Ancestors",
+                  "type": "table"
+                },
+                {
+                  "label": "Breath Weapon",
+                  "text": "When you take the [Attack](srd-5.2/08/rules-definitions/attack) action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot [Cone](srd-5.2/08/rules-definitions/cone) or a 30-foot [Line](srd-5.2/08/rules-definitions/line) that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and [Proficiency Bonus](srd-5.2/08/rules-definitions/proficiency)). On a failed save, a creature takes 1d10 damage of the type determined by your Draconic Ancestry trait. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "You can use this Breath Weapon a number of times equal to your [Proficiency Bonus](srd-5.2/08/rules-definitions/proficiency), and you regain all expended uses when you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest).",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Damage Resistance",
+                  "text": "You have [Resistance](srd-5.2/08/rules-definitions/resistance) to the damage type determined by your Draconic Ancestry trait.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Darkvision",
+                  "text": "You have [Darkvision](srd-5.2/08/rules-definitions/darkvision) with a range of 60 feet.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Draconic Flight",
+                  "text": "When you reach character level 5, you can channel draconic magic to give yourself temporary flight. As a [Bonus Action](srd-5.2/08/rules-definitions/bonus-action), you sprout spectral wings on your back that last for 10 minutes or until you retract the wings (no action required) or have the [Incapacitated](srd-5.2/08/rules-definitions/incapacitated) condition. During that time, you have a [Fly Speed](srd-5.2/08/rules-definitions/fly-speed) equal to your [Speed](srd-5.2/08/rules-definitions/speed). Your wings appear to be made of the same energy as your Breath Weapon. Once you use this trait, you can't use it again until you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest).",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/04/species-descriptions/dragonborn/dragonborn-traits",
+              "title": "Dragonborn Traits",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "data": {
+            "creature_type": "Humanoid",
+            "darkvision": 60,
+            "size": "Medium (about 5–7 feet tall)",
+            "speed": "30 feet",
+            "traits": [
+              "Draconic Ancestry",
+              "Breath Weapon",
+              "Damage Resistance",
+              "Darkvision",
+              "Draconic Flight"
+            ]
+          },
+          "id": "srd-5.2/04/species-descriptions/dragonborn",
+          "origin": {
+            "name": "Dragonborn",
+            "prop": "race",
+            "source": "XPHB"
+          },
+          "title": "Dragonborn",
+          "type": "species"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "label": "Creature Type",
+                  "text": "Humanoid",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Size",
+                  "text": "Medium (about 4–5 feet tall)",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Speed",
+                  "text": "30 feet",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As a Dwarf, you have these special traits.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Darkvision",
+                  "text": "You have [Darkvision](srd-5.2/08/rules-definitions/darkvision) with a range of 120 feet.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Dwarven Resilience",
+                  "text": "You have [Resistance](srd-5.2/08/rules-definitions/resistance) to Poison damage. You also have [Advantage](srd-5.2/08/rules-definitions/advantage) on saving throws you make to avoid or end the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Dwarven Toughness",
+                  "text": "Your [Hit Point](srd-5.2/08/rules-definitions/hit-points) maximum increases by 1, and it increases by 1 again whenever you gain a level.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Stonecunning",
+                  "text": "As a [Bonus Action](srd-5.2/08/rules-definitions/bonus-action), you gain [Tremorsense](srd-5.2/08/rules-definitions/tremorsense) with a range of 60 feet for 10 minutes. You must be on a stone surface or touching a stone surface to use this [Tremorsense](srd-5.2/08/rules-definitions/tremorsense). The stone can be natural or worked.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "You can use this [Bonus Action](srd-5.2/08/rules-definitions/bonus-action) a number of times equal to your [Proficiency Bonus](srd-5.2/08/rules-definitions/proficiency), and you regain all expended uses when you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest).",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/04/species-descriptions/dwarf/dwarf-traits",
+              "title": "Dwarf Traits",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "data": {
+            "creature_type": "Humanoid",
+            "darkvision": 120,
+            "size": "Medium (about 4–5 feet tall)",
+            "speed": "30 feet",
+            "traits": [
+              "Darkvision",
+              "Dwarven Resilience",
+              "Dwarven Toughness",
+              "Stonecunning"
+            ]
+          },
+          "id": "srd-5.2/04/species-descriptions/dwarf",
+          "origin": {
+            "name": "Dwarf",
+            "prop": "race",
+            "source": "XPHB"
+          },
+          "title": "Dwarf",
+          "type": "species"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "label": "Creature Type",
+                  "text": "Humanoid",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Size",
+                  "text": "Medium (about 5–6 feet tall)",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Speed",
+                  "text": "30 feet",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As an Elf, you have these special traits.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Darkvision",
+                  "text": "You have [Darkvision](srd-5.2/08/rules-definitions/darkvision) with a range of 60 feet.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Elven Lineage",
+                  "text": "You are part of a lineage that grants you supernatural abilities. Choose a lineage from the Elven Lineages table. You gain the level 1 benefit of that lineage.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "When you reach character levels 3 and 5, you learn a higher-level spell, as shown on the table. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest). You can also cast the spell using any spell slots you have of the appropriate level.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage).",
+                  "type": "paragraph"
+                },
+                {
+                  "columns": [
+                    "Lineage",
+                    "Level 1",
+                    "Level 3",
+                    "Level 5"
+                  ],
+                  "rows": [
+                    [
+                      "Drow",
+                      "The range of your [Darkvision](srd-5.2/08/rules-definitions/darkvision) increases to 120 feet. You also know the *[Dancing Lights](srd-5.2/07/spell-descriptions/dancing-lights)* cantrip.",
+                      "*[Faerie Fire](srd-5.2/07/spell-descriptions/faerie-fire)*",
+                      "*[Darkness](srd-5.2/07/spell-descriptions/darkness)*"
+                    ],
+                    [
+                      "High Elf",
+                      "You know the *[Prestidigitation](srd-5.2/07/spell-descriptions/prestidigitation)* cantrip. Whenever you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest), you can replace that cantrip with a different cantrip from the Wizard spell list.",
+                      "*[Detect Magic](srd-5.2/07/spell-descriptions/detect-magic)*",
+                      "*[Misty Step](srd-5.2/07/spell-descriptions/misty-step)*"
+                    ],
+                    [
+                      "Wood Elf",
+                      "Your [Speed](srd-5.2/08/rules-definitions/speed) increases to 35 feet. You also know the *[Druidcraft](srd-5.2/07/spell-descriptions/druidcraft)* cantrip.",
+                      "*[Longstrider](srd-5.2/07/spell-descriptions/longstrider)*",
+                      "*[Pass without Trace](srd-5.2/07/spell-descriptions/pass-without-trace)*"
+                    ]
+                  ],
+                  "title": "Elven Lineages",
+                  "type": "table"
+                },
+                {
+                  "label": "Fey Ancestry",
+                  "text": "You have [Advantage](srd-5.2/08/rules-definitions/advantage) on saving throws you make to avoid or end the [Charmed](srd-5.2/08/rules-definitions/charmed) condition.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Keen Senses",
+                  "text": "You have proficiency in the [Insight](srd-5.2/01/proficiency/skill-proficiencies/skill-list/insight), [Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception), or [Survival](srd-5.2/01/proficiency/skill-proficiencies/skill-list/survival) skill.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Trance",
+                  "text": "You don't need to sleep, and magic can't put you to sleep. You can finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest) in 4 hours if you spend those hours in a trancelike meditation, during which you retain consciousness.",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/04/species-descriptions/elf/elf-traits",
+              "title": "Elf Traits",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "data": {
+            "creature_type": "Humanoid",
+            "darkvision": 60,
+            "lineages": [
+              "Drow",
+              "High Elf",
+              "Wood Elf"
+            ],
+            "size": "Medium (about 5–6 feet tall)",
+            "speed": "30 feet",
+            "traits": [
+              "Darkvision",
+              "Elven Lineage",
+              "Fey Ancestry",
+              "Keen Senses",
+              "Trance"
+            ]
+          },
+          "id": "srd-5.2/04/species-descriptions/elf",
+          "origin": {
+            "name": "Elf",
+            "prop": "race",
+            "source": "XPHB"
+          },
+          "title": "Elf",
+          "type": "species"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "label": "Creature Type",
+                  "text": "Humanoid",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Size",
+                  "text": "Small (about 3–4 feet tall)",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Speed",
+                  "text": "30 feet",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As a Gnome, you have these special traits.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Darkvision",
+                  "text": "You have [Darkvision](srd-5.2/08/rules-definitions/darkvision) with a range of 60 feet.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Gnomish Cunning",
+                  "text": "You have [Advantage](srd-5.2/08/rules-definitions/advantage) on Intelligence, Wisdom, and Charisma saving throws.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Gnomish Lineage",
+                  "text": "You are part of a lineage that grants you supernatural abilities. Choose one of the following options; whichever one you choose, Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage):",
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "label": "Forest Gnome",
+                      "text": "You know the *[Minor Illusion](srd-5.2/07/spell-descriptions/minor-illusion)* cantrip. You also always have the *[Speak with Animals](srd-5.2/07/spell-descriptions/speak-with-animals)* spell prepared. You can cast it without a spell slot a number of times equal to your [Proficiency Bonus](srd-5.2/08/rules-definitions/proficiency), and you regain all expended uses when you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest). You can also use any spell slots you have to cast the spell."
+                    },
+                    {
+                      "label": "Rock Gnome",
+                      "text": "You know the *[Mending](srd-5.2/07/spell-descriptions/mending)* and *[Prestidigitation](srd-5.2/07/spell-descriptions/prestidigitation)* cantrips. In addition, you can spend 10 minutes casting *[Prestidigitation](srd-5.2/07/spell-descriptions/prestidigitation)* to create a Tiny clockwork device (AC 5, 1 HP), such as a toy, fire starter, or music box. When you create the device, you determine its function by choosing one effect from *[Prestidigitation](srd-5.2/07/spell-descriptions/prestidigitation)*; the device produces that effect whenever you or another creature takes a [Bonus Action](srd-5.2/08/rules-definitions/bonus-action) to activate it with a touch. If the chosen effect has options within it, you choose one of those options for the device when you create it. For example, if you choose the spell's ignite-extinguish effect, you determine whether the device ignites or extinguishes fire; the device doesn't do both. You can have three such devices in existence at a time, and each falls apart 8 hours after its creation or when you dismantle it with a touch as a [Utilize](srd-5.2/08/rules-definitions/utilize) action."
+                    }
+                  ],
+                  "ordered": false,
+                  "type": "list"
+                }
+              ],
+              "id": "srd-5.2/04/species-descriptions/gnome/gnome-traits",
+              "title": "Gnome Traits",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "data": {
+            "creature_type": "Humanoid",
+            "darkvision": 60,
+            "size": "Small (about 3–4 feet tall)",
+            "speed": "30 feet",
+            "traits": [
+              "Darkvision",
+              "Gnomish Cunning",
+              "Gnomish Lineage",
+              "Forest Gnome",
+              "Rock Gnome"
+            ]
+          },
+          "id": "srd-5.2/04/species-descriptions/gnome",
+          "origin": {
+            "name": "Gnome",
+            "prop": "race",
+            "source": "XPHB"
+          },
+          "title": "Gnome",
+          "type": "species"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "label": "Creature Type",
+                  "text": "Humanoid",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Size",
+                  "text": "Medium (about 7–8 feet tall)",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Speed",
+                  "text": "35 feet",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As a Goliath, you have these special traits.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Giant Ancestry",
+                  "text": "You are descended from Giants. Choose one of the following benefits—a supernatural boon from your ancestry; you can use the chosen benefit a number of times equal to your [Proficiency Bonus](srd-5.2/08/rules-definitions/proficiency), and you regain all expended uses when you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest):",
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "label": "Cloud's Jaunt (Cloud Giant)",
+                      "text": "As a [Bonus Action](srd-5.2/08/rules-definitions/bonus-action), you magically teleport up to 30 feet to an unoccupied space you can see."
+                    },
+                    {
+                      "label": "Fire's Burn (Fire Giant)",
+                      "text": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 Fire damage to that target."
+                    },
+                    {
+                      "label": "Frost's Chill (Frost Giant)",
+                      "text": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 Cold damage to that target and reduce its [Speed](srd-5.2/08/rules-definitions/speed) by 10 feet until the start of your next turn."
+                    },
+                    {
+                      "label": "Hill's Tumble (Hill Giant)",
+                      "text": "When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the [Prone](srd-5.2/08/rules-definitions/prone) condition."
+                    },
+                    {
+                      "label": "Stone's Endurance (Stone Giant)",
+                      "text": "When you take damage, you can take a [Reaction](srd-5.2/08/rules-definitions/reaction) to roll 1d12. Add your Constitution modifier to the number rolled and reduce the damage by that total."
+                    },
+                    {
+                      "label": "Storm's Thunder (Storm Giant)",
+                      "text": "When you take damage from a creature within 60 feet of you, you can take a [Reaction](srd-5.2/08/rules-definitions/reaction) to deal 1d8 Thunder damage to that creature."
+                    }
+                  ],
+                  "ordered": false,
+                  "type": "list"
+                },
+                {
+                  "label": "Large Form",
+                  "text": "Starting at character level 5, you can change your size to Large as a [Bonus Action](srd-5.2/08/rules-definitions/bonus-action) if you're in a big enough space. This transformation lasts for 10 minutes or until you end it (no action required). For that duration, you have [Advantage](srd-5.2/08/rules-definitions/advantage) on Strength checks, and your [Speed](srd-5.2/08/rules-definitions/speed) increases by 10 feet. Once you use this trait, you can't use it again until you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest).",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Powerful Build",
+                  "text": "You have [Advantage](srd-5.2/08/rules-definitions/advantage) on any ability check you make to end the [Grappled](srd-5.2/08/rules-definitions/grappled) condition. You also count as one size larger when determining your carrying capacity.",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/04/species-descriptions/goliath/goliath-traits",
+              "title": "Goliath Traits",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "data": {
+            "creature_type": "Humanoid",
+            "size": "Medium (about 7–8 feet tall)",
+            "speed": "35 feet",
+            "traits": [
+              "Giant Ancestry",
+              "Cloud's Jaunt (Cloud Giant)",
+              "Fire's Burn (Fire Giant)",
+              "Frost's Chill (Frost Giant)",
+              "Hill's Tumble (Hill Giant)",
+              "Stone's Endurance (Stone Giant)",
+              "Storm's Thunder (Storm Giant)",
+              "Large Form",
+              "Powerful Build"
+            ]
+          },
+          "id": "srd-5.2/04/species-descriptions/goliath",
+          "origin": {
+            "name": "Goliath",
+            "prop": "race",
+            "source": "XPHB"
+          },
+          "title": "Goliath",
+          "type": "species"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "label": "Creature Type",
+                  "text": "Humanoid",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Size",
+                  "text": "Small (about 2–3 feet tall)",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Speed",
+                  "text": "30 feet",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As a Halfling, you have these special traits.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Brave",
+                  "text": "You have [Advantage](srd-5.2/08/rules-definitions/advantage) on saving throws you make to avoid or end the [Frightened](srd-5.2/08/rules-definitions/frightened) condition.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Halfling Nimbleness",
+                  "text": "You can move through the space of any creature that is a size larger than you, but you can't stop in the same space.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Luck",
+                  "text": "When you roll a 1 on the d20 of a [D20 Test](srd-5.2/08/rules-definitions/d20-test), you can reroll the die, and you must use the new roll.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Naturally Stealthy",
+                  "text": "You can take the [Hide](srd-5.2/08/rules-definitions/hide) action even when you are obscured only by a creature that is at least one size larger than you.",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/04/species-descriptions/halfling/halfling-traits",
+              "title": "Halfling Traits",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "data": {
+            "creature_type": "Humanoid",
+            "size": "Small (about 2–3 feet tall)",
+            "speed": "30 feet",
+            "traits": [
+              "Brave",
+              "Halfling Nimbleness",
+              "Luck",
+              "Naturally Stealthy"
+            ]
+          },
+          "id": "srd-5.2/04/species-descriptions/halfling",
+          "origin": {
+            "name": "Halfling",
+            "prop": "race",
+            "source": "XPHB"
+          },
+          "title": "Halfling",
+          "type": "species"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "label": "Creature Type",
+                  "text": "Humanoid",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Size",
+                  "text": "Medium (about 4–7 feet tall) or Small (about 2–4 feet tall), chosen when you select this species",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Speed",
+                  "text": "30 feet",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As a Human, you have these special traits.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Resourceful",
+                  "text": "You gain [Heroic Inspiration](srd-5.2/08/rules-definitions/heroic-inspiration) whenever you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest).",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Skillful",
+                  "text": "You gain proficiency in one skill of your choice.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Versatile",
+                  "text": "You gain an Origin feat of your choice.",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/04/species-descriptions/human/human-traits",
+              "title": "Human Traits",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "data": {
+            "creature_type": "Humanoid",
+            "size": "Medium (about 4–7 feet tall) or Small (about 2–4 feet tall), chosen when you select this species",
+            "speed": "30 feet",
+            "traits": [
+              "Resourceful",
+              "Skillful",
+              "Versatile"
+            ]
+          },
+          "id": "srd-5.2/04/species-descriptions/human",
+          "origin": {
+            "name": "Human",
+            "prop": "race",
+            "source": "XPHB"
+          },
+          "title": "Human",
+          "type": "species"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "label": "Creature Type",
+                  "text": "Humanoid",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Size",
+                  "text": "Medium (about 6–7 feet tall)",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Speed",
+                  "text": "30 feet",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As an Orc, you have these special traits.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Adrenaline Rush",
+                  "text": "You can take the [Dash](srd-5.2/08/rules-definitions/dash) action as a [Bonus Action](srd-5.2/08/rules-definitions/bonus-action). When you do so, you gain a number of [Temporary Hit Points](srd-5.2/08/rules-definitions/temporary-hit-points) equal to your [Proficiency Bonus](srd-5.2/08/rules-definitions/proficiency).",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "You can use this trait a number of times equal to your [Proficiency Bonus](srd-5.2/08/rules-definitions/proficiency), and you regain all expended uses when you finish a [Short](srd-5.2/08/rules-definitions/short-rest) or [Long Rest](srd-5.2/08/rules-definitions/long-rest).",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Darkvision",
+                  "text": "You have [Darkvision](srd-5.2/08/rules-definitions/darkvision) with a range of 120 feet.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Relentless Endurance",
+                  "text": "When you are reduced to 0 [Hit Points](srd-5.2/08/rules-definitions/hit-points) but not killed outright, you can drop to 1 [Hit Point](srd-5.2/08/rules-definitions/hit-points) instead. Once you use this trait, you can't do so again until you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest).",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/04/species-descriptions/orc/orc-traits",
+              "title": "Orc Traits",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "data": {
+            "creature_type": "Humanoid",
+            "darkvision": 120,
+            "size": "Medium (about 6–7 feet tall)",
+            "speed": "30 feet",
+            "traits": [
+              "Adrenaline Rush",
+              "Darkvision",
+              "Relentless Endurance"
+            ]
+          },
+          "id": "srd-5.2/04/species-descriptions/orc",
+          "origin": {
+            "name": "Orc",
+            "prop": "race",
+            "source": "XPHB"
+          },
+          "title": "Orc",
+          "type": "species"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "label": "Creature Type",
+                  "text": "Humanoid",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Size",
+                  "text": "Medium (about 4–7 feet tall) or Small (about 3–4 feet tall), chosen when you select this species",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Speed",
+                  "text": "30 feet",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As a Tiefling, you have these special traits.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Darkvision",
+                  "text": "You have [Darkvision](srd-5.2/08/rules-definitions/darkvision) with a range of 60 feet.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Fiendish Legacy",
+                  "text": "You are the recipient of a legacy that grants you supernatural abilities. Choose a legacy from the Fiendish Legacies table. You gain the level 1 benefit of the chosen legacy.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "When you reach character levels 3 and 5, you learn a higher-level spell, as shown on the table. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a [Long Rest](srd-5.2/08/rules-definitions/long-rest). You can also cast the spell using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy).",
+                  "type": "paragraph"
+                },
+                {
+                  "columns": [
+                    "Legacy",
+                    "Level 1",
+                    "Level 3",
+                    "Level 5"
+                  ],
+                  "rows": [
+                    [
+                      "Abyssal",
+                      "You have [Resistance](srd-5.2/08/rules-definitions/resistance) to Poison damage. You also know the *[Poison Spray](srd-5.2/07/spell-descriptions/poison-spray)* cantrip.",
+                      "*[Ray of Sickness](srd-5.2/07/spell-descriptions/ray-of-sickness)*",
+                      "*[Hold Person](srd-5.2/07/spell-descriptions/hold-person)*"
+                    ],
+                    [
+                      "Chthonic",
+                      "You have [Resistance](srd-5.2/08/rules-definitions/resistance) to Necrotic damage. You also know the *[Chill Touch](srd-5.2/07/spell-descriptions/chill-touch)* cantrip.",
+                      "*[False Life](srd-5.2/07/spell-descriptions/false-life)*",
+                      "*[Ray of Enfeeblement](srd-5.2/07/spell-descriptions/ray-of-enfeeblement)*"
+                    ],
+                    [
+                      "Infernal",
+                      "You have [Resistance](srd-5.2/08/rules-definitions/resistance) to Fire damage. You also know the *[Fire Bolt](srd-5.2/07/spell-descriptions/fire-bolt)* cantrip.",
+                      "*[Hellish Rebuke](srd-5.2/07/spell-descriptions/hellish-rebuke)*",
+                      "*[Darkness](srd-5.2/07/spell-descriptions/darkness)*"
+                    ]
+                  ],
+                  "title": "Fiendish Legacies",
+                  "type": "table"
+                },
+                {
+                  "label": "Otherworldly Presence",
+                  "text": "You know the *[Thaumaturgy](srd-5.2/07/spell-descriptions/thaumaturgy)* cantrip. When you cast it with this trait, the spell uses the same spellcasting ability you use for your Fiendish Legacy Trait.",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/04/species-descriptions/tiefling/tiefling-traits",
+              "title": "Tiefling Traits",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "data": {
+            "creature_type": "Humanoid",
+            "darkvision": 60,
+            "lineages": [
+              "Abyssal",
+              "Chthonic",
+              "Infernal"
+            ],
+            "size": "Medium (about 4–7 feet tall) or Small (about 3–4 feet tall), chosen when you select this species",
+            "speed": "30 feet",
+            "traits": [
+              "Darkvision",
+              "Fiendish Legacy",
+              "Otherworldly Presence"
+            ]
+          },
+          "id": "srd-5.2/04/species-descriptions/tiefling",
+          "origin": {
+            "name": "Tiefling",
+            "prop": "race",
+            "source": "XPHB"
+          },
+          "title": "Tiefling",
+          "type": "species"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/04/species-descriptions",
+      "title": "Species Descriptions",
+      "type": "section"
+    }
+  ],
+  "content": [],
+  "id": "srd-5.2/04",
+  "title": "Chapter 4: Character Origins",
+  "type": "chapter"
+}

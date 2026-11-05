@@ -1,0 +1,11 @@
+{% import "cards/_blocks.j2" as k %}
+{# One category back (`make cards --backs category`). fit.js clones it behind every card whose
+   data-back matches, mirrored for a long-edge duplex flip. #}
+<article class="card-back size-{{ size }}" data-back="{{ b.key }}">
+  <div class="b-frame">
+    <div class="b-kicker">{{ b.kicker }}</div>
+    <div class="b-medallion">{% if b.icon %}{{ k.ico(b.icon, "gl" if b.icon.startswith("ui-") else "ico") }}{% else %}<span class="b-initial">{{ b.title[:1] }}</span>{% endif %}</div>
+    <div class="b-title">{{ b.title }}</div>
+    <div class="b-rule"></div>
+  </div>
+</article>

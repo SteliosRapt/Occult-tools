@@ -1,0 +1,15 @@
+{% extends "book/_base.html.j2" %}
+{% import "book/_blocks.j2" as k %}
+{# Rules glossary: the conventions, then every term A-Z with its tag and See also line. #}
+{% block book %}
+{{ k.opener(book.kicker, book.title) }}
+<div class="columns-2">
+<h2>{{ book.intro_title }}</h2>
+{{ k.blocks(book.intro) }}
+{% for g in book.letters %}
+<h2 class="letter">{{ g.letter }}</h2>
+{% for t in g.terms %}{{ k.term(t) }}
+{% endfor %}
+{% endfor %}
+</div>
+{% endblock %}

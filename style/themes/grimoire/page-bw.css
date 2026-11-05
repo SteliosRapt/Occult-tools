@@ -1,0 +1,7 @@
+/* Ink-saver companion to body.bw. Margin boxes and the page background are
+   outside the DOM, so they need their own override. Link after page.css. */
+@page { background: #fff; }
+@page :right { @bottom-right { color: #000; background: linear-gradient(90deg, #fff0, #888 35%) left calc(50% + 12pt) / 100% 0.7pt no-repeat; } }
+@page :left  { @bottom-left  { color: #000; background: linear-gradient(270deg, #fff0, #888 35%) left calc(50% + 12pt) / 100% 0.7pt no-repeat; } }
+@page :right { @bottom-right-corner { background: linear-gradient(90deg, #888, #fff0) left 0 bottom 12.4pt / 80% 0.6pt no-repeat; } }
+@page :left  { @bottom-left-corner  { background: linear-gradient(270deg, #888, #fff0) right 0 bottom 12.4pt / 80% 0.6pt no-repeat; } }

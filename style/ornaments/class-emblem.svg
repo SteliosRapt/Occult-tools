@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Generic placeholder emblem used where the PHB shows a class icon. -->
+  <path d="M16 2 C21 5 25 5 29 4 C29 16 25 25 16 30 C7 25 3 16 3 4 C7 5 11 5 16 2 Z" fill="#cdb27a"/>
+  <path d="M16 6 C20 8 23 8 25.5 7.6 C25 16 22 22.5 16 26 C10 22.5 7 16 6.5 7.6 C9 8 12 8 16 6 Z" fill="none" stroke="#f7f0e1" stroke-width="1.2"/>
+  <path d="M16 10 L19 16 L16 22 L13 16 Z" fill="#f7f0e1"/>
+</svg>

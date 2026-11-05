@@ -1,0 +1,7 @@
+{% extends "book/_base.html.j2" %}
+{% import "book/_spells.j2" as sp %}
+{# Spellbook for one class: the class spell list (its lowest to highest level), then every description,
+   by level and A-Z within a level. #}
+{% block book %}
+{{ sp.spells(book) }}
+{% endblock %}

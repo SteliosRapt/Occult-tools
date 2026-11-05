@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 24" width="200" height="24">
+  <!-- Left-hand flourish for the chapter kicker. Mirror with transform: scaleX(-1) for the right side. -->
+  <g fill="none" stroke="#b99a5b" stroke-linecap="round">
+    <path d="M0 12 L170 12" stroke-width="0.6" opacity="0.7"/>
+    <path d="M60 12 L172 12" stroke-width="1.4"/>
+    <path d="M172 12 C180 12 182 6 186 3.5 C188 2.4 190 2.6 191 3.6" stroke-width="1.4"/>
+    <path d="M172 12 C180 12 182 18 186 20.5 C188 21.6 190 21.4 191 20.4" stroke-width="1.4"/>
+    <path d="M178 12 L196 12" stroke-width="1"/>
+  </g>
+  <path d="M196 9.5 L199 12 L196 14.5 L193 12 Z" fill="#b99a5b"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 40" width="48" height="40">
+  <!-- Mirror of footer-swash.svg for left-hand (verso) pages. -->
+  <g transform="translate(48 0) scale(-1 1)" fill="none" stroke="#c4a76a" stroke-linecap="round">
+    <path d="M0 37 H14 C24 37 27 31 29 22 C31 12 36 5 46 3" stroke-width="1.5"/>
+    <path d="M29 22 C30 30 35 35 44 36.5" stroke-width="0.8"/>
+  </g>
+</svg>

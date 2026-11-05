@@ -1,0 +1,33 @@
+{% import "cards/_blocks.j2" as k %}
+<article class="card creature size-{{ c.size }}{{ ' has-art' if c.art }}{{ ' has-token' if c.token }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+  <header class="c-head">
+    {% if c.token %}<img class="c-token" src="{{ c.token.src }}" alt="">{% endif %}
+    <div class="c-titles">{{ k.tag("CR " ~ c.cr) }}<h2 class="c-title">{{ c.title }}</h2><div class="c-type"><span class="c-type-text">{{ c.type_line }}</span><span class="c-cont-note">continued</span></div></div>
+  </header>
+  {{ k.art(c, "cover") }}
+  <div class="c-meta">
+  <dl class="sb-core">
+    <div><dt>AC</dt><dd>{{ c.ac | safe }}</dd></div>
+    {% if not c.object %}<div><dt>Initiative</dt><dd>{{ c.initiative }}</dd></div>{% endif %}
+    <div class="w"><dt>HP</dt><dd>{{ c.hp | safe }}</dd></div>
+    {% if c.speed %}<div class="w"><dt>Speed</dt><dd>{{ c.speed | safe }}</dd></div>{% endif %}
+  </dl>
+  {% if c.abilities %}
+  <table class="sb-abil">
+    <thead><tr><th></th><th>Score</th><th>Mod</th><th>Save</th><th></th><th>Score</th><th>Mod</th><th>Save</th></tr></thead>
+    <tbody>{% for i in range(3) %}{% set a = c.abilities[i] %}{% set b = c.abilities[i + 3] %}
+      <tr><th>{{ a[0] }}</th><td>{{ a[1].score }}</td><td>{{ a[1].modifier }}</td><td>{{ a[1].save }}</td>
+          <th>{{ b[0] }}</th><td>{{ b[1].score }}</td><td>{{ b[1].modifier }}</td><td>{{ b[1].save }}</td></tr>{% endfor %}</tbody>
+  </table>
+  {% endif %}
+  </div>
+  <div class="c-body">
+    <dl class="sb-lines">{% for lab, val in c.lines %}<div><dt>{{ lab }}</dt> <dd>{{ val | safe }}</dd></div>{% endfor %}</dl>
+    {% for title, items in c.sections %}
+    <h3 class="sb-h">{{ title }}</h3>
+    {% if c.intros.get(title) %}<p class="run">{{ c.intros[title] | safe }}</p>{% endif %}
+    {% for e in items %}<p class="run"><b class="lab">{{ e.name }}.</b> {{ e.html | safe }}</p>{% for m in e.more %}<p class="run">{{ m | safe }}</p>{% endfor %}{% endfor %}
+    {% endfor %}
+  </div>
+  {{ k.foot(c, c.foot) }}
+</article>

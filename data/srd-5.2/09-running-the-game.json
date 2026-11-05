@@ -1,0 +1,306 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "columns": [
+                "Task",
+                "DC"
+              ],
+              "rows": [
+                [
+                  "Very easy",
+                  "5"
+                ],
+                [
+                  "Easy",
+                  "10"
+                ],
+                [
+                  "Moderate",
+                  "15"
+                ],
+                [
+                  "Hard",
+                  "20"
+                ],
+                [
+                  "Very hard",
+                  "25"
+                ],
+                [
+                  "Nearly impossible",
+                  "30"
+                ]
+              ],
+              "title": "Typical DCs",
+              "type": "table"
+            }
+          ],
+          "id": "srd-5.2/09/resolving-outcomes/difficulty-class",
+          "title": "Difficulty Class",
+          "type": "section"
+        }
+      ],
+      "content": [
+        {
+          "columns": [
+            "Ability",
+            "Score Measures...",
+            "Make an Ability Check To...",
+            "Make a Saving Throw To..."
+          ],
+          "rows": [
+            [
+              "Strength",
+              "Physical might",
+              "Lift, push, pull, or break something",
+              "Physically resist direct force"
+            ],
+            [
+              "Dexterity",
+              "Agility, reflexes, balance",
+              "Move nimbly, quickly, or quietly",
+              "Dodge out of harm's way"
+            ],
+            [
+              "Constitution",
+              "Health and stamina",
+              "Push your body beyond normal limits",
+              "Endure a toxic hazard"
+            ],
+            [
+              "Intelligence",
+              "Reasoning and memory",
+              "Reason or remember",
+              "Recognize an illusion as fake"
+            ],
+            [
+              "Wisdom",
+              "Perceptiveness and mental fortitude",
+              "Notice things in the environment or in creatures' behavior",
+              "Resist a mental assault"
+            ],
+            [
+              "Charisma",
+              "Confidence, poise, and charm",
+              "Influence, entertain, or deceive",
+              "Assert your identity"
+            ]
+          ],
+          "title": "Abilities, Ability Checks, and Saving Throws",
+          "type": "table"
+        }
+      ],
+      "id": "srd-5.2/09/resolving-outcomes",
+      "title": "Resolving Outcomes",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Terrain",
+                    "Maximum Pace",
+                    "Encounter Distance",
+                    "Foraging DC",
+                    "Navigation DC",
+                    "Search DC"
+                  ],
+                  "rows": [
+                    [
+                      "Arctic",
+                      "Fast*",
+                      "6d6 × 10 feet",
+                      "20",
+                      "10",
+                      "10"
+                    ],
+                    [
+                      "Coastal",
+                      "Normal",
+                      "2d10 × 10 feet",
+                      "10",
+                      "5",
+                      "15"
+                    ],
+                    [
+                      "Desert",
+                      "Normal",
+                      "6d6 × 10 feet",
+                      "20",
+                      "10",
+                      "10"
+                    ],
+                    [
+                      "Forest",
+                      "Normal",
+                      "2d8 × 10 feet",
+                      "10",
+                      "15",
+                      "15"
+                    ],
+                    [
+                      "Grassland",
+                      "Fast",
+                      "6d6 × 10 feet",
+                      "15",
+                      "5",
+                      "15"
+                    ],
+                    [
+                      "Hill",
+                      "Normal",
+                      "2d10 × 10 feet",
+                      "15",
+                      "10",
+                      "15"
+                    ],
+                    [
+                      "Mountain",
+                      "Slow",
+                      "4d10 × 10 feet",
+                      "20",
+                      "15",
+                      "20"
+                    ],
+                    [
+                      "Swamp",
+                      "Slow",
+                      "2d8 × 10 feet",
+                      "10",
+                      "15",
+                      "20"
+                    ],
+                    [
+                      "Underdark",
+                      "Normal",
+                      "2d6 × 10 feet",
+                      "20",
+                      "10",
+                      "20"
+                    ],
+                    [
+                      "Urban",
+                      "Normal",
+                      "2d6 × 10 feet",
+                      "20",
+                      "15",
+                      "15"
+                    ],
+                    [
+                      "Waterborne",
+                      "Special†",
+                      "6d6 × 10 feet",
+                      "15",
+                      "10",
+                      "15"
+                    ]
+                  ],
+                  "title": "Travel Terrain",
+                  "type": "table"
+                },
+                {
+                  "text": "*Appropriate equipment (such as skis) is necessary to keep up a Fast pace in Arctic terrain.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "†Characters' rate of travel while waterborne depends on the vehicle carrying them; see \"Vehicles.\"",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/09/running-exploration/travel/travel-pace",
+              "title": "Travel Pace",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/09/running-exploration/travel",
+          "title": "Travel",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/09/running-exploration",
+      "title": "Running Exploration",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Size",
+                    "Space in Squares",
+                    "Space in Hexes"
+                  ],
+                  "rows": [
+                    [
+                      "Tiny",
+                      "4 per square",
+                      "4 per hex"
+                    ],
+                    [
+                      "Small",
+                      "1 square",
+                      "1 hex"
+                    ],
+                    [
+                      "Medium",
+                      "1 square",
+                      "1 hex"
+                    ],
+                    [
+                      "Large",
+                      "4 squares (2 by 2)",
+                      "3 hexes"
+                    ],
+                    [
+                      "Huge",
+                      "9 squares (3 by 3)",
+                      "7 hexes"
+                    ],
+                    [
+                      "Gargantuan",
+                      "16 squares (4 by 4) or more",
+                      "12 hexes or more"
+                    ]
+                  ],
+                  "title": "Creature Size and Space",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/09/running-combat/miniatures/creature-size-and-space",
+              "title": "Creature Size and Space",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/09/running-combat/miniatures",
+          "title": "Miniatures",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/09/running-combat",
+      "title": "Running Combat",
+      "type": "section"
+    }
+  ],
+  "content": [],
+  "id": "srd-5.2/09",
+  "title": "Chapter 9: Running the Game",
+  "type": "chapter"
+}

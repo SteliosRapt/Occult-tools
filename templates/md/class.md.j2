@@ -1,0 +1,7 @@
+{% extends "_base.md.j2" %}
+{% block intro %}
+`{{ sid }}`{{ " · %s" % page if page else "" }} · {{ tagline }}
+
+Names and ids only; read one with `./occult show <id>`.
+{%- if spells %} Spell list: [../spells/by-class/{{ sid.split(":")[1] }}.md](../spells/by-class/{{ sid.split(":")[1] }}.md).{% endif %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% import "cards/_blocks.j2" as k %}
+{# A Deck of Many More Things card (tarot size): the face image full-bleed (it has its own gold frame),
+   then the name and effect in a parchment panel over the foot of the face. The window above the
+   panel gives way first as the text grows (fit.js then shrinks the text). Without a face image
+   it is an ordinary grimoire card. #}
+<article class="card deck-card size-{{ c.size }}{{ ' has-face' if c.art }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+  {% if c.art %}<img class="dk-face" src="{{ c.art.src }}" alt="">{% endif %}
+  <div class="dk-window"></div>
+  <div class="dk-panel">
+    <header class="c-head">
+      <div class="c-titles"><h2 class="c-title">{{ c.title }}</h2><div class="c-type"><span class="c-type-text">{{ c.deck }}</span><span class="c-cont-note">continued</span></div></div>
+    </header>
+    <div class="c-body">
+      {{ k.blocks(c.body) }}
+    </div>
+    {{ k.foot(c, ("Art: " ~ c.art.credit) if c.art and c.art.credit else "Deck of Many More Things") }}
+  </div>
+</article>

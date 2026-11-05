@@ -1,0 +1,27 @@
+// Spell Explorer service worker (explorer.py, `make pwa`). Precaches the whole site under a cache
+// named by a hash of its files, so a new build replaces the old cache in one step.
+const CACHE = "occult-spells-{{ version }}";
+const ASSETS = {{ assets | tojson }};
+
+self.addEventListener("install", (ev) => {
+  ev.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)));
+});
+
+self.addEventListener("activate", (ev) => {
+  ev.waitUntil(caches.keys()
+    .then((keys) => Promise.all(keys.filter((k) => k.startsWith("occult-spells-") && k !== CACHE).map((k) => caches.delete(k))))
+    .then(() => self.clients.claim()));
+});
+
+self.addEventListener("message", (ev) => {
+  if (ev.data === "skip-waiting") self.skipWaiting();
+});
+
+// Cache first (the files only change with a new worker); navigations get the cached shell.
+self.addEventListener("fetch", (ev) => {
+  const req = ev.request;
+  if (req.method !== "GET" || new URL(req.url).origin !== location.origin) return;
+  const key = req.mode === "navigate" ? "./" : req;
+  ev.respondWith(caches.open(CACHE).then((c) => c.match(key, { ignoreSearch: true })
+    .then((hit) => hit || fetch(req))));
+});

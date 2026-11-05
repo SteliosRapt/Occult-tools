@@ -1,0 +1,373 @@
+/* ==========================================================================
+   Grimoire cards (design direction A): the approved PHB page look shrunk to a card.
+   Parchment, notched gold double frame (style/ornaments/frame-border.svg),
+   Alegreya SC titles in heading red, sage-striped stat grid, sidebar-style
+   upcast box. Ink-saver: white, grey frame, black type, no fills.
+   ========================================================================== */
+.card {
+  --fs-max: 7.8; --fs-min: 6.4;
+  --accent: var(--heading); --rule: var(--gold); --frame: url("../../ornaments/frame-border.svg");
+  --fill: var(--parchment); --box: var(--sidebar-bg); --stripe: rgba(224,224,210,.75); --emblem-ink: var(--heading);
+  background: radial-gradient(ellipse 120% 100% at 50% 40%, rgba(222,190,150,0) 60%, rgba(222,190,150,.45) 100%), var(--fill);
+  border: 11px solid transparent;
+  border-image: var(--frame) 32 / 11px / 0 stretch;
+  padding: 1px 2px 0;
+}
+.bw .card {
+  --accent: #000; --rule: #8c8c8c; --frame: url("../../ornaments/frame-border-bw.svg");
+  --fill: #fff; --box: transparent; --stripe: transparent; --emblem-ink: #000;
+  background: #fff; color: #000;
+}
+
+/* header ------------------------------------------------------------------ */
+.c-head {
+  padding: 1px 0 5px; margin-bottom: 3px;
+  background: linear-gradient(90deg, transparent, var(--rule) 18%, var(--rule) 82%, transparent) bottom / 100% 0.8px no-repeat;
+}
+.c-titles { text-align: center; min-width: 0; }
+/* the emblem (spell school, class, armour shield): a medallion on the right edge; the titles move
+   left, and the kicker keeps only its trailing rule */
+.c-head:has(> .c-emblem) { display: flex; align-items: center; gap: 5px; }
+.c-head:has(> .c-emblem) .c-titles { flex: 1; text-align: left; }
+.c-head:has(> .c-emblem) .c-tag { justify-content: flex-start; }
+.c-head:has(> .c-emblem) .c-tag::before { display: none; }
+.c-head:has(> .c-emblem) .c-tag::after { max-width: none; }
+.c-emblem {
+  order: 2; flex: none; width: 34px; height: 34px; margin: -1px 0 -1px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--emblem-ink);
+  background: radial-gradient(circle, var(--fill) 50%, var(--parchment-deep) 100%);
+  border: 0.8px solid var(--gold-deep); box-shadow: inset 0 0 0 1.8px var(--fill), inset 0 0 0 2.4px var(--rule);
+}
+.c-emblem .ico, .c-emblem .gl { width: 21px; height: 21px; }
+.c-emblem .gl { stroke-width: 1.8; }
+/* ink-saver: one thin grey ring, no fill, a slightly smaller black icon */
+.bw .c-emblem { width: 31px; height: 31px; background: none; border: 0.7px solid #8c8c8c; box-shadow: none; color: #000; }
+.bw .c-emblem .ico, .bw .c-emblem .gl { width: 18px; height: 18px; }
+/* the kicker: what kind of card this is, in letter-spaced caps between rules fading outwards */
+.c-tag {
+  display: flex; align-items: center; justify-content: center; gap: 3.5px; margin: 0 0 2.5px;
+  font: 700 5.7pt/1 var(--font-sans-sc); letter-spacing: .13em; color: var(--tag, var(--accent));
+}
+.c-tag::before, .c-tag::after { content: ""; flex: 1 1 0; max-width: 13mm; height: 4px; }
+.c-tag::before { background: linear-gradient(90deg, transparent, var(--rule)) 50% 30% / 100% 0.7px no-repeat; margin-right: 2px; }
+.c-tag::after { background: linear-gradient(90deg, var(--rule), transparent) 50% 30% / 100% 0.7px no-repeat; margin-left: 2px; }
+.c-tag-t { flex: none; white-space: nowrap; }
+.bw .c-tag { color: #000; }
+.c-title { font: 800 14pt/0.98 var(--font-heading); color: var(--accent); letter-spacing: 0.01em; text-wrap: balance; }
+.c-type { font: italic 400 7.4pt/1.2 var(--font-body); color: var(--ink-soft); margin-top: 1px; }
+.bw .c-type { color: #000; }
+
+/* second rule closing the stat table (spells) */
+.spell .c-meta {
+  padding-bottom: 3px; margin-bottom: 3px;
+  background: linear-gradient(90deg, transparent, var(--rule) 18%, var(--rule) 82%, transparent) bottom / 100% 0.8px no-repeat;
+}
+
+/* stat grid --------------------------------------------------------------- */
+.c-stats { display: grid; grid-template-columns: 1fr 1fr; font-family: var(--font-sans); margin: 0 0 2px; }
+.st { padding: 1.5px 3px 1.5px; line-height: 1.05; }
+.st:nth-child(1), .st:nth-child(2) { background: var(--stripe); }
+.c-stats .gl { display: none; }
+.st dt { font: 700 5.3pt/1.1 var(--font-sans-sc); color: var(--accent); letter-spacing: 0.05em; }
+.st dd { font: 500 7.2pt/1.1 var(--font-sans); }
+.st-comp { order: 4; } .st-dur { order: 3; }
+.st-wide { grid-column: 1 / -1; }
+.c-stats-item .st:nth-child(1), .c-stats-item .st:nth-child(2) { background: none; }
+.c-stats-item .st:nth-child(odd) { background: var(--stripe); }
+.c-stats-item { margin-bottom: 3px; }
+.flag {
+  display: inline-grid; place-items: center; width: 8.5px; height: 8.5px; margin-left: 1px; vertical-align: 0.5px;
+  font: 800 5.4pt/1 var(--font-sans); color: var(--fill); background: var(--accent); border-radius: 50%;
+}
+.c-material { font: italic 400 6.3pt/1.15 var(--font-body); color: var(--ink-soft); margin: 1px 3px 3px; }
+.c-material b { font: 700 5.6pt var(--font-sans-sc); font-style: normal; color: var(--accent); margin-right: 1px; }
+.c-material.costly { color: var(--ink); font-weight: 700; }
+.c-material .gl { width: 7px; height: 7px; color: var(--gold-deep); stroke-width: 2.4; margin: -1px 2px 0 0; }
+.bw .c-material { color: #000; }
+.bw .c-material .gl { color: #000; }
+
+/* body -------------------------------------------------------------------- */
+.c-body { padding: 0 1px; }
+.c-body > p + p { text-indent: 0.9em; }
+.c-body > p.run, .c-body > p.c-trigger + p { text-indent: 0; }
+.c-body > p.run { margin-top: 0.2em; }
+.lab { font-weight: 700; font-style: italic; }
+.c-trigger { font-style: italic; color: var(--ink-soft); margin-bottom: 0.2em !important; }
+.bw .c-trigger { color: #000; }
+.items { padding-left: 0.9em; margin: 0.15em 0 !important; }
+.items li { margin: 0.1em 0; }
+.items li::marker { color: var(--accent); }
+.c-upcast {
+  margin-top: 0.35em !important; padding: 0.25em 0.4em 0.3em; background: var(--box);
+  border-top: 0.8px solid var(--rule); border-bottom: 0.8px solid var(--rule);
+}
+.c-upcast .lab { font: 700 0.92em var(--font-sans-sc); font-style: normal; color: var(--accent); letter-spacing: 0.03em; }
+.c-table tbody tr:nth-child(odd) { background: var(--stripe); }
+.bw .c-table tbody tr:nth-child(odd) { background: none; box-shadow: inset 0 -0.5px #bbb; }
+.c-table caption { font: 700 1em var(--font-sans-sc); color: var(--accent); }
+
+/* footer ------------------------------------------------------------------ */
+.c-foot {
+  display: flex; align-items: center; gap: 4px; min-height: 13px; margin-top: 2px; padding-top: 2px;
+  background: linear-gradient(90deg, transparent, var(--rule) 15%, var(--rule) 85%, transparent) top / 100% 0.6px no-repeat;
+  font: 400 5.6pt/1 var(--font-sans); color: var(--ink-faint);
+}
+.bw .c-foot { color: #444; }
+.c-classes { display: flex; gap: 2.5px; color: var(--ink-soft); flex: 1; }
+.c-classes .ico { width: 11px; height: 11px; }
+.c-classes .cl-n { display: none; }
+.c-classes .cl:only-child .cl-n { display: inline; margin-left: 2px; vertical-align: middle; }
+.c-foot-l { flex: 1; font: 700 5.4pt var(--font-sans-sc); letter-spacing: .05em; }
+.c-cont { font: 700 6pt var(--font-sans); color: var(--accent); }
+.c-page { font: italic 400 6pt var(--font-body); }
+.bw .c-classes { color: #000; }
+
+/* continuation ------------------------------------------------------------ */
+.card.cont .c-title { font-size: 10pt; }
+
+/* weapon / armour --------------------------------------------------------- */
+.c-hero { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; column-gap: 7px; row-gap: 0; margin: 0 0 3px; }
+.hero-big { display: flex; align-items: baseline; gap: 3px; width: 100%; justify-content: center; }
+.hero-n { font: 700 17pt/1 var(--font-display); color: var(--accent); }
+.hero-k { font: 700 8pt var(--font-sans-sc); color: var(--accent); }
+.hero-u { font: 700 7.5pt var(--font-sans-sc); letter-spacing: .04em; }
+.hero-alt { font: italic 400 6.5pt var(--font-body); color: var(--ink-soft); }
+.hero-alt b { font-style: normal; font-family: var(--font-sans); }
+.bw .hero-alt { color: #000; }
+.item .c-body > p.run { text-indent: 0; margin-top: 0.25em; }
+.c-mastery { margin: 0 0 0.2em !important; }
+
+/* glossary terms ---------------------------------------------------------- */
+.term .c-head { padding-bottom: 5px; margin-bottom: 5px; }
+.term-action { --tag: var(--gold-deep); }
+.term .c-title { font-size: 15pt; }
+.term .c-body { --fs-max: 8.4; }
+.card.term { --fs-max: 8.4; --fs-min: 6.6; }
+.term .c-body > p.run { position: relative; padding-left: 0.9em; text-indent: 0; margin-top: 0.4em; }
+.term .c-body > p.run::before { content: "◆"; position: absolute; left: 0; top: 0.15em; font-size: 0.7em; color: var(--accent); }
+.term .c-body > p.run.cont-p::before { content: "… "; position: static; font-size: inherit; color: inherit; }
+.term .lab { font-style: normal; font-family: var(--font-sans); }
+.c-see { font-style: italic; color: var(--ink-soft); margin-top: 0.5em !important; text-indent: 0 !important; }
+
+/* creature (tarot) -------------------------------------------------------- */
+.creature .c-titles { text-align: left; }
+.creature .c-tag { justify-content: flex-start; }
+.creature .c-tag::before { display: none; }
+.creature .c-title { font-size: 13pt; }
+.card.creature { --fs-max: 7.4; --fs-min: 6.2; }
+.sb-core { display: grid; grid-template-columns: 1fr 1fr; font: 400 7pt/1.25 var(--font-sans); margin-bottom: 3px; }
+.sb-core div { padding: 0 2px; }
+.sb-core dt { display: inline; font-weight: 700; color: var(--accent); }
+.sb-core dd { display: inline; margin-left: 2px; }
+.sb-abil { width: 100%; border-collapse: collapse; font: 400 6.6pt/1.2 var(--font-sans); text-align: center; margin-bottom: 3px; }
+.sb-abil thead th { font: 700 4.8pt var(--font-sans-sc); color: var(--ink-faint); letter-spacing: .04em; }
+.sb-abil tbody th { font: 700 6.4pt var(--font-sans-sc); color: var(--accent); text-align: left; padding-left: 3px; }
+.sb-abil tbody tr:nth-child(odd) { background: var(--stripe); }
+.sb-abil tbody th:nth-of-type(2) { border-left: 4px solid var(--fill); }
+.sb-lines { font: 400 6.8pt/1.25 var(--font-sans); margin-bottom: 2px; padding-bottom: 2px; border-bottom: 0.6px solid var(--rule); }
+.sb-lines dt { display: inline; font-weight: 700; }
+.sb-lines dd { display: inline; }
+.sb-h { font: 700 8pt/1.2 var(--font-heading); color: var(--accent); border-bottom: 0.6px solid var(--rule); margin: 0.35em 0 0.15em; }
+.creature .c-body > p.run { margin-top: 0.2em; }
+
+.weapon .hero-n { font: 800 18pt/1 var(--font-body); }
+.see { color: var(--ink-faint); }
+
+/* feats and class options (glossary-style header: tag pill + title) ------- */
+.feat .c-head, .option .c-head { padding-bottom: 5px; margin-bottom: 4px; }
+.feat .c-title, .option .c-title { font-size: 14pt; }
+.feat-origin { --tag: var(--gold-deep); }
+.feat-fighting-style { --tag: var(--ink-soft); }
+.feat-epic-boon { --tag: var(--heading-deep); }
+.option .c-type-text { font-style: italic; }
+.c-stats-feat { grid-template-columns: 1fr 1fr; }
+.c-stats-feat .st dd { font-size: 6.9pt; }
+.feat .c-body > p.run, .option .c-body > p.run { margin-top: 0.3em; text-indent: 0; }
+.card.feat, .card.option { --fs-max: 8.1; --fs-min: 6.4; }
+
+/* category backs (make cards --backs category) -------------------------------- */
+.back-designs { display: none; }
+.card-back {
+  position: relative; display: flex; overflow: hidden;
+  background: radial-gradient(ellipse 90% 70% at 50% 50%, rgba(255,250,238,.6), rgba(222,190,150,0) 60%),
+              radial-gradient(ellipse 120% 100% at 50% 40%, rgba(222,190,150,0) 55%, rgba(222,190,150,.55) 100%), var(--parchment);
+  border: 11px solid transparent; border-image: url("../../ornaments/frame-border.svg") 32 / 11px / 0 stretch;
+  color: var(--heading);
+}
+.card-back.size-poker { width: var(--poker-w); height: var(--poker-h); }
+.card-back.size-tarot { width: var(--tarot-w); height: var(--tarot-h); }
+.card-back.blank { background: none; border: 0; }
+.b-frame {
+  flex: 1; margin: 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+  border: 0.8px solid var(--gold); box-shadow: inset 0 0 0 2.4px var(--parchment), inset 0 0 0 3.2px var(--gold);
+  background: repeating-linear-gradient(45deg, rgba(194,164,102,.07) 0 4px, rgba(194,164,102,0) 4px 8px);
+}
+.b-kicker { font: 600 7pt/1 var(--font-display); letter-spacing: .2em; text-transform: uppercase; color: var(--heading); }
+.b-medallion {
+  width: 30mm; height: 30mm; border-radius: 50%; display: grid; place-items: center;
+  border: 1.2px solid var(--gold-deep); background: radial-gradient(circle, var(--parchment) 55%, var(--gold-light) 100%);
+  box-shadow: inset 0 0 0 3px var(--parchment), inset 0 0 0 4px var(--gold), 0 0 0 3px var(--parchment), 0 0 0 3.8px var(--gold);
+}
+.b-medallion .ico { width: 17mm; height: 17mm; color: var(--heading); }
+.b-medallion .gl { width: 15mm; height: 15mm; stroke-width: 1.6; color: var(--heading); }
+.b-initial { font: 700 34pt/1 var(--font-display); color: var(--heading); margin-top: 2pt; }
+.b-title { font: 800 13pt/1.05 var(--font-heading); color: var(--heading); text-align: center; padding: 0 6px; text-wrap: balance; }
+.b-rule { width: 60%; height: 10px;
+  background: linear-gradient(90deg, transparent, var(--gold) 20%, var(--gold) 80%, transparent) center / 100% 0.8px no-repeat; }
+.size-tarot .b-medallion { width: 36mm; height: 36mm; }
+.bw .card-back { background: #fff; border-image-source: url("../../ornaments/frame-border-bw.svg"); color: #000; }
+.bw .b-frame { border-color: #888; box-shadow: inset 0 0 0 2.4px #fff, inset 0 0 0 3.2px #888; background: none; }
+.bw .b-kicker, .bw .b-title, .bw .b-initial, .bw .b-medallion .ico, .bw .b-medallion .gl { color: #000; }
+.bw .b-medallion { border-color: #555; background: #fff; box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 4px #888, 0 0 0 3px #fff, 0 0 0 3.8px #888; }
+.bw .b-rule { background: linear-gradient(90deg, transparent, #888 20%, #888 80%, transparent) center / 100% 0.8px no-repeat; }
+
+/* magic items (glossary-style header + rarity / attunement / charges badges) -------- */
+.card.magic-item { --fs-max: 8.0; --fs-min: 6.3;
+  --r-common: #6f655b; --r-uncommon: #3f6b3a; --r-rare: #2f557f; --r-very-rare: #5f3b7a;
+  --r-legendary: #a2611c; --r-artifact: var(--heading-deep); --r-varies: var(--gold-deep); --r-unknown: var(--ink-soft); }
+.magic-item .c-head { padding-bottom: 4px; margin-bottom: 3px; }
+.magic-item .c-title { font-size: 13.5pt; }
+.magic-item .c-type { font-size: 6.9pt; text-wrap: balance; }
+/* rarity / attunement / charges: one small-caps line, the rarity in its colour, dots between */
+.mi-badges { display: flex; flex-wrap: wrap; justify-content: center; row-gap: 2px; margin: 0 0 4px; }
+.badge { font: 700 6pt/1.1 var(--font-sans-sc); letter-spacing: .06em; color: var(--ink-soft); }
+.badge + .badge::before { content: "·"; margin: 0 4px; color: var(--rule); font-weight: 700; }
+.badge.line-start::before { content: none; }
+.badge.b-rarity { color: var(--rarity, var(--accent)); }
+.badge.b-charges { font-family: var(--font-sans); font-weight: 500; letter-spacing: 0; }
+.rarity-common { --rarity: var(--r-common); }       .rarity-uncommon { --rarity: var(--r-uncommon); }
+.rarity-rare { --rarity: var(--r-rare); }           .rarity-very-rare { --rarity: var(--r-very-rare); }
+.rarity-legendary { --rarity: var(--r-legendary); } .rarity-artifact { --rarity: var(--r-artifact); }
+.rarity-varies { --rarity: var(--r-varies); }       .rarity-unknown { --rarity: var(--r-unknown); }
+.magic-item .c-body > p.run { margin-top: 0.3em; text-indent: 0; }
+.magic-item .c-body > .c-table + p { text-indent: 0; }
+.bw .card.magic-item { --rarity: #000; }
+.bw .badge { color: #444; font-weight: 500; }
+.bw .badge.b-rarity { color: #000; font-weight: 800; letter-spacing: .1em; }
+.bw .badge + .badge::before { color: #8c8c8c; }
+
+/* art panels: a gold double rule around a lit parchment vignette (cut-out item art floats on it,
+   paintings fill it); the artist's credit sits in the corner. Ink-saver: greyscale, no fill. ---- */
+.c-art { margin: 0 3px 4px; }
+.c-art .art-frame {
+  padding: 3.5px; border: 0.8px solid var(--rule); border-radius: 1.5px;
+  box-shadow: inset 0 0 0 1.5px var(--fill), inset 0 0 0 2.1px var(--rule);
+  background: radial-gradient(ellipse 72% 78% at 50% 48%, rgba(255,252,243,.95) 0%, rgba(247,240,226,.7) 50%, rgba(222,190,150,.5) 100%);
+}
+.c-art.art-contain img { filter: drop-shadow(0 0.7px 1.1px rgba(70,45,20,.4)); }
+.c-art.art-cover .art-frame { padding: 2.6px; background: var(--fill); }
+.c-art::before, .c-art::after {          /* gold lozenges on the frame's side midpoints */
+  content: ""; position: absolute; top: 50%; width: 4px; height: 4px; margin-top: -2px; z-index: 1;
+  background: var(--gold); transform: rotate(45deg); box-shadow: 0 0 0 1px var(--fill);
+}
+.c-art::before { left: -2px; } .c-art::after { right: -2px; }
+.art-credit {
+  position: absolute; right: 4px; bottom: 3.5px; z-index: 1; max-width: 70%;
+  font: italic 400 4.2pt/1.1 var(--font-body); color: var(--ink-soft);
+  background: rgba(245,238,225,.82); padding: 0.4px 2.5px 0.6px; border-radius: 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.art-credit::before { content: "Art: "; }
+/* weapons and armour (views._common.item_art sizes each panel from the image's shape and pixels) */
+.c-hero-row { display: flex; align-items: center; gap: 4px; margin: 0 0 3px; padding-bottom: 4px;
+  background: linear-gradient(90deg, transparent, var(--rule) 18%, var(--rule) 82%, transparent) bottom / 100% 0.8px no-repeat; }
+.c-hero-row .c-hero { flex: 1; margin: 0; }
+/* squarer art (all armour) beside the damage / AC: a frame cut to the image's own proportions */
+.c-hero-row .c-art { --art-wmm: 30mm; --art-lo: 15mm; --art-hi: 24mm; --art-min: 50; --art-grow: 105;
+  flex: none; width: auto; max-width: 30mm; aspect-ratio: 1 / var(--art-ratio); margin: 0 0 0 2px; }
+.c-hero-row .c-art::after { display: none; }
+.c-hero-row .art-credit { font-size: 3.8pt; right: 3px; bottom: 3px; }
+/* a tall piece: a column beside the hero and the stat table, its width following its height */
+.c-item-meta.tall { display: flex; align-items: center; gap: 4px; margin-bottom: 3px; }
+.c-item-meta.tall .c-item-main { flex: 1; min-width: 0; }
+.c-item-meta.tall .c-stats { margin-bottom: 0; }
+.c-item-meta.tall > .c-art { --art-wmm: 20mm; flex: none; width: auto; aspect-ratio: 1 / var(--art-ratio); }
+.c-item-meta.tall > .c-art::after { display: none; }
+.c-item-meta.tall .art-credit { font-size: 3.8pt; right: 3px; bottom: 3px; }
+.card.item { --art-cost: 0.6; }       /* weapons and armour keep their art at up to 0.6pt smaller text */
+/* a long weapon: a frameless strip under the header, the blade or haft running across the card */
+.c-art.art-band { margin: 2px 0 5px; min-height: 2px; }
+.c-art.art-band::before, .c-art.art-band::after { display: none; }
+.c-art.art-band .art-frame { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: none; overflow: visible; }
+.c-art.art-band .art-credit { font-size: 3.8pt; right: 0; bottom: auto; top: 100%; margin-top: 1px; background: none; padding: 0; }
+.art-rot .art-frame { container-type: size; }
+.art-rot img { position: absolute; left: 50%; top: 50%; width: 100cqh; height: 100cqw;
+  transform: translate(-50%, -50%) rotate(90deg); }
+.c-art.art-contain.art-rot img { filter: drop-shadow(0.7px 0 1.1px rgba(70,45,20,.4)); }
+.creature .c-art { --art-lo: 22mm; --art-min: 60; margin-bottom: 3px; }   /* paintings: no slivers */
+.facility .c-art { --art-lo: 18mm; --art-hi: 30mm; --art-min: 54; }
+.bw .c-art img, .bw .c-token, .bw .dk-face { filter: grayscale(1) contrast(1.08); }
+.bw .c-art .art-frame { background: #fff; border-color: #8c8c8c; box-shadow: inset 0 0 0 1.5px #fff, inset 0 0 0 2.1px #8c8c8c; }
+.bw .c-art.art-band .art-frame { border: 0; box-shadow: none; background: none; }
+.bw .c-art.art-contain.art-rot img { filter: grayscale(1) contrast(1.08); }
+.bw .c-art::before, .bw .c-art::after { background: #8c8c8c; box-shadow: 0 0 0 1px #fff; }
+.bw .art-credit { color: #000; background: rgba(255,255,255,.85); }
+
+/* creatures: stat-block colours (values from the 5etools style survey), round token inset in the
+   header when there is no art (or fit.js dropped it) --------------------------------------------- */
+.card.creature {
+  --statblock-bg: #fdf1dc; --statblock-bar: #e69a28; --statblock-name: #822000;
+  --fill: var(--statblock-bg); --accent: var(--statblock-name); --rule: var(--statblock-bar);
+}
+.creature .c-head { display: flex; align-items: center; gap: 5px; padding-bottom: 4px;
+  background: linear-gradient(90deg, var(--statblock-bar), var(--statblock-bar) 70%, transparent) bottom / 100% 1.6px no-repeat; }
+.creature .c-titles { flex: 1; }
+.c-token { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin: -1px 0; }
+.creature.has-art:not(.cont) .c-token { display: none; }
+.creature .c-meta { padding-bottom: 3px; margin-bottom: 3px;
+  background: linear-gradient(90deg, var(--statblock-bar), var(--statblock-bar) 70%, transparent) bottom / 100% 1.6px no-repeat; }
+.sb-abil tbody tr:nth-child(odd) { background: none; }
+.sb-abil tbody tr > :nth-child(-n+4) { background: #22220015; }
+.sb-abil tbody tr > :nth-child(n+5) { background: #003bc01c; }
+.sb-abil tbody th:nth-of-type(2) { border-left-color: var(--fill); }
+.sb-abil { border-collapse: separate; border-spacing: 0 1px; }
+.bw .card.creature { --fill: #fff; --accent: #000; --rule: #8c8c8c; --statblock-bar: #8c8c8c; }
+.bw .sb-abil tbody tr > * { background: none !important; }
+
+/* deities: pantheon tag, holy symbol in a gold medallion (or a Cinzel initial) ------------------ */
+.card.deity { --fs-max: 8.0; --fs-min: 6.4; }
+.deity .c-head { padding-bottom: 4px; margin-bottom: 4px; }
+.deity .c-title { font-size: 15pt; }
+.deity .c-type { text-wrap: balance; }
+.c-art.art-medallion { --art-lo: 20mm; --art-hi: 27mm; --art-min: 52; --art-grow: 0; height: 26mm; margin: 0 0 4px; }
+.c-art.art-medallion::before, .c-art.art-medallion::after { display: none; }
+.c-art.art-medallion .art-frame {
+  position: relative; inset: auto; height: 100%; aspect-ratio: 1; margin: 0 auto; padding: 2.4mm;
+  border-radius: 50%; border: 1px solid var(--gold-deep);
+  background: radial-gradient(circle, var(--parchment) 55%, var(--gold-light) 100%);
+  box-shadow: inset 0 0 0 2.5px var(--parchment), inset 0 0 0 3.2px var(--gold), 0 0 0 2.4px var(--fill), 0 0 0 3px var(--gold);
+}
+.art-medallion img { border-radius: 50%; }
+.art-medallion .art-credit { right: 0; bottom: 0; }
+.art-init { font: 700 30pt/1 var(--font-display); color: var(--accent); margin-top: 3pt; }
+.deity .c-stats dd { font-size: 6.8pt; }
+.deity .c-body > p { text-indent: 0; }
+.bw .c-art.art-medallion .art-frame { background: #fff; border-color: #555; box-shadow: inset 0 0 0 2.5px #fff, inset 0 0 0 3.2px #888, 0 0 0 2.4px #fff, 0 0 0 3px #888; }
+
+/* Bastion facilities: level medallion, type tag, art, the stat strip, order options ------------- */
+.card.facility { --fs-max: 7.8; --fs-min: 6.3; }
+.facility .c-head { padding-bottom: 4px; margin-bottom: 4px; }
+.facility .c-title { font-size: 13.5pt; }
+.facility .c-type { font-size: 6.9pt; }
+.fac-basic { --tag: var(--gold-deep); }
+.facility .c-body > p.run { margin-top: 0.3em; text-indent: 0; }
+.facility .c-stats dd { font-size: 6.8pt; }
+
+/* Deck of Many More Things cards (tarot): the face full-bleed, name and effect on a parchment panel -- */
+.card.deck-card { --fs-max: 8.2; --fs-min: 6.4; }
+.deck-card .dk-panel { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.dk-window { display: none; }
+.deck-card .c-title { font: 700 15pt/1 var(--font-display); letter-spacing: .04em; }
+.deck-card .c-body > p { text-indent: 0; }
+.card.deck-card.has-face { border: 0; border-image: none; padding: 0; background: #2a2420; }
+.has-face .dk-face { object-fit: fill; }    /* 850x1552 faces on 70x120: a 6% stretch keeps their whole gold frame */
+.has-face .dk-window { display: block; flex: 1 1 0; min-height: 50mm; }
+.has-face .dk-panel {
+  flex: 0 1 auto; position: relative; margin: 0 5mm 6.4mm; padding: 4px 6px 1px;
+  background: rgba(245,238,225,.95); border: 0.8px solid var(--gold-deep); border-radius: 2px;
+  box-shadow: 0 0 0 1.4px rgba(245,238,225,.95), 0 0 0 2px var(--gold-deep), 0 1px 7px rgba(0,0,0,.55);
+}
+.has-face .c-head { padding-bottom: 3px; margin-bottom: 3px; }
+.has-face .c-foot { min-height: 10px; }
+.bw .card.deck-card.has-face { background: #fff; }
+.bw .has-face .dk-panel { background: #fff; border-color: #555; box-shadow: 0 0 0 1.4px #fff, 0 0 0 2px #555; }

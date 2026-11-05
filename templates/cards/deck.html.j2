@@ -1,0 +1,16 @@
+{% extends "base.html.j2" %}
+{# One .deck per card size; fit.js fits each card, adds continuation cards and imposes
+   every deck onto sheets (cols x rows) with crop marks. With backs, each deck carries one
+   design per category back; fit.js adds a mirrored back sheet after every front sheet. #}
+{% block body %}
+{% for deck in decks %}
+<div class="deck" data-size="{{ deck.size }}" data-cols="{{ deck.cols }}" data-rows="{{ deck.rows }}" data-art="{{ art_mode }}">
+{% for c in deck.cards %}{% include "cards/" ~ c.kind ~ ".j2" %}{% endfor %}
+</div>
+{% if backs %}
+<div class="back-designs" data-size="{{ deck.size }}">
+{% for b in deck.backs %}{% with size = deck.size %}{% include "cards/back.j2" %}{% endwith %}{% endfor %}
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}

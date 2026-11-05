@@ -1,0 +1,959 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SteliosRapt/occult-lore/scripts/build/book-node.schema.json",
+  "title": "Book node",
+  "description": "One chapter file is one node; every node holds its content as ordered blocks and its subsections as ordered children, so reading the tree top to bottom reads the book.",
+  "$ref": "#/$defs/node",
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "title",
+        "content",
+        "children"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+(/[a-z0-9-]+)+$"
+        },
+        "type": {
+          "enum": [
+            "chapter",
+            "appendix",
+            "section",
+            "class",
+            "subclass",
+            "feature",
+            "option",
+            "background",
+            "species",
+            "feat",
+            "item",
+            "weapon",
+            "armor",
+            "weapon-property",
+            "mastery-property",
+            "spell",
+            "plane",
+            "stat-block",
+            "term",
+            "magic-item",
+            "legendary-group",
+            "deity",
+            "facility",
+            "hazard",
+            "trap",
+            "reward",
+            "card",
+            "deck",
+            "language",
+            "object",
+            "vehicle",
+            "disease"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "page": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "description": "Printed page the node starts on, or null when the source has no page numbers (never guessed)."
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/block"
+          }
+        },
+        "data": {
+          "type": "object",
+          "description": "Structured facts about the entry; depends on type."
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/image_ref"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "spell"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "required": [
+                  "level",
+                  "school",
+                  "classes",
+                  "casting_time",
+                  "range",
+                  "components",
+                  "duration"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "feature"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "required": [
+                  "level"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "feat"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "required": [
+                  "category"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "stat-block"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "required": [
+                  "size",
+                  "type",
+                  "alignment",
+                  "ac",
+                  "hp",
+                  "speed"
+                ],
+                "if": {
+                  "properties": {
+                    "type": {
+                      "const": "Object"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                },
+                "else": {
+                  "required": [
+                    "abilities"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "legendary-group"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "required": [
+                  "creatures"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "background"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "required": [
+                  "ability_scores",
+                  "feat",
+                  "skill_proficiencies",
+                  "tool_proficiency",
+                  "equipment"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "species"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "required": [
+                  "creature_type",
+                  "size",
+                  "speed"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "class"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "required": [
+                  "tagline",
+                  "core_traits",
+                  "levels"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "magic-item"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object",
+                "required": [
+                  "subtitle",
+                  "category",
+                  "applies_to",
+                  "rarity",
+                  "attunement",
+                  "charges",
+                  "recharge",
+                  "variants"
+                ],
+                "properties": {
+                  "subtitle": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "category": {
+                    "enum": [
+                      "Armor",
+                      "Potion",
+                      "Ring",
+                      "Rod",
+                      "Scroll",
+                      "Staff",
+                      "Wand",
+                      "Weapon",
+                      "Wondrous Item"
+                    ]
+                  },
+                  "applies_to": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "rarity": {
+                    "enum": [
+                      "Common",
+                      "Uncommon",
+                      "Rare",
+                      "Very Rare",
+                      "Legendary",
+                      "Artifact",
+                      "Varies"
+                    ]
+                  },
+                  "attunement": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^by "
+                      }
+                    ]
+                  },
+                  "charges": {
+                    "type": [
+                      "integer",
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "recharge": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "variants": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "title",
+                        "rarity"
+                      ],
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "rarity": {
+                          "enum": [
+                            "Common",
+                            "Uncommon",
+                            "Rare",
+                            "Very Rare",
+                            "Legendary",
+                            "Artifact"
+                          ]
+                        },
+                        "attunement": {
+                          "anyOf": [
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "string",
+                              "pattern": "^by "
+                            }
+                          ]
+                        },
+                        "record": {
+                          "type": "string"
+                        },
+                        "images": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/$defs/image_ref"
+                          },
+                          "description": "The variant's own art, when it differs from the entry's."
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "spells": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "weight_lb": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "value_gp": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "cost": {
+                    "type": "string",
+                    "description": "Printed cost, when the record has no value (FRHoF catalogue)."
+                  },
+                  "base_item": {
+                    "type": "string",
+                    "description": "Node id of the base weapon or armor."
+                  },
+                  "bonus": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "weapon, weapon_attack, weapon_damage, ac, spell_attack, spell_save_dc, saving_throw, ..."
+                  },
+                  "weapon": {
+                    "type": "object",
+                    "required": [
+                      "damage",
+                      "damage_type",
+                      "properties",
+                      "mastery"
+                    ]
+                  },
+                  "armor": {
+                    "type": "object",
+                    "required": [
+                      "ac",
+                      "stealth_disadvantage"
+                    ]
+                  },
+                  "cursed": {
+                    "type": "boolean"
+                  },
+                  "sentient": {
+                    "type": "boolean"
+                  },
+                  "focus": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    ]
+                  },
+                  "deck": {
+                    "type": "object",
+                    "description": "A deck folded into its magic item: back image, card node ids.",
+                    "properties": {
+                      "back": {
+                        "$ref": "#/$defs/image_ref"
+                      },
+                      "cards": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "vehicle": {
+                    "type": "object",
+                    "description": "The vehicle statistics of a magic item (a magical vehicle)."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "description": "A node made from a 5e.tools entity says which one (plane and other lifted nodes have none).",
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "class",
+                  "subclass",
+                  "feature",
+                  "option",
+                  "background",
+                  "species",
+                  "feat",
+                  "item",
+                  "weapon",
+                  "armor",
+                  "weapon-property",
+                  "mastery-property",
+                  "spell",
+                  "stat-block",
+                  "term",
+                  "magic-item",
+                  "legendary-group",
+                  "deity",
+                  "facility",
+                  "hazard",
+                  "trap",
+                  "reward",
+                  "card",
+                  "deck",
+                  "language",
+                  "object",
+                  "vehicle",
+                  "disease"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "origin"
+            ]
+          }
+        }
+      ]
+    },
+    "page": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Printed page, when the block is on a different page from its node."
+    },
+    "inline": {
+      "type": "string",
+      "description": "Text with Markdown emphasis (*italic*, **bold**) where the source has it, and links `[text](<node id>)` to other nodes."
+    },
+    "block": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "$ref": "#/$defs/paragraph"
+        },
+        {
+          "$ref": "#/$defs/list"
+        },
+        {
+          "$ref": "#/$defs/table"
+        },
+        {
+          "$ref": "#/$defs/sidebar"
+        },
+        {
+          "$ref": "#/$defs/dialogue"
+        },
+        {
+          "$ref": "#/$defs/caption"
+        },
+        {
+          "$ref": "#/$defs/heading"
+        },
+        {
+          "$ref": "#/$defs/image"
+        },
+        {
+          "$ref": "#/$defs/embed"
+        }
+      ]
+    },
+    "paragraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "paragraph"
+        },
+        "label": {
+          "type": "string",
+          "description": "A run-in heading: the bold or italic \"Name.\" that starts the paragraph."
+        },
+        "text": {
+          "$ref": "#/$defs/inline"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "text": {
+          "$ref": "#/$defs/inline"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/item"
+          }
+        }
+      }
+    },
+    "list": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "ordered",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "list"
+        },
+        "ordered": {
+          "type": "boolean"
+        },
+        "start": {
+          "type": "integer",
+          "description": "First number of a numbered list that resumes after a table."
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/item"
+          }
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "table": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "columns",
+        "rows"
+      ],
+      "properties": {
+        "type": {
+          "const": "table"
+        },
+        "title": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "sidebar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "content"
+      ],
+      "properties": {
+        "type": {
+          "const": "sidebar"
+        },
+        "title": {
+          "type": "string"
+        },
+        "callout": {
+          "type": "integer",
+          "description": "The numbered margin callout this box explains, in examples of play."
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/block"
+          }
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "dialogue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "lines"
+      ],
+      "description": "An example of play: who says what at the table.",
+      "properties": {
+        "type": {
+          "const": "dialogue"
+        },
+        "lines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "speaker",
+              "text"
+            ],
+            "properties": {
+              "speaker": {
+                "type": "string"
+              },
+              "as": {
+                "type": "string",
+                "description": "The character the player is speaking as."
+              },
+              "callout": {
+                "type": "integer"
+              },
+              "text": {
+                "$ref": "#/$defs/inline"
+              }
+            }
+          }
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "caption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "text"
+      ],
+      "description": "A caption or label printed on art.",
+      "properties": {
+        "type": {
+          "const": "caption"
+        },
+        "text": {
+          "type": "string"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "heading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "text"
+      ],
+      "description": "A minor heading inside a block of text that is not a section of its own.",
+      "properties": {
+        "type": {
+          "const": "heading"
+        },
+        "text": {
+          "type": "string"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "prop",
+        "name"
+      ],
+      "description": "The 5e.tools key of the entity this node was made from, for re-import diffs and image lookups.",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "prop": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "page": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "className": {
+          "type": "string",
+          "description": "Class features, subclasses: the class a repeated name belongs to."
+        },
+        "classSource": {
+          "type": "string",
+          "description": "Subclasses of another book's class (AU, FRHoF, RHW): the class's source."
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "subclassShortName": {
+          "type": "string"
+        },
+        "level": {
+          "type": "integer"
+        }
+      }
+    },
+    "image_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "width",
+        "height",
+        "role"
+      ],
+      "description": "An image of the node; `path` is relative to the 5etools-img root and to img/.",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "height": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "role": {
+          "enum": [
+            "art",
+            "token",
+            "map",
+            "cover",
+            "page"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "credit": {
+          "type": "string"
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "path",
+        "width",
+        "height"
+      ],
+      "description": "Book art in print position; `path` as in image_ref.",
+      "properties": {
+        "type": {
+          "const": "image"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "height": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "title": {
+          "$ref": "#/$defs/inline"
+        },
+        "credit": {
+          "type": "string"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "embed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id"
+      ],
+      "description": "Where the book prints an entity (a 5e.tools statblock): the entity is a child node with this id.",
+      "properties": {
+        "type": {
+          "const": "embed"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+(/[a-z0-9-]+)+$"
+        }
+      }
+    }
+  }
+}

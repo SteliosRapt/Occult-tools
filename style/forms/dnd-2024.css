@@ -1,0 +1,153 @@
+/* The official D&D 2024 character sheet (forms/dnd-2024-character-sheet.pdf, 603 × 774 pt, 2 pages):
+   where each value prints. Every box is in PDF points, measured on that file (its rules, checkbox
+   circles and diamonds; pdfplumber), so the overlay pipeline.run_form renders lands on the form's
+   own lines. The page is transparent: only the values are drawn. */
+@page { size: 603pt 774pt; margin: 0; }
+html, body { margin: 0; padding: 0; background: transparent; }
+body { font-family: "Alegreya Sans", sans-serif; color: #1d2a5b; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body.bw { color: #000; }
+
+.form-page { position: relative; width: 603pt; height: 774pt; overflow: hidden; break-after: page; }
+.form-page:last-child { break-after: auto; }
+
+/* ---------------------------------------------------------------- value boxes */
+.v { position: absolute; display: flex; align-items: flex-end; justify-content: flex-start;
+     white-space: nowrap; overflow: hidden; font-size: 9pt; line-height: 1.1; }
+.v.c { justify-content: center; }
+.v.mid { align-items: center; }
+.v.big { font-family: "Alegreya", serif; font-weight: 700; }
+.v.wrap { white-space: normal; line-height: 1.05; }
+
+/* A pen dot in a proficiency circle, a filled diamond (armor training, shield, C/R/M). */
+.dot { position: absolute; width: 4pt; height: 4pt; margin: 1.1pt 0 0 1.1pt; border-radius: 50%; background: currentColor; }
+.dot.ex { box-shadow: 0 0 0 1.2pt #fff, 0 0 0 2pt currentColor; }
+.dia { position: absolute; width: 4.6pt; height: 4.6pt; margin: 1.85pt 0 0 1.85pt; transform: rotate(45deg); background: currentColor; }
+
+/* ---------------------------------------------------------------- page 1: header */
+.f-name       { left: 26pt; top: 13pt; width: 224pt; height: 16pt; font-size: 13pt; font-weight: 700; }
+.f-background { left: 26pt; top: 38pt; width: 116pt; height: 13pt; }
+.f-class      { left: 150pt; top: 38pt; width: 96pt; height: 13pt; }
+.f-species    { left: 26pt; top: 59.5pt; width: 116pt; height: 13pt; }
+.f-subclass   { left: 150pt; top: 59.5pt; width: 106pt; height: 13pt; }
+.f-level      { left: 263pt; top: 30pt; width: 26pt; height: 16pt; font-size: 13pt; }
+.f-xp         { left: 259pt; top: 54.5pt; width: 35pt; height: 13pt; font-size: 8pt; }
+.f-ac         { left: 318pt; top: 34pt; width: 45pt; height: 26pt; font-size: 20pt; }
+.m-shield     { left: 335.2pt; top: 71.5pt; }
+.f-hp-max     { left: 438pt; top: 55pt; width: 43pt; height: 15pt; font-size: 11pt; }
+.f-hd-max     { left: 492pt; top: 55pt; width: 38pt; height: 15pt; font-size: 11pt; }
+
+/* ---------------------------------------------------------------- page 1: stats */
+.f-pb         { left: 18pt; top: 134pt; width: 80pt; height: 34pt; font-size: 20pt; }
+.f-initiative { left: 227pt; top: 128pt; width: 72pt; height: 22pt; font-size: 15pt; }
+.f-speed      { left: 318pt; top: 128pt; width: 78pt; height: 22pt; font-size: 15pt; }
+.f-size       { left: 415pt; top: 128pt; width: 72pt; height: 22pt; font-size: 13pt; }
+.f-passive    { left: 507pt; top: 128pt; width: 80pt; height: 22pt; font-size: 15pt; }
+
+/* Ability boxes: the modifier in the big circle, the score in the tab to its right. */
+.mod   { width: 34pt; height: 24pt; font-size: 17pt; }
+.score { width: 22pt; height: 15pt; font-size: 10.5pt; }
+.f-str-mod { left: 26.5pt; top: 214pt; }  .f-str-score { left: 63pt; top: 219pt; }
+.f-dex-mod { left: 26.5pt; top: 332pt; }  .f-dex-score { left: 63pt; top: 337pt; }
+.f-con-mod { left: 26.5pt; top: 478pt; }  .f-con-score { left: 63pt; top: 483pt; }
+.f-int-mod { left: 132.5pt; top: 137pt; } .f-int-score { left: 169pt; top: 142pt; }
+.f-wis-mod { left: 132.5pt; top: 311pt; } .f-wis-score { left: 169pt; top: 316pt; }
+.f-cha-mod { left: 132.5pt; top: 485pt; } .f-cha-score { left: 169pt; top: 490pt; }
+
+/* Saving throws and skills: the bonus on the short rule, the dot in the circle before it. */
+.bonus { width: 17pt; height: 11pt; font-size: 8.5pt; }
+.col-l { left: 27.5pt; }  .col-l.dot { left: 18.5pt; }
+.col-r { left: 133.7pt; } .col-r.dot { left: 124.7pt; }
+.b-str-save { top: 258.3pt; }  .d-str-save { top: 262.4pt; }
+.b-athletics { top: 277.9pt; } .d-athletics { top: 281.9pt; }
+.b-dex-save { top: 376.1pt; }  .d-dex-save { top: 380.1pt; }
+.b-acrobatics { top: 395.7pt; } .d-acrobatics { top: 399.7pt; }
+.b-sleight-of-hand { top: 409.7pt; } .d-sleight-of-hand { top: 413.8pt; }
+.b-stealth { top: 423.7pt; }   .d-stealth { top: 427.8pt; }
+.b-con-save { top: 522pt; }    .d-con-save { top: 526pt; }
+.b-int-save { top: 181pt; }    .d-int-save { top: 185pt; }
+.b-arcana { top: 200.5pt; }    .d-arcana { top: 204.6pt; }
+.b-history { top: 214.6pt; }   .d-history { top: 218.6pt; }
+.b-investigation { top: 228.6pt; } .d-investigation { top: 232.7pt; }
+.b-nature { top: 242.6pt; }    .d-nature { top: 246.7pt; }
+.b-religion { top: 256.7pt; }  .d-religion { top: 260.7pt; }
+.b-wis-save { top: 354.9pt; }  .d-wis-save { top: 358.9pt; }
+.b-animal-handling { top: 374.4pt; } .d-animal-handling { top: 378.5pt; }
+.b-insight { top: 388.5pt; }   .d-insight { top: 392.5pt; }
+.b-medicine { top: 402.5pt; }  .d-medicine { top: 406.6pt; }
+.b-perception { top: 416.5pt; } .d-perception { top: 420.6pt; }
+.b-survival { top: 430.6pt; }  .d-survival { top: 434.6pt; }
+.b-cha-save { top: 528.8pt; }  .d-cha-save { top: 532.9pt; }
+.b-deception { top: 548.4pt; } .d-deception { top: 552.4pt; }
+.b-intimidation { top: 562.4pt; } .d-intimidation { top: 566.5pt; }
+.b-performance { top: 576.4pt; } .d-performance { top: 580.5pt; }
+.b-persuasion { top: 590.5pt; } .d-persuasion { top: 594.5pt; }
+
+/* ---------------------------------------------------------------- page 1: weapons and boxes */
+.weapons { position: absolute; left: 0; top: 197.6pt; }
+.weapons .row { position: relative; height: 19.44pt; }
+.weapons .v { top: 1pt; height: 13.5pt; font-size: 8.5pt; }
+.weapons .v.wrap { top: 0; height: 15.5pt; }
+.w-name { left: 229pt; width: 103pt; }
+.w-hit { left: 336.6pt; width: 43pt; }
+.w-damage { left: 385pt; width: 72.5pt; }
+.w-notes { left: 462.5pt; width: 123pt; }
+.weapons .v.w-notes { font-size: 7pt; }          /* no !important: form.js sets an inline size to shrink */
+
+/* Text boxes: a title per entry and its text; form.js shrinks a box's text until it fits, then
+   drops the texts (titles only) if even the smallest size overflows. */
+.box { position: absolute; overflow: hidden; font-size: 7pt; line-height: 1.18; }
+.box p { margin: 0 0 0.25em; }
+.box .entry { margin-bottom: 0.35em; break-inside: avoid; }
+.box .t { font-weight: 700; }
+.box .n { font-style: italic; opacity: 0.8; }
+.box .lab { font-weight: 700; font-style: italic; }
+.box.firsts .entry p + p { display: none; }
+.box.titles .entry p { display: none; }
+.box.titles .entry { margin-bottom: 0.1em; }
+.box-features { left: 229pt; top: 350pt; width: 355pt; height: 203pt; column-count: 2; column-gap: 11pt; column-fill: auto; }
+.box-species  { left: 229pt; top: 591pt; width: 161pt; height: 165pt; }
+.box-feats    { left: 413pt; top: 591pt; width: 172pt; height: 165pt; }
+
+.m-light   { left: 59pt; top: 644.5pt; }
+.m-medium  { left: 93.1pt; top: 644.5pt; }
+.m-heavy   { left: 137.3pt; top: 644.5pt; }
+.m-shields { left: 174.6pt; top: 644.5pt; }
+.box-weapons { left: 17pt; top: 669pt; width: 190pt; height: 48pt; font-size: 8.5pt; }
+.box-tools   { left: 17pt; top: 729pt; width: 190pt; height: 27pt; font-size: 8.5pt; }
+
+/* ---------------------------------------------------------------- page 2: spellcasting */
+.f-casting-ability { left: 26pt; top: 16pt; width: 106pt; height: 16pt; font-size: 10pt; }
+.f-casting-mod    { left: 15pt; top: 48pt; width: 39pt; height: 24pt; font-size: 15pt; }
+.f-casting-dc     { left: 15pt; top: 74pt; width: 39pt; height: 24pt; font-size: 15pt; }
+.f-casting-attack { left: 15pt; top: 100pt; width: 39pt; height: 24pt; font-size: 15pt; }
+.slot { width: 14.4pt; height: 11pt; font-size: 9pt; }
+.s-1 { left: 181.8pt; top: 83.3pt; } .s-2 { left: 181.8pt; top: 97.4pt; } .s-3 { left: 181.8pt; top: 111.4pt; }
+.s-4 { left: 269.9pt; top: 83.3pt; } .s-5 { left: 269.9pt; top: 97.4pt; } .s-6 { left: 269.9pt; top: 111.4pt; }
+.s-7 { left: 348.4pt; top: 83.3pt; } .s-8 { left: 348.4pt; top: 97.4pt; } .s-9 { left: 348.4pt; top: 111.4pt; }
+.f-pact { left: 155pt; top: 122.6pt; width: 237pt; height: 6.5pt; font-size: 5.5pt; font-style: italic; }
+
+.spells { position: absolute; left: 0; top: 177.6pt; }
+.spells .row { position: relative; height: 19.441pt; }
+.spells .v { top: 1pt; height: 13.5pt; font-size: 8pt; }
+.spells .v.wrap { top: 0; height: 15.5pt; }
+.spells .dia { top: 3.4pt; }
+.sp-level { left: 17.6pt; width: 20.2pt; }
+.sp-name  { left: 43pt; width: 107pt; }
+.sp-time  { left: 155pt; width: 29pt; }
+.sp-range { left: 189pt; width: 40.5pt; }
+.sp-c { left: 239pt; } .sp-r { left: 260.9pt; } .sp-m { left: 282.6pt; }
+.sp-notes { left: 305.5pt; width: 85pt; }
+.spells .v.sp-time, .spells .v.sp-range { font-size: 6.5pt; }
+.spells .v.sp-notes { font-size: 6pt; }
+
+/* ---------------------------------------------------------------- page 2: the right column */
+.box-appearance  { left: 414pt; top: 34pt; width: 171pt; height: 99pt; font-size: 8pt; }
+.box-personality { left: 414pt; top: 139pt; width: 171pt; height: 136pt; font-size: 8pt; }
+.f-alignment     { left: 414pt; top: 288.5pt; width: 171pt; height: 13pt; }
+.box-languages   { left: 414pt; top: 342pt; width: 171pt; height: 32pt; font-size: 8.5pt; }
+.box-equipment   { left: 414pt; top: 410pt; width: 171pt; height: 175pt; font-size: 8pt; }
+.box-equipment ul { margin: 0; padding: 0; list-style: none; }
+.box-equipment li { padding-left: 0.7em; text-indent: -0.7em; }
+.box-equipment li::before { content: "• "; }
+.coin { top: 705pt; width: 30.5pt; height: 18pt; font-size: 10.5pt; }
+.c-cp { left: 413.1pt; } .c-sp { left: 448.9pt; } .c-ep { left: 484.4pt; } .c-gp { left: 519.5pt; } .c-pp { left: 554.6pt; }

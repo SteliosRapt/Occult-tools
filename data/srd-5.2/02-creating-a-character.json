@@ -1,0 +1,2042 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "columns": [
+                "Class",
+                "Likes...",
+                "Primary Ability",
+                "Complexity"
+              ],
+              "rows": [
+                [
+                  "[Barbarian](srd-5.2/03/barbarian)",
+                  "Battle",
+                  "Strength",
+                  "Average"
+                ],
+                [
+                  "[Bard](srd-5.2/03/bard)",
+                  "Performing",
+                  "Charisma",
+                  "High"
+                ],
+                [
+                  "[Cleric](srd-5.2/03/cleric)",
+                  "Gods",
+                  "Wisdom",
+                  "Average"
+                ],
+                [
+                  "[Druid](srd-5.2/03/druid)",
+                  "Nature",
+                  "Wisdom",
+                  "High"
+                ],
+                [
+                  "[Fighter](srd-5.2/03/fighter)",
+                  "Weapons",
+                  "Strength or Dexterity",
+                  "Low"
+                ],
+                [
+                  "[Monk](srd-5.2/03/monk)",
+                  "Unarmed combat",
+                  "Dexterity and Wisdom",
+                  "High"
+                ],
+                [
+                  "[Paladin](srd-5.2/03/paladin)",
+                  "Defense",
+                  "Strength and Charisma",
+                  "Average"
+                ],
+                [
+                  "[Ranger](srd-5.2/03/ranger)",
+                  "Survival",
+                  "Dexterity and Wisdom",
+                  "Average"
+                ],
+                [
+                  "[Rogue](srd-5.2/03/rogue)",
+                  "Stealth",
+                  "Dexterity",
+                  "Low"
+                ],
+                [
+                  "[Sorcerer](srd-5.2/03/sorcerer)",
+                  "Power",
+                  "Charisma",
+                  "High"
+                ],
+                [
+                  "[Warlock](srd-5.2/03/warlock)",
+                  "Occult lore",
+                  "Charisma",
+                  "High"
+                ],
+                [
+                  "[Wizard](srd-5.2/03/wizard)",
+                  "Spellbooks",
+                  "Intelligence",
+                  "Average"
+                ]
+              ],
+              "title": "Class Overview",
+              "type": "table"
+            }
+          ],
+          "id": "srd-5.2/02/create-your-character/step-1-choose-a-class",
+          "title": "Step 1: Choose a Class",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "columns": [
+                        "Ability",
+                        "Backgrounds"
+                      ],
+                      "rows": [],
+                      "title": "Ability Scores and Backgrounds",
+                      "type": "table"
+                    }
+                  ],
+                  "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-a-background/ability-scores-and-backgrounds",
+                  "title": "Ability Scores and Backgrounds",
+                  "type": "section"
+                }
+              ],
+              "content": [],
+              "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-a-background",
+              "title": "Choose a Background",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "the multiverse",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/common",
+                      "origin": {
+                        "name": "Common",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Common",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "the multiverse",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/common-sign-language",
+                      "origin": {
+                        "name": "Common Sign Language",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Common Sign Language",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "Dragons",
+                        "script": "Draconic",
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/draconic",
+                      "origin": {
+                        "name": "Draconic",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Draconic",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "Dwarves",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/dwarvish",
+                      "origin": {
+                        "name": "Dwarvish",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Dwarvish",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "Elves",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/elvish",
+                      "origin": {
+                        "name": "Elvish",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Elvish",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "Giants",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/giant",
+                      "origin": {
+                        "name": "Giant",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Giant",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "Gnomes",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/gnomish",
+                      "origin": {
+                        "name": "Gnomish",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Gnomish",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "Goblinoids",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/goblin",
+                      "origin": {
+                        "name": "Goblin",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Goblin",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "Halflings",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/halfling",
+                      "origin": {
+                        "name": "Halfling",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Halfling",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "standard",
+                        "dialects": [],
+                        "origin": "Orcs",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/orc",
+                      "origin": {
+                        "name": "Orc",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Orc",
+                      "type": "language"
+                    }
+                  ],
+                  "content": [
+                    {
+                      "columns": [
+                        "1d12",
+                        "Language",
+                        "Origin"
+                      ],
+                      "rows": [
+                        [
+                          "—",
+                          "[Common](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/common)",
+                          "the multiverse"
+                        ],
+                        [
+                          "1",
+                          "[Common Sign Language](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/common-sign-language)",
+                          "the multiverse"
+                        ],
+                        [
+                          "2",
+                          "[Draconic](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/draconic)",
+                          "Dragons"
+                        ],
+                        [
+                          "3–4",
+                          "[Dwarvish](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/dwarvish)",
+                          "Dwarves"
+                        ],
+                        [
+                          "5–6",
+                          "[Elvish](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/elvish)",
+                          "Elves"
+                        ],
+                        [
+                          "7",
+                          "[Giant](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/giant)",
+                          "Giants"
+                        ],
+                        [
+                          "8",
+                          "[Gnomish](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/gnomish)",
+                          "Gnomes"
+                        ],
+                        [
+                          "9",
+                          "[Goblin](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/goblin)",
+                          "Goblinoids"
+                        ],
+                        [
+                          "10–11",
+                          "[Halfling](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/halfling)",
+                          "Halflings"
+                        ],
+                        [
+                          "12",
+                          "[Orc](srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages/orc)",
+                          "Orcs"
+                        ]
+                      ],
+                      "title": "Standard Languages",
+                      "type": "table"
+                    }
+                  ],
+                  "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/standard-languages",
+                  "title": "Standard Languages",
+                  "type": "section"
+                },
+                {
+                  "children": [
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "rare",
+                        "dialects": [],
+                        "origin": "Demons of the Abyss",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages/abyssal",
+                      "origin": {
+                        "name": "Abyssal",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Abyssal",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "rare",
+                        "dialects": [],
+                        "origin": "Celestials",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages/celestial",
+                      "origin": {
+                        "name": "Celestial",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Celestial",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "rare",
+                        "dialects": [],
+                        "origin": "Aberrations",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages/deep-speech",
+                      "origin": {
+                        "name": "Deep Speech",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Deep Speech",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "rare",
+                        "dialects": [],
+                        "origin": "Druidic circles",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages/druidic",
+                      "origin": {
+                        "name": "Druidic",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Druidic",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "rare",
+                        "dialects": [],
+                        "origin": "Devils of the Nine Hells",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages/infernal",
+                      "origin": {
+                        "name": "Infernal",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Infernal",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "rare",
+                        "dialects": [
+                          "Auran",
+                          "Aquan",
+                          "Ignan",
+                          "Terran"
+                        ],
+                        "origin": "Elementals",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages/primordial",
+                      "origin": {
+                        "name": "Primordial",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Primordial",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "rare",
+                        "dialects": [],
+                        "origin": "The Feywild",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages/sylvan",
+                      "origin": {
+                        "name": "Sylvan",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Sylvan",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "rare",
+                        "dialects": [],
+                        "origin": "Various criminal guilds",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages/thieves-cant",
+                      "origin": {
+                        "name": "Thieves' Cant",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Thieves' Cant",
+                      "type": "language"
+                    },
+                    {
+                      "children": [],
+                      "content": [],
+                      "data": {
+                        "category": "rare",
+                        "dialects": [],
+                        "origin": "The Underdark",
+                        "script": null,
+                        "typical_speakers": []
+                      },
+                      "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages/undercommon",
+                      "origin": {
+                        "name": "Undercommon",
+                        "prop": "language",
+                        "source": "XPHB"
+                      },
+                      "title": "Undercommon",
+                      "type": "language"
+                    }
+                  ],
+                  "content": [
+                    {
+                      "columns": [
+                        "Language",
+                        "Origin"
+                      ],
+                      "rows": [
+                        [
+                          "Abyssal",
+                          "Demons of the Abyss"
+                        ],
+                        [
+                          "Celestial",
+                          "Celestials"
+                        ],
+                        [
+                          "Deep Speech",
+                          "Aberrations"
+                        ],
+                        [
+                          "Druidic",
+                          "Druidic circles"
+                        ],
+                        [
+                          "Infernal",
+                          "Devils of the Nine Hells"
+                        ],
+                        [
+                          "Primordial*",
+                          "Elementals"
+                        ],
+                        [
+                          "Sylvan",
+                          "The Feywild"
+                        ],
+                        [
+                          "Thieves' Cant",
+                          "Various criminal guilds"
+                        ],
+                        [
+                          "Undercommon",
+                          "The Underdark"
+                        ]
+                      ],
+                      "title": "Rare Languages",
+                      "type": "table"
+                    }
+                  ],
+                  "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages/rare-languages",
+                  "title": "Rare Languages",
+                  "type": "section"
+                }
+              ],
+              "content": [
+                {
+                  "text": "*Primordial includes the Aquan, Auran, Ignan, and Terran dialects. Creatures that know one of these dialects can communicate with those that know a different one.",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/02/create-your-character/step-2-determine-origin/choose-languages",
+              "title": "Choose Languages",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/02/create-your-character/step-2-determine-origin",
+          "title": "Step 2: Determine Origin",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Score",
+                    "Cost"
+                  ],
+                  "rows": [
+                    [
+                      "8",
+                      "0"
+                    ],
+                    [
+                      "9",
+                      "1"
+                    ],
+                    [
+                      "10",
+                      "2"
+                    ],
+                    [
+                      "11",
+                      "3"
+                    ],
+                    [
+                      "12",
+                      "4"
+                    ],
+                    [
+                      "13",
+                      "5"
+                    ],
+                    [
+                      "14",
+                      "7"
+                    ],
+                    [
+                      "15",
+                      "9"
+                    ]
+                  ],
+                  "title": "Ability Score Point Costs",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/02/create-your-character/step-3-determine-ability-scores/generate-your-scores",
+              "title": "Generate Your Scores",
+              "type": "section"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Class",
+                    "Str.",
+                    "Dex.",
+                    "Con.",
+                    "Int.",
+                    "Wis.",
+                    "Cha."
+                  ],
+                  "rows": [
+                    [
+                      "[Barbarian](srd-5.2/03/barbarian)",
+                      "15",
+                      "13",
+                      "14",
+                      "10",
+                      "12",
+                      "8"
+                    ],
+                    [
+                      "[Bard](srd-5.2/03/bard)",
+                      "8",
+                      "14",
+                      "12",
+                      "13",
+                      "10",
+                      "15"
+                    ],
+                    [
+                      "[Cleric](srd-5.2/03/cleric)",
+                      "14",
+                      "8",
+                      "13",
+                      "10",
+                      "15",
+                      "12"
+                    ],
+                    [
+                      "[Druid](srd-5.2/03/druid)",
+                      "8",
+                      "12",
+                      "14",
+                      "13",
+                      "15",
+                      "10"
+                    ],
+                    [
+                      "[Fighter](srd-5.2/03/fighter)",
+                      "15",
+                      "14",
+                      "13",
+                      "8",
+                      "10",
+                      "12"
+                    ],
+                    [
+                      "[Monk](srd-5.2/03/monk)",
+                      "12",
+                      "15",
+                      "13",
+                      "10",
+                      "14",
+                      "8"
+                    ],
+                    [
+                      "[Paladin](srd-5.2/03/paladin)",
+                      "15",
+                      "10",
+                      "13",
+                      "8",
+                      "12",
+                      "14"
+                    ],
+                    [
+                      "[Ranger](srd-5.2/03/ranger)",
+                      "12",
+                      "15",
+                      "13",
+                      "8",
+                      "14",
+                      "10"
+                    ],
+                    [
+                      "[Rogue](srd-5.2/03/rogue)",
+                      "12",
+                      "15",
+                      "13",
+                      "14",
+                      "10",
+                      "8"
+                    ],
+                    [
+                      "[Sorcerer](srd-5.2/03/sorcerer)",
+                      "10",
+                      "13",
+                      "14",
+                      "8",
+                      "12",
+                      "15"
+                    ],
+                    [
+                      "[Warlock](srd-5.2/03/warlock)",
+                      "8",
+                      "14",
+                      "13",
+                      "12",
+                      "10",
+                      "15"
+                    ],
+                    [
+                      "[Wizard](srd-5.2/03/wizard)",
+                      "8",
+                      "12",
+                      "13",
+                      "15",
+                      "14",
+                      "10"
+                    ]
+                  ],
+                  "title": "Standard Array by Class",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/02/create-your-character/step-3-determine-ability-scores/assign-ability-scores",
+              "title": "Assign Ability Scores",
+              "type": "section"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Score",
+                    "Modifier"
+                  ],
+                  "rows": [
+                    [
+                      "3",
+                      "−4"
+                    ],
+                    [
+                      "4–5",
+                      "−3"
+                    ],
+                    [
+                      "6–7",
+                      "−2"
+                    ],
+                    [
+                      "8–9",
+                      "−1"
+                    ],
+                    [
+                      "10–11",
+                      "+0"
+                    ],
+                    [
+                      "12–13",
+                      "+1"
+                    ],
+                    [
+                      "14–15",
+                      "+2"
+                    ],
+                    [
+                      "16–17",
+                      "+3"
+                    ],
+                    [
+                      "18–19",
+                      "+4"
+                    ],
+                    [
+                      "20",
+                      "+5"
+                    ]
+                  ],
+                  "title": "Ability Scores and Modifiers",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/02/create-your-character/step-3-determine-ability-scores/determine-ability-modifiers",
+              "title": "Determine Ability Modifiers",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/02/create-your-character/step-3-determine-ability-scores",
+          "title": "Step 3: Determine Ability Scores",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "columns": [
+                        "Class",
+                        "Hit Point Maximum"
+                      ],
+                      "rows": [
+                        [
+                          "[Barbarian](srd-5.2/03/barbarian)",
+                          "12 + Con. modifier"
+                        ],
+                        [
+                          "[Fighter](srd-5.2/03/fighter), [Paladin](srd-5.2/03/paladin), or [Ranger](srd-5.2/03/ranger)",
+                          "10 + Con. modifier"
+                        ],
+                        [
+                          "[Bard](srd-5.2/03/bard), [Cleric](srd-5.2/03/cleric), [Druid](srd-5.2/03/druid), [Monk](srd-5.2/03/monk), [Rogue](srd-5.2/03/rogue), or [Warlock](srd-5.2/03/warlock)",
+                          "8 + Con. modifier"
+                        ],
+                        [
+                          "[Sorcerer](srd-5.2/03/sorcerer) or [Wizard](srd-5.2/03/wizard)",
+                          "6 + Con. modifier"
+                        ]
+                      ],
+                      "title": "Level 1 Hit Points by Class",
+                      "type": "table"
+                    }
+                  ],
+                  "id": "srd-5.2/02/create-your-character/step-5-fill-in-details/fill-in-numbers/level-1-hit-points-by-class",
+                  "title": "Level 1 Hit Points by Class",
+                  "type": "section"
+                }
+              ],
+              "content": [],
+              "id": "srd-5.2/02/create-your-character/step-5-fill-in-details/fill-in-numbers",
+              "title": "Fill In Numbers",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/02/create-your-character/step-5-fill-in-details",
+          "title": "Step 5: Fill In Details",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/02/create-your-character",
+      "title": "Create Your Character",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Class",
+                    "Hit Points per Level"
+                  ],
+                  "rows": [
+                    [
+                      "[Barbarian](srd-5.2/03/barbarian)",
+                      "7 + Con. modifier"
+                    ],
+                    [
+                      "[Fighter](srd-5.2/03/fighter), [Paladin](srd-5.2/03/paladin), or [Ranger](srd-5.2/03/ranger)",
+                      "6 + Con. modifier"
+                    ],
+                    [
+                      "[Bard](srd-5.2/03/bard), [Cleric](srd-5.2/03/cleric), [Druid](srd-5.2/03/druid), [Monk](srd-5.2/03/monk), [Rogue](srd-5.2/03/rogue), or [Warlock](srd-5.2/03/warlock)",
+                      "5 + Con. modifier"
+                    ],
+                    [
+                      "[Sorcerer](srd-5.2/03/sorcerer) or [Wizard](srd-5.2/03/wizard)",
+                      "4 + Con. modifier"
+                    ]
+                  ],
+                  "title": "Fixed Hit Points by Class",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/02/level-advancement/gaining-a-level/fixed-hit-points-by-class",
+              "title": "Fixed Hit Points by Class",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/02/level-advancement/gaining-a-level",
+          "title": "Gaining a Level",
+          "type": "section"
+        }
+      ],
+      "content": [
+        {
+          "columns": [
+            "Level",
+            "Experience Points",
+            "Proficiency Bonus"
+          ],
+          "rows": [
+            [
+              "1",
+              "0",
+              "+2"
+            ],
+            [
+              "2",
+              "300",
+              "+2"
+            ],
+            [
+              "3",
+              "900",
+              "+2"
+            ],
+            [
+              "4",
+              "2,700",
+              "+2"
+            ],
+            [
+              "5",
+              "6,500",
+              "+3"
+            ],
+            [
+              "6",
+              "14,000",
+              "+3"
+            ],
+            [
+              "7",
+              "23,000",
+              "+3"
+            ],
+            [
+              "8",
+              "34,000",
+              "+3"
+            ],
+            [
+              "9",
+              "48,000",
+              "+4"
+            ],
+            [
+              "10",
+              "64,000",
+              "+4"
+            ],
+            [
+              "11",
+              "85,000",
+              "+4"
+            ],
+            [
+              "12",
+              "100,000",
+              "+4"
+            ],
+            [
+              "13",
+              "120,000",
+              "+5"
+            ],
+            [
+              "14",
+              "140,000",
+              "+5"
+            ],
+            [
+              "15",
+              "165,000",
+              "+5"
+            ],
+            [
+              "16",
+              "195,000",
+              "+5"
+            ],
+            [
+              "17",
+              "225,000",
+              "+6"
+            ],
+            [
+              "18",
+              "265,000",
+              "+6"
+            ],
+            [
+              "19",
+              "305,000",
+              "+6"
+            ],
+            [
+              "20",
+              "355,000",
+              "+6"
+            ]
+          ],
+          "title": "Character Advancement",
+          "type": "table"
+        }
+      ],
+      "id": "srd-5.2/02/level-advancement",
+      "title": "Level Advancement",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "columns": [
+                "Starting Level",
+                "Equipment and Money",
+                "Magic Items"
+              ],
+              "rows": [
+                [
+                  "2–4",
+                  "Normal starting equipment",
+                  "1 Common"
+                ],
+                [
+                  "5–10",
+                  "500 GP plus 1d10 × 25 GP plus normal starting equipment",
+                  "1 Common, 1 Uncommon"
+                ],
+                [
+                  "11–16",
+                  "5,000 gp plus 1d10 × 250 GP plus normal starting equipment",
+                  "2 Common, 3 Uncommon, 1 Rare"
+                ],
+                [
+                  "17–20",
+                  "20,000 GP plus 1d10 × 250 GP plus normal starting equipment",
+                  "2 Common, 4 Uncommon, 3 Rare, 1 Very Rare"
+                ]
+              ],
+              "title": "Starting Equipment at Higher Levels",
+              "type": "table"
+            }
+          ],
+          "id": "srd-5.2/02/starting-at-higher-levels/starting-equipment",
+          "title": "Starting Equipment",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/02/starting-at-higher-levels",
+      "title": "Starting at Higher Levels",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "To qualify for a new class, you must have a score of at least 13 in the primary ability of the new class and your current classes. For example, a Barbarian who decides to multiclass into the Druid class must have Strength and Wisdom scores of 13 or higher, since Strength is the primary ability for Barbarians and Wisdom is the primary ability for Druids.",
+              "type": "paragraph"
+            }
+          ],
+          "id": "srd-5.2/02/multiclassing/prerequisites",
+          "title": "Prerequisites",
+          "type": "section"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "The Experience Point cost to gain a level is based on your total character level, not your level in a particular class, as shown in the Character Advancement table in this chapter. For example, if you are a level 6 Cleric / level 1 Fighter, you must gain enough XP to reach level 8 before you can take your second level as a Fighter or your seventh level as a Cleric.",
+              "type": "paragraph"
+            }
+          ],
+          "id": "srd-5.2/02/multiclassing/experience-points",
+          "title": "Experience Points",
+          "type": "section"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "You gain the Hit Points from your new class as described for levels after 1. You gain the level 1 Hit Points for a class only when your total character level is 1.",
+              "type": "paragraph"
+            },
+            {
+              "text": "Add together the Hit Dice granted by all your classes to form your pool of Hit Dice. If these dice are the same die type, you can pool them together. For example, both the Fighter and the Paladin have a d10 Hit Die, so if you are a level 5 Fighter / level 5 Paladin, you have ten d10 Hit Dice. If your classes give you Hit Dice of different types, track them separately. If you are a level 5 Cleric / level 5 Paladin, for example, you have five d8 Hit Dice and five d10 Hit Dice.",
+              "type": "paragraph"
+            }
+          ],
+          "id": "srd-5.2/02/multiclassing/hit-points-and-hit-point-dice",
+          "title": "Hit Points and Hit Point Dice",
+          "type": "section"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "Your Proficiency Bonus is based on your total character level, not your level in a particular class, as shown in the Character Advancement table. For example, if you are a level 3 Fighter / level 2 Rogue, you have the Proficiency Bonus of a level 5 character, which is +3.",
+              "type": "paragraph"
+            }
+          ],
+          "id": "srd-5.2/02/multiclassing/proficiency-bonus",
+          "title": "Proficiency Bonus",
+          "type": "section"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "When you gain your first level in a class other than your initial class, you gain only some of the new class's starting proficiencies, as detailed in each class's description in chapter 3.",
+              "type": "paragraph"
+            }
+          ],
+          "id": "srd-5.2/02/multiclassing/proficiencies",
+          "title": "Proficiencies",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "If you have multiple ways to calculate your [Armor Class](srd-5.2/08/rules-definitions/armor-class), you can benefit from only one at a time. For example, a Monk/Sorcerer with a Monk's Unarmored Defense feature and a Sorcerer's Draconic Resilience feature must choose only one of those features as a way to calculate Armor Class.",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/02/multiclassing/class-features/armor-class",
+              "title": "Armor Class",
+              "type": "section"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "If you gain the Extra Attack feature from more than one class, the features don't stack. You can't make more than two attacks with this feature unless you have a feature that says you can (such as the Fighter's Two Extra Attacks feature).",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "Similarly, the Warlock's Thirsting Blade invocation, which grants you the Extra Attack feature with your pact weapon, doesn't give you additional attacks if you also have Extra Attack.",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/02/multiclassing/class-features/extra-attack",
+              "title": "Extra Attack",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "columns": [
+                        "Level",
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "2",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "2",
+                          "3",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "3",
+                          "4",
+                          "2",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "4",
+                          "4",
+                          "3",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "5",
+                          "4",
+                          "3",
+                          "2",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "6",
+                          "4",
+                          "3",
+                          "3",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "7",
+                          "4",
+                          "3",
+                          "3",
+                          "1",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "8",
+                          "4",
+                          "3",
+                          "3",
+                          "2",
+                          "—",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "9",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "1",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "10",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "—",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "11",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "1",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "12",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "1",
+                          "—",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "13",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "1",
+                          "1",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "14",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "1",
+                          "1",
+                          "—",
+                          "—"
+                        ],
+                        [
+                          "15",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "1",
+                          "1",
+                          "1",
+                          "—"
+                        ],
+                        [
+                          "16",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "1",
+                          "1",
+                          "1",
+                          "—"
+                        ],
+                        [
+                          "17",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "1",
+                          "1",
+                          "1",
+                          "1"
+                        ],
+                        [
+                          "18",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "3",
+                          "1",
+                          "1",
+                          "1",
+                          "1"
+                        ],
+                        [
+                          "19",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "1",
+                          "1",
+                          "1"
+                        ],
+                        [
+                          "20",
+                          "4",
+                          "3",
+                          "3",
+                          "3",
+                          "3",
+                          "2",
+                          "2",
+                          "1",
+                          "1"
+                        ]
+                      ],
+                      "title": "Multiclass Spellcaster: Spell Slots per Spell Level",
+                      "type": "table"
+                    }
+                  ],
+                  "id": "srd-5.2/02/multiclassing/class-features/spellcasting/multiclass-spellcaster-spell-slots-per-spell-level",
+                  "title": "Multiclass Spellcaster: Spell Slots per Spell Level",
+                  "type": "section"
+                }
+              ],
+              "content": [
+                {
+                  "text": "Your capacity for spellcasting depends partly on your combined levels in all your spellcasting classes and partly on your individual levels in those classes. Once you have the Spellcasting feature from more than one class, use the rules below. If you multiclass but have the Spellcasting feature from only one class, follow the rules for that class.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Spells Prepared",
+                  "text": "You determine what spells you can prepare for each class individually, as if you were a single-classed member of that class. If you are a level 4 Ranger / level 3 Sorcerer, for example, you can prepare five level 1 Ranger spells, and you can prepare six Sorcerer spells of level 1 or 2 (as well as four Sorcerer cantrips).",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "Each spell you prepare is associated with one of your classes, and you use the spellcasting ability of that class when you cast the spell.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Cantrips",
+                  "text": "If a cantrip of yours increases in power at higher levels, the increase is based on your total character level, not your level in a particular class, unless the spell says otherwise.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Spell Slots",
+                  "text": "You determine your available spell slots by adding together the following:",
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "text": "All your levels in the Bard, Cleric, Druid, Sorcerer, and Wizard classes"
+                    },
+                    {
+                      "text": "Half your levels (round up) in the Paladin and Ranger classes"
+                    },
+                    {
+                      "text": "One third of your Fighter or Rogue levels (round down) if you have the Eldritch Knight or Arcane Trickster subclass."
+                    }
+                  ],
+                  "ordered": false,
+                  "type": "list"
+                },
+                {
+                  "text": "Then look up this total level in the Level column of the Multiclass Spellcaster table. You use the slots for that level to cast spells of an appropriate level from any class whose Spellcasting feature you have.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "This table might give you spell slots of a higher level than the spells you prepare. You can use those slots but only to cast your lower-level spells. If a lower-level spell that you cast, like *[Burning Hands](srd-5.2/07/spell-descriptions/burning-hands)*, has an enhanced effect when cast at a higher level, you can use the enhanced effect as normal.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "For example, if you are a level 4 Ranger / level 3 Sorcerer, you count as a level 5 character when determining your spell slots, counting all your levels as a Sorcerer and half your Ranger levels. As shown in the Multiclass Spellcaster table, you have four level 1 spell slots, three level 2 slots, and two level 3 slots. However, you can't prepare any level 3 spells, nor can you prepare any level 2 Ranger spells. You can use the spell slots of those levels to cast the spells you do prepare—and potentially enhance their effects.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Pact Magic",
+                  "text": "If you have the Pact Magic feature from the Warlock class and the Spellcasting feature, you can use the spell slots you gain from Pact Magic to cast spells you have prepared from classes with the Spellcasting feature, and you can use the spell slots you gain from the Spellcasting feature to cast Warlock spells you have prepared.",
+                  "type": "paragraph"
+                }
+              ],
+              "id": "srd-5.2/02/multiclassing/class-features/spellcasting",
+              "title": "Spellcasting",
+              "type": "section"
+            }
+          ],
+          "content": [
+            {
+              "text": "When you gain a new level in a class, you get its features for that level. A few features have additional rules when you're multiclassing. Check the information about multiclassing included in each of your classes' descriptions.",
+              "type": "paragraph"
+            },
+            {
+              "text": "Special rules apply to Extra Attack, Spellcasting, and features (such as Unarmored Defense) that give you alternative ways to calculate your Armor Class.",
+              "type": "paragraph"
+            }
+          ],
+          "id": "srd-5.2/02/multiclassing/class-features",
+          "title": "Class Features",
+          "type": "section"
+        }
+      ],
+      "content": [
+        {
+          "text": "Multiclassing allows you to gain levels in multiple classes. With this rule, you have the option of gaining a level in a new class whenever you advance in level instead of gaining a level in your current class. Doing so lets you mix the abilities of those classes to realize a character concept that might not be reflected in a single class.",
+          "type": "paragraph"
+        }
+      ],
+      "id": "srd-5.2/02/multiclassing",
+      "title": "Multiclassing",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "When you make your character, you can roll once on the Trinkets table to gain a Tiny trinket, a simple item lightly touched by mystery. The DM might also use this table. It can help stock a room in a dungeon or fill a creature's pockets.",
+              "type": "paragraph"
+            },
+            {
+              "columns": [
+                "1d100",
+                "Trinket"
+              ],
+              "rows": [
+                [
+                  "01",
+                  "A mummified goblin hand"
+                ],
+                [
+                  "02",
+                  "A crystal that faintly glows in moonlight"
+                ],
+                [
+                  "03",
+                  "A gold coin minted in an unknown land"
+                ],
+                [
+                  "04",
+                  "A diary written in a language you don't know"
+                ],
+                [
+                  "05",
+                  "A brass ring that never tarnishes"
+                ],
+                [
+                  "06",
+                  "An old chess piece made from glass"
+                ],
+                [
+                  "07",
+                  "A pair of knucklebone dice, each with a skull symbol on the side that would normally show six pips"
+                ],
+                [
+                  "08",
+                  "A small idol depicting a nightmarish creature that gives you unsettling dreams when you sleep near it"
+                ],
+                [
+                  "09",
+                  "A lock of someone's hair"
+                ],
+                [
+                  "10",
+                  "The deed for a parcel of land in a realm unknown to you"
+                ],
+                [
+                  "11",
+                  "A 1-ounce block made from an unknown material"
+                ],
+                [
+                  "12",
+                  "A small cloth doll skewered with needles"
+                ],
+                [
+                  "13",
+                  "A tooth from an unknown beast"
+                ],
+                [
+                  "14",
+                  "An enormous scale, perhaps from a dragon"
+                ],
+                [
+                  "15",
+                  "A bright-green feather"
+                ],
+                [
+                  "16",
+                  "An old divination card bearing your likeness"
+                ],
+                [
+                  "17",
+                  "A glass orb filled with moving smoke"
+                ],
+                [
+                  "18",
+                  "A 1-pound egg with a bright-red shell"
+                ],
+                [
+                  "19",
+                  "A pipe that blows bubbles"
+                ],
+                [
+                  "20",
+                  "A glass jar containing a bit of flesh floating in pickling fluid"
+                ],
+                [
+                  "21",
+                  "A gnome-crafted music box that plays a song you dimly remember from your childhood"
+                ],
+                [
+                  "22",
+                  "A wooden statuette of a smug halfling"
+                ],
+                [
+                  "23",
+                  "A brass orb etched with strange runes"
+                ],
+                [
+                  "24",
+                  "A multicolored stone disk"
+                ],
+                [
+                  "25",
+                  "A silver icon of a raven"
+                ],
+                [
+                  "26",
+                  "A bag containing forty-seven teeth, one of which is rotten"
+                ],
+                [
+                  "27",
+                  "A shard of obsidian that always feels warm to the touch"
+                ],
+                [
+                  "28",
+                  "A dragon's talon strung on a leather necklace"
+                ],
+                [
+                  "29",
+                  "A pair of old socks"
+                ],
+                [
+                  "30",
+                  "A blank book whose pages refuse to hold ink, chalk, graphite, or any other marking"
+                ],
+                [
+                  "31",
+                  "A silver badge that is a five-pointed star"
+                ],
+                [
+                  "32",
+                  "A knife that belonged to a relative"
+                ],
+                [
+                  "33",
+                  "A glass vial filled with nail clippings"
+                ],
+                [
+                  "34",
+                  "A rectangular metal device with two tiny metal cups on one end that throws sparks when wet"
+                ],
+                [
+                  "35",
+                  "A white, sequined glove sized for a human"
+                ],
+                [
+                  "36",
+                  "A vest with one hundred tiny pockets"
+                ],
+                [
+                  "37",
+                  "A weightless stone"
+                ],
+                [
+                  "38",
+                  "A sketch of a goblin"
+                ],
+                [
+                  "39",
+                  "An empty glass vial that smells of perfume"
+                ],
+                [
+                  "40",
+                  "A gemstone that looks like a lump of coal when examined by anyone but you"
+                ],
+                [
+                  "41",
+                  "A scrap of cloth from an old banner"
+                ],
+                [
+                  "42",
+                  "A rank insignia from a lost legionnaire"
+                ],
+                [
+                  "43",
+                  "A silver bell without a clapper"
+                ],
+                [
+                  "44",
+                  "A mechanical canary inside a lamp"
+                ],
+                [
+                  "45",
+                  "A miniature chest carved to look like it has numerous feet on the bottom"
+                ],
+                [
+                  "46",
+                  "A dead sprite inside a clear glass bottle"
+                ],
+                [
+                  "47",
+                  "A metal can that has no opening but sounds as if it is filled with liquid, sand, spiders, or broken glass (your choice)"
+                ],
+                [
+                  "48",
+                  "A glass orb filled with water, in which swims a clockwork goldfish"
+                ],
+                [
+                  "49",
+                  "A silver spoon with an M engraved on the handle"
+                ],
+                [
+                  "50",
+                  "A whistle made from gold-colored wood"
+                ],
+                [
+                  "51",
+                  "A dead scarab beetle the size of your hand"
+                ],
+                [
+                  "52",
+                  "Two toy soldiers, one missing a head"
+                ],
+                [
+                  "53",
+                  "A small box filled with different-sized buttons"
+                ],
+                [
+                  "54",
+                  "A candle that can't be lit"
+                ],
+                [
+                  "55",
+                  "A miniature cage with no door"
+                ],
+                [
+                  "56",
+                  "An old key"
+                ],
+                [
+                  "57",
+                  "An indecipherable treasure map"
+                ],
+                [
+                  "58",
+                  "A hilt from a broken sword"
+                ],
+                [
+                  "59",
+                  "A rabbit's foot"
+                ],
+                [
+                  "60",
+                  "A glass eye"
+                ],
+                [
+                  "61",
+                  "A cameo of a hideous person"
+                ],
+                [
+                  "62",
+                  "A silver skull the size of a coin"
+                ],
+                [
+                  "63",
+                  "An alabaster mask"
+                ],
+                [
+                  "64",
+                  "A cone of sticky black incense that stinks"
+                ],
+                [
+                  "65",
+                  "A nightcap that gives you pleasant dreams when you wear it"
+                ],
+                [
+                  "66",
+                  "A single caltrop made from bone"
+                ],
+                [
+                  "67",
+                  "A gold monocle frame without the lens"
+                ],
+                [
+                  "68",
+                  "A 1-inch cube, each side a different color"
+                ],
+                [
+                  "69",
+                  "A crystal doorknob"
+                ],
+                [
+                  "70",
+                  "A packet filled with pink dust"
+                ],
+                [
+                  "71",
+                  "A fragment of a beautiful song, written as musical notes on two pieces of parchment"
+                ],
+                [
+                  "72",
+                  "A silver teardrop earring containing a real teardrop"
+                ],
+                [
+                  "73",
+                  "An eggshell painted with scenes of misery in disturbing detail"
+                ],
+                [
+                  "74",
+                  "A fan that, when unfolded, shows a sleepy cat"
+                ],
+                [
+                  "75",
+                  "A set of bone pipes"
+                ],
+                [
+                  "76",
+                  "A four-leaf clover pressed inside a book discussing manners and etiquette"
+                ],
+                [
+                  "77",
+                  "A sheet of parchment upon which is drawn a mechanical contraption"
+                ],
+                [
+                  "78",
+                  "An ornate scabbard that fits no blade you have found"
+                ],
+                [
+                  "79",
+                  "An invitation to a party where a murder happened"
+                ],
+                [
+                  "80",
+                  "A bronze pentacle with an etching of a rat's head in its center"
+                ],
+                [
+                  "81",
+                  "A purple handkerchief embroidered with the name of an archmage"
+                ],
+                [
+                  "82",
+                  "Half a floor plan for a temple, a castle, or another structure"
+                ],
+                [
+                  "83",
+                  "A bit of folded cloth that, when unfolded, turns into a stylish cap"
+                ],
+                [
+                  "84",
+                  "A receipt of deposit at a bank in a far-off city"
+                ],
+                [
+                  "85",
+                  "A diary with seven missing pages"
+                ],
+                [
+                  "86",
+                  "An empty silver snuffbox bearing the inscription \"dreams\" on its lid"
+                ],
+                [
+                  "87",
+                  "An iron holy symbol devoted to an unknown god"
+                ],
+                [
+                  "88",
+                  "A book about a legendary hero's rise and fall, with the last chapter missing"
+                ],
+                [
+                  "89",
+                  "A vial of dragon blood"
+                ],
+                [
+                  "90",
+                  "An ancient arrow of elven design"
+                ],
+                [
+                  "91",
+                  "A needle that never bends"
+                ],
+                [
+                  "92",
+                  "An ornate brooch of dwarven design"
+                ],
+                [
+                  "93",
+                  "An empty wine bottle bearing a pretty label that says, \"The Wizard of Wines Winery, Red Dragon Crush, 331422-W\""
+                ],
+                [
+                  "94",
+                  "A mosaic tile with a multicolored, glazed surface"
+                ],
+                [
+                  "95",
+                  "A petrified mouse"
+                ],
+                [
+                  "96",
+                  "A black pirate flag adorned with a dragon's skull and crossbones"
+                ],
+                [
+                  "97",
+                  "A tiny mechanical crab or spider that moves about when it's not being observed"
+                ],
+                [
+                  "98",
+                  "A glass jar containing lard with a label that reads, \"Griffon Grease\""
+                ],
+                [
+                  "99",
+                  "A wooden box with a ceramic bottom that holds a living worm with a head on each end of its body"
+                ],
+                [
+                  "00",
+                  "A metal urn containing the ashes of a hero"
+                ]
+              ],
+              "title": "Trinkets",
+              "type": "table"
+            }
+          ],
+          "data": {
+            "kind": "gear",
+            "section": "Trinkets"
+          },
+          "id": "srd-5.2/02/trinkets/trinket",
+          "origin": {
+            "name": "Trinket",
+            "prop": "item",
+            "source": "XPHB"
+          },
+          "title": "Trinket",
+          "type": "item"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/02/trinkets",
+      "title": "Trinkets",
+      "type": "section"
+    }
+  ],
+  "content": [],
+  "id": "srd-5.2/02",
+  "title": "Chapter 2: Creating a Character",
+  "type": "chapter"
+}

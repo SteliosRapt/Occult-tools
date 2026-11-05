@@ -1,0 +1,1305 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Cheaply made potions and elixirs are sometimes tainted by Cackle Fever, which affects Humanoids only (gnomes are strangely immune). A creature suffers the following effects 1d4 days after infection:",
+                      "type": "paragraph"
+                    },
+                    {
+                      "items": [
+                        {
+                          "label": "Fever",
+                          "text": "The creature gains 1 [Exhaustion](srd-5.2/08/rules-definitions/exhaustion) level, which lasts until the contagion ends on the creature."
+                        },
+                        {
+                          "label": "Uncontrollable Laughter",
+                          "text": "While the creature has the [Exhaustion](srd-5.2/08/rules-definitions/exhaustion) condition, the creature makes a DC 13 Constitution saving throw each time it takes damage other than Psychic damage. On a failed save, the creature takes 5 (1d10) Psychic damage and has the [Incapacitated](srd-5.2/08/rules-definitions/incapacitated) condition as it laughs uncontrollably. At the end of each of its turns, the creature repeats the save, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+                        }
+                      ],
+                      "ordered": false,
+                      "type": "list"
+                    },
+                    {
+                      "label": "Fighting the Contagion",
+                      "text": "At the end of each Long Rest, an infected creature makes a DC 13 Constitution saving throw. After the creature succeeds on three of these saves, the contagion ends on it, and the creature is immune to Cackle Fever for 1 year.",
+                      "type": "paragraph"
+                    },
+                    {
+                      "label": "Spreading the Contagion",
+                      "text": "Any Humanoid (other than a gnome) that starts its turn within a 10-foot [Emanation](srd-5.2/08/rules-definitions/emanation) originating from a creature infected with Cackle Fever must succeed on a DC 10 Constitution saving throw or also become infected with the contagion. On a successful save, the Humanoid can't catch the contagion from that particular infected creature for the next 24 hours.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "category": "Magical Contagion"
+                  },
+                  "id": "srd-5.2/10/curses-and-magical-contagions/magical-contagions/example-contagions/cackle-fever",
+                  "origin": {
+                    "name": "Cackle Fever",
+                    "prop": "disease",
+                    "source": "XDMG"
+                  },
+                  "title": "Cackle Fever",
+                  "type": "disease"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Fouled potions and alchemical waste can give rise to Sewer Plague, which incubates in sewers and refuse heaps and is sometimes transmitted by creatures that dwell in such areas, including otyughs and rats. Any Humanoid that is wounded by a creature that carries the contagion or that comes into contact with contaminated filth or offal must succeed on a DC 11 Constitution saving throw or become infected with Sewer Plague. A creature suffers the following effects 1d4 days after infection:",
+                      "type": "paragraph"
+                    },
+                    {
+                      "items": [
+                        {
+                          "label": "Fatigue",
+                          "text": "The creature gains 1 [Exhaustion](srd-5.2/08/rules-definitions/exhaustion) level."
+                        },
+                        {
+                          "label": "Weakness",
+                          "text": "While the creature has any Exhaustion levels, it regains only half the normal number of Hit Points from spending Hit Point Dice."
+                        },
+                        {
+                          "label": "Restlessness",
+                          "text": "While the creature has any Exhaustion levels, finishing a Long Rest neither restores lost Hit Points nor reduces the creature's Exhaustion level."
+                        }
+                      ],
+                      "ordered": false,
+                      "type": "list"
+                    },
+                    {
+                      "label": "Fighting the Contagion",
+                      "text": "Daily at dawn, an infected creature makes a DC 11 Constitution saving throw. On a failed save, the creature gains 1 [Exhaustion](srd-5.2/08/rules-definitions/exhaustion) level as its fatigue worsens. On a successful save, the creature's Exhaustion level decreases by 1. If the creature's Exhaustion level is reduced to 0, the contagion ends on the creature.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "category": "Magical Contagion"
+                  },
+                  "id": "srd-5.2/10/curses-and-magical-contagions/magical-contagions/example-contagions/sewer-plague",
+                  "origin": {
+                    "name": "Sewer Plague",
+                    "prop": "disease",
+                    "source": "XDMG"
+                  },
+                  "title": "Sewer Plague",
+                  "type": "disease"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Any Beast or Humanoid that drinks water tainted by Sight Rot must succeed on a DC 15 Constitution saving throw or have the [Blinded](srd-5.2/08/rules-definitions/blinded) condition until the contagion ends.",
+                      "type": "paragraph"
+                    },
+                    {
+                      "label": "Fighting the Contagion",
+                      "text": "Magic such as a *[Heal](srd-5.2/07/spell-descriptions/heal)* or *[Lesser Restoration](srd-5.2/07/spell-descriptions/lesser-restoration)* spell ends the contagion immediately. A character who is proficient with an [Herbalism Kit](srd-5.2/06/tools/other-tools/herbalism-kit) can use it to create one dose of nonmagical ointment, which takes 1 hour. When applied to the eyes of a creature suffering from Sight Rot, the ointment suppresses the contagion on that creature for 24 hours. If the contagion is suppressed in this way for a total of 72 hours (requiring three doses and applications of the ointment), the contagion ends on the creature.",
+                      "type": "paragraph"
+                    },
+                    {
+                      "label": "Spreading the Contagion",
+                      "text": "Any Humanoid that makes skin contact with a creature infected with Sight Rot must succeed on a DC 15 Constitution saving throw or also become infected with the contagion. On a successful save, the Humanoid can't catch the contagion from that particular infected creature for the next 24 hours.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "category": "Magical Contagion"
+                  },
+                  "id": "srd-5.2/10/curses-and-magical-contagions/magical-contagions/example-contagions/sight-rot",
+                  "origin": {
+                    "name": "Sight Rot",
+                    "prop": "disease",
+                    "source": "XDMG"
+                  },
+                  "title": "Sight Rot",
+                  "type": "disease"
+                }
+              ],
+              "content": [],
+              "id": "srd-5.2/10/curses-and-magical-contagions/magical-contagions/example-contagions",
+              "title": "Example Contagions",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/10/curses-and-magical-contagions/magical-contagions",
+          "title": "Magical Contagions",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/10/curses-and-magical-contagions",
+      "title": "Curses and Magical Contagions",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "Swimming through deep water (more than 100 feet deep) presents additional challenges because of the water's pressure and cold temperature. After each hour of swimming in deep water, a creature that lacks a Swim Speed must succeed on a DC 10 Constitution saving throw or gain 1 [Exhaustion](srd-5.2/08/rules-definitions/exhaustion) level.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "category": "Environmental Hazard",
+            "ratings": [],
+            "subtitle": "Environmental Hazard"
+          },
+          "id": "srd-5.2/10/environmental-effects/deep-water",
+          "origin": {
+            "name": "Deep Water",
+            "prop": "hazard",
+            "source": "XDMG"
+          },
+          "title": "Deep Water",
+          "type": "hazard"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "When the temperature is 0 degrees Fahrenheit or lower, a creature exposed to the extreme cold must succeed on a DC 10 Constitution saving throw at the end of each hour or gain 1 [Exhaustion](srd-5.2/08/rules-definitions/exhaustion) level. Creatures that have [Resistance](srd-5.2/08/rules-definitions/resistance) or [Immunity](srd-5.2/08/rules-definitions/immunity) to Cold damage automatically succeed on the save.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "category": "Environmental Hazard",
+            "ratings": [],
+            "subtitle": "Environmental Hazard"
+          },
+          "id": "srd-5.2/10/environmental-effects/extreme-cold",
+          "origin": {
+            "name": "Extreme Cold",
+            "prop": "hazard",
+            "source": "XDMG"
+          },
+          "title": "Extreme Cold",
+          "type": "hazard"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "When the temperature is 100 degrees Fahrenheit or higher, a creature exposed to the extreme heat and without access to drinkable water must succeed on a Constitution saving throw at the end of each hour or gain 1 [Exhaustion](srd-5.2/08/rules-definitions/exhaustion) level. The DC is 5 for the first hour and increases by 1 for each additional hour. Creatures wearing Medium or Heavy armor have [Disadvantage](srd-5.2/08/rules-definitions/disadvantage) on the save. Creatures that have [Resistance](srd-5.2/08/rules-definitions/resistance) or [Immunity](srd-5.2/08/rules-definitions/immunity) to Fire damage automatically succeed on the save.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "category": "Environmental Hazard",
+            "ratings": [],
+            "subtitle": "Environmental Hazard"
+          },
+          "id": "srd-5.2/10/environmental-effects/extreme-heat",
+          "origin": {
+            "name": "Extreme Heat",
+            "prop": "hazard",
+            "source": "XDMG"
+          },
+          "title": "Extreme Heat",
+          "type": "hazard"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "A creature can be immersed in frigid water for a number of minutes equal to its Constitution score before suffering any ill effects. Each additional minute spent in frigid water requires the creature to succeed on a DC 10 Constitution saving throw or gain 1 [Exhaustion](srd-5.2/08/rules-definitions/exhaustion) level. Creatures with [Resistance](srd-5.2/08/rules-definitions/resistance) or [Immunity](srd-5.2/08/rules-definitions/immunity) to Cold damage automatically succeed on the save, as do creatures that are naturally adapted to living in ice-cold water.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "category": "Environmental Hazard",
+            "ratings": [],
+            "subtitle": "Environmental Hazard"
+          },
+          "id": "srd-5.2/10/environmental-effects/frigid-water",
+          "origin": {
+            "name": "Frigid Water",
+            "prop": "hazard",
+            "source": "XDMG"
+          },
+          "title": "Frigid Water",
+          "type": "hazard"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "Everything within an area of heavy rain or heavy snowfall is [Lightly Obscured](srd-5.2/08/rules-definitions/lightly-obscured), and creatures in the area have [Disadvantage](srd-5.2/08/rules-definitions/disadvantage) on all Wisdom ([Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)) checks. Heavy rain also extinguishes open flames.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "category": "Environmental Hazard",
+            "ratings": [],
+            "subtitle": "Environmental Hazard"
+          },
+          "id": "srd-5.2/10/environmental-effects/heavy-precipitation",
+          "origin": {
+            "name": "Heavy Precipitation",
+            "prop": "hazard",
+            "source": "XDMG"
+          },
+          "title": "Heavy Precipitation",
+          "type": "hazard"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "Traveling at altitudes of 10,000 feet or higher above sea level is taxing for most creatures because of the reduced amount of oxygen in the air. Each hour such a creature spends traveling at high altitude counts as 2 hours for the purpose of determining how long that creature can travel (see \"Travel Pace\" in chapter 2).",
+              "type": "paragraph"
+            },
+            {
+              "text": "Creatures can become acclimated to a high altitude by spending 30 days or more at this elevation. Creatures can't become acclimated to elevations above 20,000 feet unless they are native to such environments.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "category": "Environmental Hazard",
+            "ratings": [],
+            "subtitle": "Environmental Hazard"
+          },
+          "id": "srd-5.2/10/environmental-effects/high-altitude",
+          "origin": {
+            "name": "High Altitude",
+            "prop": "hazard",
+            "source": "XDMG"
+          },
+          "title": "High Altitude",
+          "type": "hazard"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "Slippery ice is [Difficult Terrain](srd-5.2/08/rules-definitions/difficult-terrain). A creature that moves onto slippery ice for the first time on a turn or starts its turn there must succeed on a DC 10 Dexterity saving throw or have the [Prone](srd-5.2/08/rules-definitions/prone) condition.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "category": "Environmental Hazard",
+            "ratings": [],
+            "subtitle": "Environmental Hazard"
+          },
+          "id": "srd-5.2/10/environmental-effects/slippery-ice",
+          "origin": {
+            "name": "Slippery Ice",
+            "prop": "hazard",
+            "source": "XDMG"
+          },
+          "title": "Slippery Ice",
+          "type": "hazard"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "Strong wind imposes [Disadvantage](srd-5.2/08/rules-definitions/disadvantage) on ranged attack rolls with weapons. It also extinguishes open flames and disperses fog. A flying creature in a strong wind must land at the end of its turn or fall.",
+              "type": "paragraph"
+            },
+            {
+              "text": "A strong wind in a desert can create a sandstorm that imposes Disadvantage on Wisdom ([Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)) checks.",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "category": "Environmental Hazard",
+            "ratings": [],
+            "subtitle": "Environmental Hazard"
+          },
+          "id": "srd-5.2/10/environmental-effects/strong-wind",
+          "origin": {
+            "name": "Strong Wind",
+            "prop": "hazard",
+            "source": "XDMG"
+          },
+          "title": "Strong Wind",
+          "type": "hazard"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "text": "Thin ice has a weight tolerance of 3d10 × 10 pounds per 10-foot-square area. Whenever the total weight on an area of thin ice exceeds its tolerance, the ice in that area breaks. All creatures on broken ice fall through. Below the ice is [frigid water](srd-5.2/10/environmental-effects/frigid-water).",
+              "type": "paragraph"
+            }
+          ],
+          "data": {
+            "category": "Environmental Hazard",
+            "ratings": [],
+            "subtitle": "Environmental Hazard"
+          },
+          "id": "srd-5.2/10/environmental-effects/thin-ice",
+          "origin": {
+            "name": "Thin Ice",
+            "prop": "hazard",
+            "source": "XDMG"
+          },
+          "title": "Thin Ice",
+          "type": "hazard"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/10/environmental-effects",
+      "title": "Environmental Effects",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "columns": [
+                "Example",
+                "Save DC"
+              ],
+              "rows": [
+                [
+                  "When the characters open a sarcophagus, a harmless yet terrifying apparition appears.",
+                  "10"
+                ],
+                [
+                  "A character triggers a magical trap that creates an illusory manifestation of that character's worst fears, visible only to that character.",
+                  "15"
+                ],
+                [
+                  "A portal to the Abyss opens, revealing a nightmarish realm of torment and slaughter.",
+                  "20"
+                ]
+              ],
+              "title": "Sample Fear DCs",
+              "type": "table"
+            }
+          ],
+          "id": "srd-5.2/10/fear-and-mental-stress/fear-effects",
+          "title": "Fear Effects",
+          "type": "section"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "columns": [
+                "Example",
+                "Save DC",
+                "Psychic Damage"
+              ],
+              "rows": [
+                [
+                  "A character ingests a hallucinogenic substance that distorts the character's perception of reality.",
+                  "10",
+                  "1d6"
+                ],
+                [
+                  "A character touches a fiendish idol that tears at the character's mind, threatening to shatter it.",
+                  "15",
+                  "3d6"
+                ],
+                [
+                  "A magical trap flings a character into the Far Realm until the end of that character's next turn.",
+                  "20",
+                  "9d6"
+                ]
+              ],
+              "title": "Sample Mental Stress Effects",
+              "type": "table"
+            }
+          ],
+          "id": "srd-5.2/10/fear-and-mental-stress/mental-stress-effects",
+          "title": "Mental Stress Effects",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/10/fear-and-mental-stress",
+      "title": "Fear and Mental Stress",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Assassin's Blood makes a DC 10 Constitution saving throw. On a failed save, the creature takes 6 (1d12) Poison damage and has the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition for 24 hours. On a successful save, the creature takes half as much damage only.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "150 GP",
+                "cost_gp": 150.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/assassins-blood",
+              "origin": {
+                "name": "Assassin's Blood",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Assassin's Blood",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Burnt Othur Fumes must succeed on a DC 13 Constitution saving throw or take 10 (3d6) Poison damage, and it must repeat the save at the start of each of its turns. On each successive failed save, the creature takes 3 (1d6) Poison damage. After three successful saves, the poison ends.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "500 GP",
+                "cost_gp": 500.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/burnt-othur-fumes",
+              "origin": {
+                "name": "Burnt Othur Fumes",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Burnt Othur Fumes",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Crawler Mucus must succeed on a DC 13 Constitution saving throw or have the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition for 1 minute. The creature also has the [Paralyzed](srd-5.2/08/rules-definitions/paralyzed) condition while [Poisoned](srd-5.2/08/rules-definitions/poisoned) in this way. The creature repeats the save at the end of each of its turns, ending the effect on itself on a success.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "200 GP",
+                "cost_gp": 200.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/crawler-mucus",
+              "origin": {
+                "name": "Crawler Mucus",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Crawler Mucus",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Essence of Ether must succeed on a DC 15 Constitution saving throw or have the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition for 8 hours. The creature also has the [Unconscious](srd-5.2/08/rules-definitions/unconscious) condition while [Poisoned](srd-5.2/08/rules-definitions/poisoned) in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "300 GP",
+                "cost_gp": 300.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/essence-of-ether",
+              "origin": {
+                "name": "Essence of Ether",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Essence of Ether",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Spider's Sting must succeed on a DC 13 Constitution saving throw or have the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition for 1 hour. If the creature fails the save by 5 or more, the creature also has the [Unconscious](srd-5.2/08/rules-definitions/unconscious) condition while [Poisoned](srd-5.2/08/rules-definitions/poisoned) in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "200 GP",
+                "cost_gp": 200.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/spiders-sting",
+              "origin": {
+                "name": "Spider's Sting",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Spider's Sting",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Malice must succeed on a DC 15 Constitution saving throw or have the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition for 1 hour. The creature also has the [Blinded](srd-5.2/08/rules-definitions/blinded) condition while [Poisoned](srd-5.2/08/rules-definitions/poisoned) in this way.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "250 GP",
+                "cost_gp": 250.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/malice",
+              "origin": {
+                "name": "Malice",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Malice",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature that ingests Midnight Tears suffers no effect until the stroke of midnight. Any effect that ends the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition neutralizes this poison. If the poison hasn't been neutralized before midnight, the creature makes a DC 17 Constitution saving throw, taking 31 (9d6) Poison damage on a failed save or half as much damage on a successful one.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "1,500 GP",
+                "cost_gp": 1500.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/midnight-tears",
+              "origin": {
+                "name": "Midnight Tears",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Midnight Tears",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Oil of Taggit must succeed on a DC 13 Constitution saving throw or have the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition for 24 hours. The creature also has the [Unconscious](srd-5.2/08/rules-definitions/unconscious) condition while [Poisoned](srd-5.2/08/rules-definitions/poisoned) in this way. It wakes up if it takes damage.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "400 GP",
+                "cost_gp": 400.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/oil-of-taggit",
+              "origin": {
+                "name": "Oil of Taggit",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Oil of Taggit",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Pale Tincture must succeed on a DC 16 Constitution saving throw or take 3 (1d6) Poison damage and have the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition. The [Poisoned](srd-5.2/08/rules-definitions/poisoned) creature repeats the save every 24 hours, taking 3 (1d6) Poison damage on a failed save. The damage the poison deals can't be healed by any means while the creature remains [Poisoned](srd-5.2/08/rules-definitions/poisoned). After seven successful saves against the poison, the creature is no longer [Poisoned](srd-5.2/08/rules-definitions/poisoned).",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "250 GP",
+                "cost_gp": 250.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/pale-tincture",
+              "origin": {
+                "name": "Pale Tincture",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Pale Tincture",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Purple Worm Poison makes a DC 21 Constitution saving throw, taking 35 (10d6) Poison damage on a failed save or half as much damage on a successful one.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "2,000 GP",
+                "cost_gp": 2000.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/purple-worm-poison",
+              "origin": {
+                "name": "Purple Worm Poison",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Purple Worm Poison",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Serpent Venom must succeed on a DC 11 Constitution saving throw, taking 10 (3d6) Poison damage on a failed save or half as much damage on a successful one.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "200 GP",
+                "cost_gp": 200.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/serpent-venom",
+              "origin": {
+                "name": "Serpent Venom",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Serpent Venom",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Torpor poison must succeed on a DC 15 Constitution saving throw or have the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition for 4d6 hours. The creature's [Speed](srd-5.2/08/rules-definitions/speed) is halved while the creature is [Poisoned](srd-5.2/08/rules-definitions/poisoned) in this way.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "600 GP",
+                "cost_gp": 600.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/torpor",
+              "origin": {
+                "name": "Torpor",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Torpor",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Truth Serum must succeed on a DC 11 Constitution saving throw or have the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition for 1 hour. The [Poisoned](srd-5.2/08/rules-definitions/poisoned) creature can't knowingly communicate a lie.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "150 GP",
+                "cost_gp": 150.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/truth-serum",
+              "origin": {
+                "name": "Truth Serum",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Truth Serum",
+              "type": "item"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A creature subjected to Wyvern Poison makes a DC 14 Constitution saving throw, taking 24 (7d6) Poison damage on a failed save or half as much damage on a successful one.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "cost": "1,200 GP",
+                "cost_gp": 1200.0,
+                "kind": "poison",
+                "section": "Sample Poisons"
+              },
+              "id": "srd-5.2/10/poison/sample-poisons/wyvern-poison",
+              "origin": {
+                "name": "Wyvern Poison",
+                "prop": "item",
+                "source": "XDMG"
+              },
+              "title": "Wyvern Poison",
+              "type": "item"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/10/poison/sample-poisons",
+          "title": "Sample Poisons",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/10/poison",
+      "title": "Poison",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "This trap uses a trip wire to collapse an unstable section of ceiling. The trip wire is 3 inches off the ground and stretches between two weak supports that topple when the trip wire is pulled.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "The first creature that crosses the trip wire causes the supports to topple and the unstable section of ceiling to collapse. Each creature beneath the unstable section of ceiling must succeed on a DC 13 Dexterity saving throw, taking 11 (2d10) Bludgeoning damage on a failed save or half as much damage on a successful one. Rubble from the collapse turns the trapped area into [Difficult Terrain](srd-5.2/08/rules-definitions/difficult-terrain).",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Detect and Disarm",
+                  "text": "As a [Search](srd-5.2/08/rules-definitions/search) action, a creature can examine the trapped area and make a DC 11 Wisdom ([Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)) check, detecting the trip wire and the unstable section of ceiling on a successful check. Once detected, the trip wire can be easily cut or avoided (no ability check required).",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "At Higher Levels",
+                  "text": "You can scale the trap for higher levels by increasing the damage and the save DC, as shown in the following table.",
+                  "type": "paragraph"
+                },
+                {
+                  "columns": [
+                    "Levels",
+                    "Bludgeoning Damage",
+                    "Save DC"
+                  ],
+                  "rows": [
+                    [
+                      "5–10",
+                      "22 (4d10)",
+                      "15"
+                    ],
+                    [
+                      "11–16",
+                      "55 (10d10)",
+                      "17"
+                    ],
+                    [
+                      "17–20",
+                      "99 (18d10)",
+                      "19"
+                    ]
+                  ],
+                  "type": "table"
+                }
+              ],
+              "data": {
+                "category": "Trap",
+                "duration": "Instantaneous",
+                "ratings": [
+                  {
+                    "levels": "1–4",
+                    "threat": "Deadly",
+                    "tier": 1
+                  }
+                ],
+                "subtitle": "Deadly Trap (Levels 1–4)",
+                "trigger": "A creature crosses a trip wire"
+              },
+              "id": "srd-5.2/10/traps/example-traps/collapsing-roof",
+              "origin": {
+                "name": "Collapsing Roof",
+                "prop": "trap",
+                "source": "XDMG"
+              },
+              "title": "Collapsing Roof",
+              "type": "trap"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A falling net trap uses a trip wire to release a weighted, 10-foot-square [Net](srd-5.2/06/adventuring-gear/net) suspended from the ceiling. The trip wire is 3 inches off the ground and stretches between two columns or trees.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "The first creature that crosses the trip wire causes the Net to fall on it. The target must succeed on a DC 10 Dexterity saving throw or have the [Restrained](srd-5.2/08/rules-definitions/restrained) condition until it escapes. The target succeeds automatically if it's Huge or larger. A creature can take an action to make a DC 10 Strength ([Athletics](srd-5.2/01/proficiency/skill-proficiencies/skill-list/athletics)) check, freeing itself or another creature within its reach from the Net on a successful check.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Detect and Disarm",
+                  "text": "As a [Search](srd-5.2/08/rules-definitions/search) action, a creature can examine the trapped area and make a DC 11 Wisdom ([Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)) check, detecting the trip wire and the suspended Net on a successful check. Once detected, the trip wire can be easily cut or avoided (no ability check required).",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Destroy the Net",
+                  "text": "Reducing the Net to 0 Hit Points frees any creature trapped in it (see the System Reference Document for the [Net's](srd-5.2/06/adventuring-gear/net) statistics).",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Set the Trap",
+                  "text": "A creature that has [Thieves' Tools](srd-5.2/06/tools/other-tools/thieves-tools) and all the trap's components (including a Net) can try to set a falling net trap, doing so with a successful DC 13 Dexterity ([Sleight of Hand](srd-5.2/01/proficiency/skill-proficiencies/skill-list/sleight-of-hand)) check. Each attempt to set this trap takes 10 minutes.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "At Higher Levels",
+                  "text": "You can scale the trap for higher levels by increasing the weight of the Net, which increases the save DC and the DC of the Strength ([Athletics](srd-5.2/01/proficiency/skill-proficiencies/skill-list/athletics)) check as follows: DC 12 at levels 5–10, DC 14 at levels 11–16, or DC 16 at levels 17–20.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "category": "Trap",
+                "duration": "Instantaneous",
+                "ratings": [
+                  {
+                    "levels": "1–4",
+                    "threat": "Nuisance",
+                    "tier": 1
+                  }
+                ],
+                "subtitle": "Nuisance Trap (Levels 1–4)",
+                "trigger": "A creature crosses a trip wire"
+              },
+              "id": "srd-5.2/10/traps/example-traps/falling-net",
+              "origin": {
+                "name": "Falling Net",
+                "prop": "trap",
+                "source": "XDMG"
+              },
+              "title": "Falling Net",
+              "type": "trap"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "When a creature moves onto this trap's pressure plate for the first time on a turn or starts its turn there, a nearby statue exhales a 15-foot [Cone](srd-5.2/08/rules-definitions/cone) of magical flame. The statue can look like anything, such as a dragon or a wizard. Each creature in the Cone must succeed on a DC 15 Dexterity saving throw, taking 11 (2d10) Fire damage on a failed save or half as much damage on a successful one.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Detect and Disarm",
+                  "text": "A *[Detect Magic](srd-5.2/07/spell-descriptions/detect-magic)* spell reveals an aura of Evocation magic around the statue. As a [Search](srd-5.2/08/rules-definitions/search) action, a creature within 5 feet of the statue can examine it and make a DC 10 Wisdom ([Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)) check, detecting a tiny glyph on the statue on a successful check. Once the glyph is found, a character can take a [Study](srd-5.2/08/rules-definitions/study) action to examine it and make a DC 15 Intelligence ([Arcana](srd-5.2/01/proficiency/skill-proficiencies/skill-list/arcana)) check, ascertaining that the glyph means \"fire\" on a successful check. As an action, a character can use a sharp tool to deface the glyph, which disarms the trap.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As a [Search](srd-5.2/08/rules-definitions/search) action, a creature can examine the section of floor that forms the pressure plate and make a DC 15 Wisdom ([Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)) check, detecting the pressure plate on a successful check. Wedging an [Iron Spike](srd-5.2/06/adventuring-gear/spikes-iron) or similar object under the pressure plate prevents the trap from triggering.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "At Higher Levels",
+                  "text": "You can scale the trap for higher levels by increasing the damage and the area of effect, as shown in the following table.",
+                  "type": "paragraph"
+                },
+                {
+                  "columns": [
+                    "Levels",
+                    "Fire Damage",
+                    "Area of Effect"
+                  ],
+                  "rows": [
+                    [
+                      "5–10",
+                      "22 (4d10)",
+                      "30-foot Cone"
+                    ],
+                    [
+                      "11–16",
+                      "55 (10d10)",
+                      "60-foot Cone"
+                    ],
+                    [
+                      "17–20",
+                      "99 (18d10)",
+                      "120-foot Cone"
+                    ]
+                  ],
+                  "type": "table"
+                }
+              ],
+              "data": {
+                "category": "Trap",
+                "duration": "Instantaneous",
+                "ratings": [
+                  {
+                    "levels": "1–4",
+                    "threat": "Deadly",
+                    "tier": 1
+                  }
+                ],
+                "subtitle": "Deadly Trap (Levels 1–4)",
+                "trigger": "A creature moves onto a pressure plate"
+              },
+              "id": "srd-5.2/10/traps/example-traps/fire-casting-statue",
+              "origin": {
+                "name": "Fire-Casting Statue",
+                "prop": "trap",
+                "source": "XDMG"
+              },
+              "title": "Fire-Casting Statue",
+              "type": "trap"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "This 10-foot-deep pit has a hinged lid constructed from material identical to the surrounding floor. When a creature moves onto the lid, it swings open like a trapdoor, causing the creature to fall into the pit. The lid remains open thereafter.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "A creature that falls into the pit takes 3 (1d6) Bludgeoning damage from the fall.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Detect and Disarm",
+                  "text": "As a [Study](srd-5.2/08/rules-definitions/study) action, a creature can examine the section of floor that forms the pit's lid and make a DC 15 Intelligence ([Investigation](srd-5.2/01/proficiency/skill-proficiencies/skill-list/investigation)) check, detecting the pit on a successful check. Once the pit is detected, an Iron Spike or a similar object can be wedged between the pit's lid and the surrounding floor to prevent the lid from opening, thereby making it safe to cross. The cover can also be held shut using *[Arcane Lock](srd-5.2/07/spell-descriptions/arcane-lock)* or similar magic.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Escape",
+                  "text": "A creature needs a Climb Speed, climbing gear, or magic such as *[Spider Climb](srd-5.2/07/spell-descriptions/spider-climb)* to scale the pit's smooth walls. (You can make the pit easier to escape by adding cracks in the walls big enough to serve as handholds and footholds.)",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "At Higher Levels",
+                  "text": "You can scale the trap for higher levels by increasing the pit's depth and damage, as shown in the following table.",
+                  "type": "paragraph"
+                },
+                {
+                  "columns": [
+                    "Levels",
+                    "Pit Depth",
+                    "Bludgeoning Damage"
+                  ],
+                  "rows": [
+                    [
+                      "5–10",
+                      "30 feet",
+                      "10 (3d6)"
+                    ],
+                    [
+                      "11–16",
+                      "60 feet",
+                      "21 (6d6)"
+                    ],
+                    [
+                      "17–20",
+                      "120 feet",
+                      "42 (12d6)"
+                    ]
+                  ],
+                  "type": "table"
+                }
+              ],
+              "data": {
+                "category": "Trap",
+                "duration": "Instantaneous",
+                "ratings": [
+                  {
+                    "levels": "1–4",
+                    "threat": "Nuisance",
+                    "tier": 1
+                  }
+                ],
+                "subtitle": "Nuisance Trap (Levels 1–4)",
+                "trigger": "A creature moves onto the pit's lid"
+              },
+              "id": "srd-5.2/10/traps/example-traps/hidden-pit",
+              "origin": {
+                "name": "Hidden Pit",
+                "prop": "trap",
+                "source": "XDMG"
+              },
+              "title": "Hidden Pit",
+              "type": "trap"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "When a creature moves onto this trap's pressure plate for the first time on a turn, poisoned darts shoot from tubes embedded in the surrounding walls. The holes that house these tubes are obscured by dust and cobwebs, or skillfully hidden amid bas-reliefs, murals, or frescoes.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "Each creature in the darts' path must succeed on a DC 13 Dexterity saving throw or be struck by 1d3 darts, taking 3 (1d6) Poison damage per dart.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Detect and Disarm",
+                  "text": "As a [Search](srd-5.2/08/rules-definitions/search) action, a creature can examine the walls and make a DC 15 Wisdom ([Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)) check, detecting the holes on a successful check. Plugging all the holes with wax, cloth, or detritus prevents the darts from firing.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "As a [Search](srd-5.2/08/rules-definitions/search) action, a creature can examine the section of floor that forms the pressure plate and make a DC 15 Wisdom ([Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)) check, detecting the pressure plate on a successful check. Wedging an [Iron Spike](srd-5.2/06/adventuring-gear/spikes-iron) or a similar object under the pressure plate prevents the trap from triggering.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "At Higher Levels",
+                  "text": "You can scale the trap for higher levels by increasing each dart's Poison damage as follows: 7 (2d6) at levels 5–10, 14 (4d6) at levels 11–16, or 24 (7d6) at levels 17–20.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "category": "Trap",
+                "duration": "Instantaneous",
+                "ratings": [
+                  {
+                    "levels": "1–4",
+                    "threat": "Deadly",
+                    "tier": 1
+                  }
+                ],
+                "subtitle": "Deadly Trap (Levels 1–4)",
+                "trigger": "A creature moves onto a pressure plate"
+              },
+              "id": "srd-5.2/10/traps/example-traps/poisoned-darts",
+              "origin": {
+                "name": "Poisoned Darts",
+                "prop": "trap",
+                "source": "XDMG"
+              },
+              "title": "Poisoned Darts",
+              "type": "trap"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A poisoned needle is hidden in a lock. When a creature opens the lock with any object other than the proper key, the needle springs out and stabs the creature. The creature makes a DC 11 Constitution saving throw. On a failed save, the creature takes 5 (1d10) Poison damage and has the [Poisoned](srd-5.2/08/rules-definitions/poisoned) condition for 1 hour. On a successful save, the creature takes half as much damage only.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Avoid",
+                  "text": "The trap doesn't trigger if the lock is opened using a *[Knock](srd-5.2/07/spell-descriptions/knock)* spell or similar magic.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Detect and Disarm",
+                  "text": "As a [Search](srd-5.2/08/rules-definitions/search) action, a creature can examine the trapped lock and make a DC 15 Wisdom ([Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)) check, detecting the needle on a successful check. Once the trap is detected, a character can take an action to try to disarm the trap, doing so with a successful DC 15 Dexterity ([Sleight of Hand](srd-5.2/01/proficiency/skill-proficiencies/skill-list/sleight-of-hand)) check. On a failed check, the creature triggers the trap.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "At Higher Levels",
+                  "text": "You can scale the trap for higher levels by increasing the damage and the save DC, as shown in the following table.",
+                  "type": "paragraph"
+                },
+                {
+                  "columns": [
+                    "Levels",
+                    "Poison Damage",
+                    "Save DC"
+                  ],
+                  "rows": [
+                    [
+                      "5–10",
+                      "11 (2d10)",
+                      "13"
+                    ],
+                    [
+                      "11–16",
+                      "22 (4d10)",
+                      "15"
+                    ],
+                    [
+                      "17–20",
+                      "55 (10d10)",
+                      "17"
+                    ]
+                  ],
+                  "type": "table"
+                }
+              ],
+              "data": {
+                "category": "Trap",
+                "duration": "Instantaneous",
+                "ratings": [
+                  {
+                    "levels": "1–4",
+                    "threat": "Nuisance",
+                    "tier": 1
+                  }
+                ],
+                "subtitle": "Nuisance Trap (Levels 1–4)",
+                "trigger": "A creature opens the trap's lock improperly or fails to disarm the trap"
+              },
+              "id": "srd-5.2/10/traps/example-traps/poisoned-needle",
+              "origin": {
+                "name": "Poisoned Needle",
+                "prop": "trap",
+                "source": "XDMG"
+              },
+              "title": "Poisoned Needle",
+              "type": "trap"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "When a creature moves onto a hidden pressure plate, a 5-foot-radius orb of solid stone is released from a secret compartment and begins to roll. The stone and all creatures nearby roll Initiative; the stone gets a +8 bonus on its Initiative roll.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "On its turn, the stone moves 60 feet in one direction, changing course if redirected by an obstacle. The stone can move through creatures' spaces, and creatures can move through the stone's space, treating it as [Difficult Terrain](srd-5.2/08/rules-definitions/difficult-terrain). Whenever the stone enters a creature's space for the first time on a turn or a creature enters the stone's space while the stone is rolling, that creature must succeed on a DC 15 Dexterity saving throw or take 55 (10d10) Bludgeoning damage and have the [Prone](srd-5.2/08/rules-definitions/prone) condition.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "The stone stops when it hits a wall or similar barrier. It can't go around corners, but creative dungeon builders incorporate curving turns into nearby passages that allow the stone to keep moving.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Detect and Disarm",
+                  "text": "As a [Study](srd-5.2/08/rules-definitions/study) action, a creature can examine the section of floor that forms the pressure plate and make a DC 15 Intelligence ([Investigation](srd-5.2/01/proficiency/skill-proficiencies/skill-list/investigation)) check, deducing the pressure plate's function on a successful check. Wedging an Iron Spike or a similar object under the pressure plate prevents the trap from triggering.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Destroy the Stone",
+                  "text": "The stone is a Large object that has AC 17, HP 100, a [Damage Threshold](srd-5.2/08/rules-definitions/damage-threshold) of 10, and [Immunity](srd-5.2/08/rules-definitions/immunity) to Poison and Psychic damage.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Slow the Stone",
+                  "text": "As an action, a creature can try to slow down the stone with a DC 20 Strength ([Athletics](srd-5.2/01/proficiency/skill-proficiencies/skill-list/athletics)) check. If the check is successful, the distance the stone moves on its turn is reduced by 15 feet. If that distance drops to 0, it stops moving and is no longer a threat.",
+                  "type": "paragraph"
+                }
+              ],
+              "data": {
+                "category": "Trap",
+                "duration": "Until the stone stops rolling",
+                "ratings": [
+                  {
+                    "levels": "11–16",
+                    "threat": "Deadly",
+                    "tier": 3
+                  },
+                  {
+                    "levels": "17–20",
+                    "threat": "Nuisance",
+                    "tier": 4
+                  }
+                ],
+                "subtitle": "Deadly Trap (Levels 11–16) or Nuisance Trap (Levels 17–20)",
+                "trigger": "A creature moves onto a pressure plate"
+              },
+              "id": "srd-5.2/10/traps/example-traps/rolling-stone",
+              "origin": {
+                "name": "Rolling Stone",
+                "prop": "trap",
+                "source": "XDMG"
+              },
+              "title": "Rolling Stone",
+              "type": "trap"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "text": "A 10-foot-deep pit has a hinged lid constructed from material identical to the surrounding floor. When a creature moves onto the lid, it swings open like a trapdoor, causing the creature to fall into the pit, which has sharpened wooden or metal spikes at the bottom. The lid remains open thereafter.",
+                  "type": "paragraph"
+                },
+                {
+                  "text": "A creature that falls into the pit lands at the bottom and takes 3 (1d6) Bludgeoning damage from the fall plus 9 (2d8) Piercing damage from the spikes.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Detect and Disarm",
+                  "text": "As a [Study](srd-5.2/08/rules-definitions/study) action, a creature can examine the section of floor that forms the pit's lid and make a DC 15 Intelligence ([Investigation](srd-5.2/01/proficiency/skill-proficiencies/skill-list/investigation)) check, detecting the pit on a successful check. Once the hidden pit is detected, an Iron Spike or a similar object can be wedged between the pit's lid and the surrounding floor to prevent the lid from opening, thereby making it safe to cross. The cover can also be held shut using an *[Arcane Lock](srd-5.2/07/spell-descriptions/arcane-lock)* spell or similar magic.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "Escape",
+                  "text": "A creature needs a Climb Speed, climbing gear, or magic such as a *[Spider Climb](srd-5.2/07/spell-descriptions/spider-climb)* spell to scale the pit's smooth walls. You can make the pit easier to escape by adding cracks in the walls big enough to serve as handholds and footholds.",
+                  "type": "paragraph"
+                },
+                {
+                  "label": "At Higher Levels",
+                  "text": "You can scale the trap for higher levels by increasing the pit's depth and damage, as shown in the following table.",
+                  "type": "paragraph"
+                },
+                {
+                  "columns": [
+                    "Levels",
+                    "Pit Depth",
+                    "Damage"
+                  ],
+                  "rows": [
+                    [
+                      "5–10",
+                      "30 feet",
+                      "10 (3d6) Bludgeoning plus 13 (3d8) Piercing"
+                    ],
+                    [
+                      "11–16",
+                      "60 feet",
+                      "21 (6d6) Bludgeoning plus 36 (8d8) Piercing"
+                    ],
+                    [
+                      "17–20",
+                      "120 feet",
+                      "42 (12d6) Bludgeoning plus 57 (13d8) Piercing"
+                    ]
+                  ],
+                  "type": "table"
+                }
+              ],
+              "data": {
+                "category": "Trap",
+                "duration": "Instantaneous",
+                "ratings": [
+                  {
+                    "levels": "1–4",
+                    "threat": "Deadly",
+                    "tier": 1
+                  }
+                ],
+                "subtitle": "Deadly Trap (Levels 1–4)",
+                "trigger": "A creature moves onto the pit's lid"
+              },
+              "id": "srd-5.2/10/traps/example-traps/spiked-pit",
+              "origin": {
+                "name": "Spiked Pit",
+                "prop": "trap",
+                "source": "XDMG"
+              },
+              "title": "Spiked Pit",
+              "type": "trap"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/10/traps/example-traps",
+          "title": "Example Traps",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/10/traps",
+      "title": "Traps",
+      "type": "section"
+    }
+  ],
+  "content": [],
+  "id": "srd-5.2/10",
+  "title": "Chapter 10: Gameplay Toolbox",
+  "type": "chapter"
+}

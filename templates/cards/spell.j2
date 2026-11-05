@@ -1,0 +1,37 @@
+{% import "cards/_blocks.j2" as k %}
+<article class="card spell size-{{ c.size }} school-{{ c.school_id }} {{ 'cantrip' if c.level == 0 else 'lvl' }}{{ ' conc' if c.concentration }}{{ ' ritual' if c.ritual }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+  <header class="c-head">
+    <span class="c-emblem" title="{{ c.school }}">{{ k.ico("school-" ~ c.school_id) }}</span>
+    <div class="c-titles">
+      {{ k.tag(("Cantrip" if c.level == 0 else "Level " ~ c.level) ~ " · " ~ c.school) }}
+      <h2 class="c-title">{{ c.title }}</h2>
+      <div class="c-type"><span class="c-cont-note">continued</span></div>
+    </div>
+  </header>
+  <div class="c-meta">
+  <dl class="c-stats">
+    <div class="st st-time">{{ k.ico("ui-clock", "gl") }}<dt>Casting Time</dt><dd>{{ c.casting_time }}{% if c.trigger %}<span class="trig-mark">*</span>{% endif %}{% if c.ritual %} <span class="flag flag-r" title="Ritual">R</span>{% endif %}</dd></div>
+    <div class="st st-range">{{ k.ico("ui-range", "gl") }}<dt>Range</dt><dd>{{ c.range }}</dd></div>
+    <div class="st st-dur">{{ k.ico("ui-duration", "gl") }}<dt>Duration</dt><dd>{{ c.duration }}{% if c.concentration %} <span class="flag flag-c" title="Concentration">C</span>{% endif %}</dd></div>
+    <div class="st st-conc {{ 'on' if c.concentration or c.ritual else 'off' }}">{{ k.ico("ui-ritual" if c.ritual and not c.concentration else "ui-concentration", "gl") }}<dt>{{ 'Ritual' if c.ritual and not c.concentration else 'Concentration' }}</dt><dd>{% if c.concentration and c.ritual %}Conc. · Ritual{% elif c.concentration %}Conc.{% elif c.ritual %}Ritual{% else %}No{% endif %}</dd></div>
+    <div class="st st-comp">{{ k.ico("ui-material", "gl") }}<dt>Components</dt><dd>{{ c.components | join(", ") }}</dd></div>
+  </dl>
+  <div class="c-comp-icons">
+    {% for kk, g, t in [("V", "ui-verbal", "Verbal"), ("S", "ui-somatic", "Somatic"), ("M", "ui-material", "Material")] %}
+    <span class="ci {{ 'on' if kk in c.components else 'off' }}" title="{{ t }}">{{ k.ico(g, "gl") }}</span>
+    {% endfor %}
+    {% if c.costly %}<span class="ci on cost" title="Costly">{{ k.ico("ui-coin", "gl") }}</span>{% endif %}
+  </div>
+  <ul class="c-classlist">{% for cl in c.all_classes %}<li class="{{ 'on' if cl in c.classes else 'off' }}">{{ cl }}</li>{% endfor %}</ul>
+  </div>
+  {% if c.material %}<p class="c-material{{ ' costly' if c.costly }}">{% if c.costly %}{{ k.ico("ui-coin", "gl") }}{% endif %}<b>M</b> {{ c.material | safe }}</p>{% endif %}
+  <div class="c-body">
+    {% if c.trigger %}<p class="c-trigger"><b class="lab">Trigger<span class="trig-mark">*</span>.</b> You take this {{ c.casting_time }} {{ c.trigger | safe }}.</p>{% endif %}
+    {{ k.blocks(c.body) }}
+  </div>
+  <footer class="c-foot">
+    <span class="c-classes">{% for cl in c.classes %}<span class="cl" title="{{ cl }}">{{ k.ico("class-" ~ cl.lower()) }}<span class="cl-n">{{ cl }}</span></span>{% endfor %}</span>
+    <span class="c-cont"></span>
+    <span class="c-page">{{ k.src(c) }}</span>
+  </footer>
+</article>

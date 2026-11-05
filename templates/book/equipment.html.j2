@@ -1,0 +1,31 @@
+{% extends "book/_base.html.j2" %}
+{% import "book/_blocks.j2" as k %}
+{# Equipment catalogue: coins, weapons, armor, tools, adventuring gear (tables built from the
+   entities, with cost and weight), then the table-only sections (mounts and vehicles, services)
+   passed through as printed. #}
+{% macro section(s) -%}
+<section class="equip-sec" id="{{ s.sid }}">
+<h1>{{ s.title }}</h1>
+{% if s.wide %}
+<div class="columns-2">{{ k.blocks(s.content) }}</div>
+{{ k.table(s.built, "wide") }}
+<div class="columns-2">{% for c in s.children %}{{ k.tree(c) }}{% endfor %}</div>
+{% else %}
+<div class="columns-2">
+{{ k.blocks(s.content) }}
+{% if s.built %}{{ k.table(s.built) }}{% endif %}
+{% for c in s.children %}{{ k.tree(c) }}
+{% if c.get('entries') %}<div class="entries">{% for e in c.entries %}{{ k.tree(e) }}{% endfor %}</div>{% endif %}
+{% endfor %}
+{% if s.entries %}<div class="entries">{% for e in s.entries %}{{ k.tree(e) }}{% endfor %}</div>{% endif %}
+</div>
+{% endif %}
+</section>
+{%- endmacro %}
+{% block book %}
+{{ k.opener(book.kicker, book.title) }}
+<div class="columns-2 intro">
+{% for b in book.intro %}<p{% if loop.first %} class="drop-cap"{% endif %}>{{ b.text | inline }}</p>{% endfor %}
+</div>
+{% for s in book.sections %}{{ section(s) }}{% endfor %}
+{% endblock %}

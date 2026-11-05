@@ -1,0 +1,103 @@
+{
+  "name": "Sel Varanthe",
+  "species": "elf",
+  "background": "sage",
+  "method": "point-buy",
+  "abilities": {
+    "str": 8,
+    "dex": 14,
+    "con": 14,
+    "int": 15,
+    "wis": 12,
+    "cha": 8
+  },
+  "background_bonus": {
+    "int": 2,
+    "wis": 1
+  },
+  "classes": [
+    {
+      "class": "wizard",
+      "level": 3,
+      "subclass": "evoker"
+    }
+  ],
+  "choices": {
+    "elven_lineage": "High Elf",
+    "keen_senses": "Perception"
+  },
+  "skills": [
+    "perception",
+    "investigation",
+    "insight"
+  ],
+  "weapons": [
+    "dagger",
+    "quarterstaff"
+  ],
+  "mage_armor": true,
+  "spells": [
+    "fire-bolt",
+    "mage-hand",
+    "shocking-grasp",
+    "magic-missile",
+    "shield",
+    "sleep",
+    "feather-fall",
+    "misty-step",
+    "scorching-ray",
+    {
+      "spell": "find-familiar",
+      "prepared": false
+    },
+    {
+      "spell": "alarm",
+      "prepared": false
+    },
+    {
+      "spell": "light",
+      "source": "Magic Initiate"
+    },
+    {
+      "spell": "minor-illusion",
+      "source": "Magic Initiate"
+    },
+    {
+      "spell": "mage-armor",
+      "source": "Magic Initiate"
+    },
+    {
+      "spell": "prestidigitation",
+      "source": "High Elf"
+    },
+    {
+      "spell": "detect-magic",
+      "source": "High Elf"
+    }
+  ],
+  "languages": [
+    "Common",
+    "Elvish",
+    "Draconic"
+  ],
+  "equipment": [
+    "Quarterstaff (arcane focus)",
+    "Dagger",
+    "Spellbook",
+    "Calligrapher's Supplies",
+    "Book (history)",
+    "Parchment (8 sheets)",
+    "Robe",
+    "Scholar's Pack"
+  ],
+  "coins": {
+    "gp": 8
+  },
+  "details": {
+    "alignment": "Neutral Good",
+    "age": "112",
+    "appearance": "Silver hair worn in a long braid, ink-stained fingers, a sage-green robe.",
+    "personality": "Answers every question with three more. Keeps meticulous notes on everyone she meets.",
+    "backstory": "Sel left a quiet village library to study the workings of magic."
+  }
+}

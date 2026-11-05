@@ -1,0 +1,100 @@
+{% extends "book/_base.html.j2" %}
+{% import "book/_blocks.j2" as k %}
+{# An encounter handout (views.encounter.context): the DM's summary on page 1 (budget and rating, roster,
+   HP tracker, initiative), then one stat block per kind of creature, then the conditions and spells the
+   stat blocks name, all in one flow (a small encounter fits one page). Blank boxes are for pencil. #}
+{% macro monster(s) -%}
+<article class="sb" id="{{ s.sid }}">
+<header class="sb-head">
+  {% if s.token %}<img class="sb-token" src="{{ s.token.src }}" alt="">{% endif %}
+  <div class="sb-titles">
+    <h3 class="sb-name">{{ s.title }}{% if s.count > 1 %} <span class="sb-count">×{{ s.count }}</span>{% endif %}</h3>
+    <p class="sb-type">{{ s.type_line }}</p>
+  </div>
+  <span class="cs-ref">{{ s.ref }}</span>
+</header>
+<p class="sb-core">{% for key, v in s.core %}<span><b>{{ key }}</b> {{ v | inline }}</span>{% endfor %}</p>
+{% if s.abilities %}
+<table class="sb-abilities"><thead><tr>{% for a in s.abilities %}<th>{{ a[0] }}</th>{% endfor %}</tr></thead>
+<tbody><tr>{% for a in s.abilities %}<td><b>{{ a[1] }}</b> <span>{{ a[2] }}</span></td>{% endfor %}</tr>
+<tr class="sb-saves">{% for a in s.abilities %}<td>save {{ a[3] }}</td>{% endfor %}</tr></tbody></table>
+{% endif %}
+{% if s.lines or s.cr %}<p class="sb-lines">{% for key, v in s.lines %}<b>{{ key }}</b> {{ v | inline }}<br>{% endfor %}{% if s.cr %}<b>Challenge</b> {{ s.cr }}{% endif %}</p>{% endif %}
+{% for title, items in s.sections %}<h4 class="sb-section">{{ title }}</h4>
+{% if s.intros.get(title) %}<p>{{ s.intros[title] | inline }}</p>{% endif %}
+{% for x in items %}<p class="run-in"><b class="run-in-title">{{ x.name | inline }}.</b> {{ x.text | inline }}</p>
+{% for m in x.more_texts %}<p class="run-in sb-more">{{ m | inline }}</p>
+{% endfor %}{% endfor %}{% endfor %}
+</article>
+{%- endmacro %}
+{% block book %}
+<section class="en-front">
+{{ k.opener("Encounter", book.name) }}
+{% set s = book.summary %}
+{% if s %}
+<div class="en-summary">
+  <div class="cs-box en-party">
+    <div class="cs-title">Party</div>
+    <div class="cs-mid">{{ s.party }}</div>
+    <div class="cs-small">XP budget ({{ s.source }})</div>
+    <div class="en-budget">{% for d, v, on in s.budget %}<div class="{{ 'on' if on }}"><b>{{ v }}</b><span class="cs-label">{{ d }}</span></div>{% endfor %}</div>
+  </div>
+  <div class="cs-box en-rating">
+    <div class="cs-title">Difficulty</div>
+    <div class="cs-big">{{ s.rating }}</div>
+    <div class="cs-small">{{ s.total }} XP{% if s.lair %} (lair XP){% endif %} · {{ s.per_pc }} XP per character</div>
+  </div>
+</div>
+{% if s.warnings %}<aside class="sidebar en-warnings"><h4 class="sidebar-title">DMG Troubleshooting</h4>
+{% for w in s.warnings %}<p>{{ w }}.</p>{% endfor %}</aside>{% endif %}
+{% endif %}
+
+<table class="phb-table en-roster">
+<thead><tr><th class="num">#</th><th>Creature</th><th class="num">CR</th><th class="num">XP</th><th class="num">AC</th><th>HP</th><th>Initiative</th><th>Speed</th><th class="num">Page</th></tr></thead>
+<tbody>{% for r in book.roster %}<tr><td class="num">{{ r.count }}</td><td><b>{{ r.title }}</b></td><td class="num">{{ r.cr }}</td><td class="num">{{ "{:,}".format(r.xp) }}</td><td class="num">{{ r.ac }}</td><td>{{ r.hp }}</td><td>{{ r.init }}</td><td>{{ r.speed }}</td><td class="num">{{ r.ref }}</td></tr>
+{% endfor %}</tbody></table>
+
+<div class="en-tables">
+<div class="cs-box en-tracker">
+  <div class="cs-title">Hit Points{% if book.tracker_grouped %} <span class="cs-note">one row per kind: too many creatures to list</span>{% endif %}</div>
+  <table><thead><tr><th>Creature</th><th class="num">AC</th><th class="num">Max</th><th>Damage taken</th><th>Conditions</th></tr></thead>
+  <tbody>{% for t in book.tracker %}<tr><td>{{ t.label }}</td><td class="num">{{ t.ac }}</td><td class="num">{{ t.hp or "" }}</td><td></td><td></td></tr>
+  {% endfor %}</tbody></table>
+</div>
+<div class="cs-box en-init">
+  <div class="cs-title">Initiative</div>
+  <table><thead><tr><th class="num">Roll</th><th>Who</th></tr></thead>
+  <tbody>{% for _ in range([8, book.pcs + book.roster | length + 2] | max) %}<tr><td></td><td></td></tr>{% endfor %}</tbody></table>
+  <div class="cs-title cs-sub">Round</div>
+  <div class="cs-track">{% for _ in range(10) %}<i class="cs-check"></i>{% endfor %}</div>
+</div>
+</div>
+</section>
+
+<section class="en-blocks">
+<h1 class="level-title">Stat Blocks</h1>
+<div class="columns-2">
+{% for b in book.blocks %}{{ monster(b) }}
+{% endfor %}
+</div>
+</section>
+
+{% if book.conditions or book.spells %}
+<section class="en-rules">
+{% if book.conditions %}
+<h1 class="level-title">Conditions <span class="cs-note">named in these stat blocks</span></h1>
+<div class="columns-2">
+{% for t in book.conditions %}{{ k.term(t, tag=False) }}
+{% endfor %}
+</div>
+{% endif %}
+{% if book.spells %}
+<h1 class="level-title">Spells <span class="cs-note">named in these stat blocks</span></h1>
+<div class="columns-2">
+{% for s in book.spells %}{{ k.spell(s) }}
+{% endfor %}
+</div>
+{% endif %}
+</section>
+{% endif %}
+{% endblock %}

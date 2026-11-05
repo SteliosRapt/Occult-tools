@@ -1,0 +1,95 @@
+{
+  "built_from": {
+    "5etools_src_commit": "90d343cde64cf8dce1083ea0525a6b0b9e545f2e",
+    "5etools_version": "2.38.0",
+    "lore_commit": "26cabed21c0509d07b31acb14157519f906cd92b"
+  },
+  "contents": [
+    {
+      "file": "01-playing-the-game.json",
+      "id": "srd-5.2/01",
+      "title": "Chapter 1: Playing the Game"
+    },
+    {
+      "file": "02-creating-a-character.json",
+      "id": "srd-5.2/02",
+      "title": "Chapter 2: Creating a Character"
+    },
+    {
+      "file": "03-character-classes.json",
+      "id": "srd-5.2/03",
+      "title": "Chapter 3: Character Classes"
+    },
+    {
+      "file": "04-character-origins.json",
+      "id": "srd-5.2/04",
+      "title": "Chapter 4: Character Origins"
+    },
+    {
+      "file": "05-feats.json",
+      "id": "srd-5.2/05",
+      "title": "Chapter 5: Feats"
+    },
+    {
+      "file": "06-equipment.json",
+      "id": "srd-5.2/06",
+      "title": "Chapter 6: Equipment"
+    },
+    {
+      "file": "07-spells.json",
+      "id": "srd-5.2/07",
+      "title": "Chapter 7: Spells"
+    },
+    {
+      "file": "08-rules-glossary.json",
+      "id": "srd-5.2/08",
+      "title": "Chapter 8: Rules Glossary"
+    },
+    {
+      "file": "09-running-the-game.json",
+      "id": "srd-5.2/09",
+      "title": "Chapter 9: Running the Game"
+    },
+    {
+      "file": "10-gameplay-toolbox.json",
+      "id": "srd-5.2/10",
+      "title": "Chapter 10: Gameplay Toolbox"
+    },
+    {
+      "file": "11-combat-encounters.json",
+      "id": "srd-5.2/11",
+      "title": "Chapter 11: Combat Encounters"
+    },
+    {
+      "file": "12-treasure-and-magic-items.json",
+      "id": "srd-5.2/12",
+      "title": "Chapter 12: Treasure and Magic Items"
+    },
+    {
+      "file": "13-using-monsters.json",
+      "id": "srd-5.2/13",
+      "title": "Chapter 13: Using Monsters"
+    },
+    {
+      "file": "14-monsters-a-to-z.json",
+      "id": "srd-5.2/14",
+      "title": "Chapter 14: Monsters A to Z"
+    },
+    {
+      "file": "15-animals.json",
+      "id": "srd-5.2/15",
+      "title": "Chapter 15: Animals"
+    }
+  ],
+  "edition": "D&D 2024",
+  "id": "srd-5.2",
+  "license": {
+    "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+    "name": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/legalcode"
+  },
+  "page_numbers": false,
+  "publisher": "Wizards of the Coast LLC",
+  "short": "srd",
+  "title": "System Reference Document 5.2.1"
+}

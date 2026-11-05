@@ -1,0 +1,17 @@
+{% import "cards/_blocks.j2" as k %}
+<article class="card option size-{{ c.size }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+  <header class="c-head">
+    {% if c.class_id %}<span class="c-emblem" title="{{ c['class'] }}">{{ k.ico("class-" ~ c.class_id) }}</span>{% endif %}
+    <div class="c-titles">{{ k.tag(c.tag) }}<h2 class="c-title">{{ c.title }}</h2><div class="c-type"><span class="c-type-text">{{ c.subclass or c['class'] }}</span><span class="c-cont-note">continued</span></div></div>
+  </header>
+  {% if c.prerequisite or c.cost %}
+  <dl class="c-stats c-stats-item c-stats-feat">
+    {% if c.prerequisite %}<div class="st st-wide"><dt>Prerequisite</dt><dd>{{ c.prerequisite | safe }}</dd></div>{% endif %}
+    {% if c.cost %}<div class="st st-wide"><dt>Cost</dt><dd>{{ c.cost | safe }}</dd></div>{% endif %}
+  </dl>
+  {% endif %}
+  <div class="c-body">
+    {{ k.blocks(c.body) }}
+  </div>
+  {{ k.foot(c, c['class'] or "Option") }}
+</article>

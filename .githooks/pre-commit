@@ -1,0 +1,23 @@
+#!/bin/sh
+# Refuse a commit that leaves collections/ out of date (docs/architecture.md §6).
+# Enable once per clone:  git config core.hooksPath .githooks
+# Runs only when the staged paths touch an input or the output of `./occult make md`.
+# It checks the working tree, so stage the regenerated collections/ along with your change.
+root=$(git rev-parse --show-toplevel) || exit 1
+cd "$root" || exit 1
+
+if ! git diff --cached --name-only --diff-filter=ACMRD | grep -qE '^(data/|tools/|templates/md/|collections/)'; then
+  exit 0
+fi
+
+# `make md` needs jinja2; without it the check cannot run, which is not the same as stale files.
+if ! python3 -c "import jinja2" 2>/dev/null; then
+  echo "pre-commit: cannot check collections/: jinja2 is not installed for python3 (pip install -r requirements.txt)." >&2
+  echo "pre-commit: install it and commit again, or skip this check once with git commit --no-verify." >&2
+  exit 1
+fi
+
+if ! ./occult make md --check; then
+  echo "pre-commit: collections/ is stale. Run ./occult make md, then git add collections/ and commit again." >&2
+  exit 1
+fi

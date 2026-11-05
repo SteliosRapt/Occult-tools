@@ -1,0 +1,17 @@
+{% import "cards/_blocks.j2" as k %}
+<article class="card feat feat-{{ c.category_id }} size-{{ c.size }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+  <header class="c-head">
+    <div class="c-titles">{{ k.tag(c.tag) }}<h2 class="c-title">{{ c.title }}</h2><div class="c-type"><span class="c-cont-note">continued</span></div></div>
+  </header>
+  {% if c.prerequisite or c.ability or c.repeatable %}
+  <dl class="c-stats c-stats-item c-stats-feat">
+    {% if c.prerequisite %}<div class="st st-wide"><dt>Prerequisite</dt><dd>{{ c.prerequisite | safe }}</dd></div>{% endif %}
+    {% if c.ability %}<div class="st{{ ' st-wide' if not c.repeatable }}"><dt>Ability Score</dt><dd>{{ c.ability }}</dd></div>{% endif %}
+    {% if c.repeatable %}<div class="st{{ ' st-wide' if not c.ability }}"><dt>Repeatable</dt><dd>Yes</dd></div>{% endif %}
+  </dl>
+  {% endif %}
+  <div class="c-body">
+    {{ k.blocks(c.body) }}
+  </div>
+  {{ k.foot(c, "Feat") }}
+</article>

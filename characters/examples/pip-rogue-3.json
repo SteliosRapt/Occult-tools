@@ -1,0 +1,53 @@
+{
+  "method": "standard-array",
+  "abilities": {
+    "str": 8,
+    "dex": 15,
+    "con": 14,
+    "int": 12,
+    "wis": 13,
+    "cha": 10
+  },
+  "languages": [
+    "Common",
+    "Dwarvish",
+    "Giant"
+  ],
+  "equipment": [
+    "Backpack",
+    "Rope"
+  ],
+  "coins": {
+    "gp": 10
+  },
+  "name": "Pip",
+  "species": "halfling",
+  "background": "criminal",
+  "background_bonus": {
+    "dex": 2,
+    "con": 1
+  },
+  "classes": [
+    {
+      "class": "rogue",
+      "level": 3,
+      "subclass": "thief"
+    }
+  ],
+  "skills": [
+    "acrobatics",
+    "perception",
+    "investigation",
+    "insight"
+  ],
+  "expertise": [
+    "stealth",
+    "perception"
+  ],
+  "armor": "leather-armor",
+  "weapons": [
+    "shortsword",
+    "shortbow",
+    "dagger"
+  ]
+}

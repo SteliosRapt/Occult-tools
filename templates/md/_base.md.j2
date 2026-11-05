@@ -1,0 +1,35 @@
+{#- Shared layout for every collection. The generated header line and the final whitespace
+    clean-up (single blank lines, one trailing newline) are added by tools/occult/collections.py.
+    Lines that must keep their newline end in {{ }}, not in a {% %} tag (trim_blocks).
+    Context: title, counts, sections = [{title, count, sid, page, note, table, body, sections}]. -#}
+{% macro section(s, depth) %}
+
+{{ "#" * depth }} {{ s.title }}{{ " (%s)" % s.count if s.count is not none else "" }}
+
+
+{% if s.sid %}
+`{{ s.sid }}`{{ " · %s" % s.page if s.page else "" }}{{ " · " ~ s.note if s.note else "" }}
+
+{% elif s.note %}
+{{ s.note }}
+
+{% endif %}
+{% if s.table %}
+{{ table(s.table) }}
+
+{% endif %}
+{% if s.body %}
+{{ s.body }}
+
+{% endif %}
+{% for c in s.sections %}{{ section(c, depth + 1) }}{% endfor %}
+{% endmacro %}
+# {{ title }}
+
+{{ counts }}
+
+{% block intro %}{% endblock %}
+
+{% for s in sections %}{{ section(s, 2) }}{% endfor %}
+
+{% block outro %}{% endblock %}

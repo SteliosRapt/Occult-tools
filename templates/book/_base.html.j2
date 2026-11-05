@@ -1,0 +1,15 @@
+{% extends "base.html.j2" %}
+{# Shared frame for every book PDF: one named page per book (its row name) carries the running footer
+   (Chromium has no string-set, so the label is set per document; see page.css §3). #}
+{% block head %}
+<style>
+.book-body { page: {{ book_name }}; }
+@page {{ book_name }}:right { @bottom-right { content: "{{ book.footer }}"; } }
+@page {{ book_name }}:left  { @bottom-left  { content: "{{ book.footer }}"; } }
+</style>
+{% endblock %}
+{% block body %}
+<div class="book-body book-{{ book_name }}">
+{% block book %}{% endblock %}
+</div>
+{% endblock %}

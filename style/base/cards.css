@@ -1,0 +1,110 @@
+/* ==========================================================================
+   occult-lore / style / base / cards.css
+   Card mechanics shared by every theme: palette tokens, card boxes, the
+   fitting contract with tools/render/fit.js, sheet imposition and crop marks.
+   Fonts come from style/fonts/fonts.css; the paper file (paper-a4.css or
+   paper-letter.css) sets the page and card sizes. A theme's cards.css adds
+   the look. Ink-saver = .bw on <body>.
+   ========================================================================== */
+
+:root {
+  /* the page-style palette, mirrored (custom properties can't be imported without page.css's @page rules) */
+  --parchment: #f5eee1; --parchment-deep: #ebdfc7; --parchment-edge: #debe96;
+  --ink: #231d18; --ink-soft: #4b4037; --ink-faint: #8a7d70;
+  --heading: #7b2316; --heading-deep: #5a160d;
+  --gold: #c2a466; --gold-deep: #a5844a; --gold-light: #e4d5ac;
+  --table-stripe: #e0e0d2; --sidebar-bg: #e9e3d2; --sidebar-rule: #b9a477;
+  --font-body: "Alegreya", Georgia, serif;
+  --font-heading: "Alegreya SC", "Alegreya", Georgia, serif;
+  --font-display: "Cinzel", "Alegreya SC", Georgia, serif;
+  --font-sans: "Alegreya Sans", "Gill Sans", sans-serif;
+  --font-sans-sc: "Alegreya Sans SC", "Alegreya Sans", sans-serif;
+  /* card and paper sizes; defaults are A4 (paper-*.css restates them) */
+  /* "poker" slot = the largest 3x3 that fits A4 inside a 4.5mm printer margin (201x288mm grid) */
+  --poker-w: 67mm;   --poker-h: 96mm;
+  --tarot-w: 70mm;   --tarot-h: 120mm;
+  --paper-w: 210mm;  --paper-h: 297mm;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { -webkit-print-color-adjust: exact; print-color-adjust: exact; color: var(--ink); }
+
+/* ---- card box + fitting contract ---------------------------------------- */
+.card {
+  --fs-max: 7.4; --fs-min: 6.3;          /* body size range in pt, read by fit.js */
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  font-family: var(--font-body); line-height: 1.18;
+  break-inside: avoid;
+}
+.card.size-poker { width: var(--poker-w); height: var(--poker-h); }
+.card.size-tarot { width: var(--tarot-w); height: var(--tarot-h); }
+.c-body { flex: 1 1 auto; min-height: 0; overflow: hidden; font-size: 7.4pt; }
+.c-body > * { margin: 0; }
+.c-upcast p { margin: 0; }
+.trig-mark { color: var(--accent, inherit); font-weight: 700; }
+.c-body p { hyphens: auto; }
+.c-head, .c-meta, .c-material, .c-foot, .c-hero, .c-stats { flex: none; }
+.ico, .gl { display: inline-block; width: 1em; height: 1em; vertical-align: middle; flex: none; }
+.gl { fill: none; stroke: currentColor; }
+dl, dd { margin: 0; }
+h2, h3 { margin: 0; font-weight: inherit; }
+sup { font-size: 0.7em; line-height: 0; }
+
+/* parts most directions hide; layers opt in */
+.c-comp-icons, .c-classlist, .c-school-name, .c-cont-note, .st-conc { display: none; }
+
+/* continuation cards: keep the identity (title, emblem), drop the stats */
+.card.cont .c-meta, .card.cont .c-material, .card.cont .c-stats, .card.cont .c-hero { display: none; }
+.card.cont .c-type-text { display: none; }
+.card.cont .c-cont-note { display: inline; font-style: italic; }
+.card.has-next .c-cont::after { content: " ▸"; }
+.c-cont:empty { display: none; }
+p.cut { hyphens: none; }
+p.cut::after { content: " …"; }
+p.cont-p::before { content: "… "; }
+
+/* art panels (views._common.art). The height follows the image's aspect (--art-ratio = h/w,
+   set inline) between --art-lo and --art-hi; fit.js shrinks the panel to --art-min (px), then
+   drops it, before it touches the text, or lets it grow to --art-grow (px) on a card with room
+   to spare. Continuation cards never show it. */
+.c-art {
+  --art-wmm: 58mm; --art-lo: 14mm; --art-hi: 30mm; --art-min: 44; --art-grow: 160;
+  flex: none; position: relative; margin: 0; min-height: 0;
+  height: clamp(var(--art-lo), calc(var(--art-wmm) * var(--art-ratio, 0.6)), var(--art-hi));
+}
+.size-tarot .c-art { --art-wmm: 62mm; --art-hi: 40mm; --art-grow: 210; }
+.c-art .art-frame { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; }
+.c-art img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.c-art.art-cover img { object-fit: cover; }
+.card.cont .c-art { display: none; }
+.c-hero-row { flex: none; display: flex; align-items: center; }
+.c-hero-row .c-hero { flex: 1 1 auto; min-width: 0; }
+.c-token { flex: none; display: block; }
+.seps > .sep-break { flex-basis: 100%; height: 0; }   /* fit.js: a separated list's line break */
+.dk-face { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* body tables (Teleport etc.) */
+.c-table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); font-size: 0.86em; line-height: 1.1; margin: 0.25em 0 0.35em; }
+.c-table caption { text-align: left; font-weight: 700; padding-bottom: 1px; }
+.c-table th { text-align: left; font-weight: 700; vertical-align: bottom; padding: 0.5px 2px; }
+.c-table td { padding: 0.5px 2px; vertical-align: top; }
+.c-table.cont-t caption::after { content: " (cont.)"; font-weight: 400; font-style: italic; }
+
+/* ---- sheets (page size: paper-*.css) -------------------------------------- */
+@page { margin: 0; }
+body.sheet { background: #fff; }
+.sheet-page { width: var(--paper-w); height: var(--paper-h); position: relative; break-after: page; overflow: hidden; }
+.sheet-page .grid {
+  --cw: var(--poker-w); --ch: var(--poker-h);
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  display: grid; grid-template-columns: repeat(var(--cols), var(--cw)); grid-auto-rows: var(--ch);
+  width: calc(var(--cols) * var(--cw)); height: calc(var(--rows) * var(--ch));
+}
+.sheet-tarot .grid { --cw: var(--tarot-w); --ch: var(--tarot-h); column-gap: 0; }
+.crop { position: absolute; background: #000; display: block; }
+.crop-v { width: 0.25pt; height: 3mm; left: calc(var(--i) * var(--cw) - 0.125pt); }
+.crop-h { height: 0.25pt; width: 3mm; top: calc(var(--i) * var(--ch) - 0.125pt); }
+.crop-top { top: -4mm; } .crop-bottom { bottom: -4mm; }
+.crop-left { left: -4mm; } .crop-right { right: -4mm; }

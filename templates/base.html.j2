@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>{{ title }}</title>
+{% for href in theme.css %}<link rel="stylesheet" href="{{ href }}">
+{% endfor %}
+{% block head %}{% endblock %}
+</head>
+<body class="{{ body_class }}{{ ' bw' if theme.mode == 'bw' }}" data-paper="{{ paper }}">
+{{ sprite | safe }}
+{% block body %}{% endblock %}
+{% for src in scripts %}<script src="{{ src }}"></script>
+{% endfor %}
+</body></html>

@@ -1,0 +1,5 @@
+{% extends "_base.md.j2" %}
+{% block intro %}
+Every spell by level, then name, with a ✓ per class spell list ({% for c in casters %}{{ c[:3] }} = {{ c }}{{ ", " if not loop.last }}{% endfor %}).
+C/R/M: Concentration, Ritual, Material component (`-` = no).
+{% endblock %}

@@ -1,0 +1,1175 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "columns": [
+                "Score",
+                "Meaning"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "This is the lowest a score can normally go. If an effect reduces a score to 0, that effect explains what happens."
+                ],
+                [
+                  "2–9",
+                  "This represents a weak capability."
+                ],
+                [
+                  "10–11",
+                  "This represents the human average."
+                ],
+                [
+                  "12–19",
+                  "This represents a strong capability."
+                ],
+                [
+                  "20",
+                  "This is the highest an adventurer's score can go unless a feature says otherwise."
+                ],
+                [
+                  "21–29",
+                  "This represents an extraordinary capability."
+                ],
+                [
+                  "30",
+                  "This is the highest a score can go."
+                ]
+              ],
+              "title": "Ability Scores",
+              "type": "table"
+            }
+          ],
+          "id": "srd-5.2/01/the-six-abilities/ability-scores",
+          "title": "Ability Scores",
+          "type": "section"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "columns": [
+                "Score",
+                "Modifier"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "−5"
+                ],
+                [
+                  "2–3",
+                  "−4"
+                ],
+                [
+                  "4–5",
+                  "−3"
+                ],
+                [
+                  "6–7",
+                  "−2"
+                ],
+                [
+                  "8–9",
+                  "−1"
+                ],
+                [
+                  "10–11",
+                  "+0"
+                ],
+                [
+                  "12–13",
+                  "+1"
+                ],
+                [
+                  "14–15",
+                  "+2"
+                ],
+                [
+                  "16–17",
+                  "+3"
+                ],
+                [
+                  "18–19",
+                  "+4"
+                ],
+                [
+                  "20–21",
+                  "+5"
+                ],
+                [
+                  "22–23",
+                  "+6"
+                ],
+                [
+                  "24–25",
+                  "+7"
+                ],
+                [
+                  "26–27",
+                  "+8"
+                ],
+                [
+                  "28–29",
+                  "+9"
+                ],
+                [
+                  "30",
+                  "+10"
+                ]
+              ],
+              "title": "Ability Modifiers",
+              "type": "table"
+            }
+          ],
+          "id": "srd-5.2/01/the-six-abilities/ability-modifiers",
+          "title": "Ability Modifiers",
+          "type": "section"
+        }
+      ],
+      "content": [
+        {
+          "columns": [
+            "Ability",
+            "Score Measures..."
+          ],
+          "rows": [
+            [
+              "Strength",
+              "Physical might"
+            ],
+            [
+              "Dexterity",
+              "Agility, reflexes, and balance"
+            ],
+            [
+              "Constitution",
+              "Health and stamina"
+            ],
+            [
+              "Intelligence",
+              "Reasoning and memory"
+            ],
+            [
+              "Wisdom",
+              "Perceptiveness and mental fortitude"
+            ],
+            [
+              "Charisma",
+              "Confidence, poise, and charm"
+            ]
+          ],
+          "title": "Ability Descriptions",
+          "type": "table"
+        }
+      ],
+      "id": "srd-5.2/01/the-six-abilities",
+      "title": "The Six Abilities",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Ability",
+                    "Make a Check To..."
+                  ],
+                  "rows": [
+                    [
+                      "Strength",
+                      "Lift, push, pull, or break something"
+                    ],
+                    [
+                      "Dexterity",
+                      "Move nimbly, quickly, or quietly"
+                    ],
+                    [
+                      "Constitution",
+                      "Push your body beyond normal limits"
+                    ],
+                    [
+                      "Intelligence",
+                      "Reason or remember"
+                    ],
+                    [
+                      "Wisdom",
+                      "Notice things in the environment or in creatures' behavior"
+                    ],
+                    [
+                      "Charisma",
+                      "Influence, entertain, or deceive"
+                    ]
+                  ],
+                  "title": "Ability Check Examples",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/01/d20-tests/ability-checks/ability-modifier",
+              "title": "Ability Modifier",
+              "type": "section"
+            },
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Task Difficulty",
+                    "DC"
+                  ],
+                  "rows": [
+                    [
+                      "Very easy",
+                      "5"
+                    ],
+                    [
+                      "Easy",
+                      "10"
+                    ],
+                    [
+                      "Medium",
+                      "15"
+                    ],
+                    [
+                      "Hard",
+                      "20"
+                    ],
+                    [
+                      "Very hard",
+                      "25"
+                    ],
+                    [
+                      "Nearly impossible",
+                      "30"
+                    ]
+                  ],
+                  "title": "Typical Difficulty Classes",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/01/d20-tests/ability-checks/difficulty-class",
+              "title": "Difficulty Class",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/01/d20-tests/ability-checks",
+          "title": "Ability Checks",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Ability",
+                    "Make a Save To..."
+                  ],
+                  "rows": [
+                    [
+                      "Strength",
+                      "Physically resist direct force"
+                    ],
+                    [
+                      "Dexterity",
+                      "Dodge out of harm's way"
+                    ],
+                    [
+                      "Constitution",
+                      "Endure a toxic hazard"
+                    ],
+                    [
+                      "Intelligence",
+                      "Recognize an illusion as fake"
+                    ],
+                    [
+                      "Wisdom",
+                      "Resist a mental assault"
+                    ],
+                    [
+                      "Charisma",
+                      "Assert your identity"
+                    ]
+                  ],
+                  "title": "Saving Throw Examples",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/01/d20-tests/saving-throws/ability-modifier",
+              "title": "Ability Modifier",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/01/d20-tests/saving-throws",
+          "title": "Saving Throws",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "columns": [
+                        "Ability",
+                        "Attack Type"
+                      ],
+                      "rows": [
+                        [
+                          "Strength",
+                          "Melee attack with a weapon or an [Unarmed Strike](srd-5.2/08/rules-definitions/unarmed-strike)"
+                        ],
+                        [
+                          "Dexterity",
+                          "Ranged attack with a weapon"
+                        ],
+                        [
+                          "Varies",
+                          "Spell attack (the ability used is determined by the spellcaster's spellcasting feature, as explained in chapter 7)"
+                        ]
+                      ],
+                      "title": "Attack Roll Abilities",
+                      "type": "table"
+                    }
+                  ],
+                  "id": "srd-5.2/01/d20-tests/attack-rolls/ability-modifier/attack-roll-abilities",
+                  "title": "Attack Roll Abilities",
+                  "type": "section"
+                }
+              ],
+              "content": [],
+              "id": "srd-5.2/01/d20-tests/attack-rolls/ability-modifier",
+              "title": "Ability Modifier",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/01/d20-tests/attack-rolls",
+          "title": "Attack Rolls",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/01/d20-tests",
+      "title": "D20 Tests",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Stay on your feet in a tricky situation, or perform an acrobatic stunt.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Dexterity",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/acrobatics",
+                  "origin": {
+                    "name": "Acrobatics",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Acrobatics",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Calm or train an animal, or get an animal to behave in a certain way.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Wisdom",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/animal-handling",
+                  "origin": {
+                    "name": "Animal Handling",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Animal Handling",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Recall lore about spells, magic items, and the planes of existence.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Intelligence",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/arcana",
+                  "origin": {
+                    "name": "Arcana",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Arcana",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Jump farther than normal, stay afloat in rough water, or break something.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Strength",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/athletics",
+                  "origin": {
+                    "name": "Athletics",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Athletics",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Tell a convincing lie, or wear a disguise convincingly.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Charisma",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/deception",
+                  "origin": {
+                    "name": "Deception",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Deception",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Recall lore about historical events, people, nations, and cultures.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Intelligence",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/history",
+                  "origin": {
+                    "name": "History",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "History",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Discern a person's mood and intentions.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Wisdom",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/insight",
+                  "origin": {
+                    "name": "Insight",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Insight",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Awe or threaten someone into doing what you want.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Charisma",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/intimidation",
+                  "origin": {
+                    "name": "Intimidation",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Intimidation",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Find obscure information in books, or deduce how something works.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Intelligence",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/investigation",
+                  "origin": {
+                    "name": "Investigation",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Investigation",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Diagnose an illness, or determine what killed the recently slain.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Wisdom",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/medicine",
+                  "origin": {
+                    "name": "Medicine",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Medicine",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Recall lore about terrain, plants, animals, and weather.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Intelligence",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/nature",
+                  "origin": {
+                    "name": "Nature",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Nature",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Using a combination of senses, notice something that's easy to miss.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Wisdom",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception",
+                  "origin": {
+                    "name": "Perception",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Perception",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Act, tell a story, perform music, or dance.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Charisma",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/performance",
+                  "origin": {
+                    "name": "Performance",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Performance",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Honestly and graciously convince someone of something.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Charisma",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/persuasion",
+                  "origin": {
+                    "name": "Persuasion",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Persuasion",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Recall lore about gods, religious rituals, and holy symbols.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Intelligence",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/religion",
+                  "origin": {
+                    "name": "Religion",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Religion",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Pick a pocket, conceal a handheld object, or perform legerdemain.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Dexterity",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/sleight-of-hand",
+                  "origin": {
+                    "name": "Sleight of Hand",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Sleight of Hand",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Escape notice by moving quietly and hiding behind things.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Dexterity",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/stealth",
+                  "origin": {
+                    "name": "Stealth",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Stealth",
+                  "type": "term"
+                },
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "text": "Follow tracks, forage, find a trail, or avoid natural hazards.",
+                      "type": "paragraph"
+                    }
+                  ],
+                  "data": {
+                    "ability": "Wisdom",
+                    "see_also": [],
+                    "tag": "Skill"
+                  },
+                  "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list/survival",
+                  "origin": {
+                    "name": "Survival",
+                    "prop": "skill",
+                    "source": "XPHB"
+                  },
+                  "title": "Survival",
+                  "type": "term"
+                }
+              ],
+              "content": [
+                {
+                  "columns": [
+                    "Skill",
+                    "Ability",
+                    "Example Uses"
+                  ],
+                  "rows": [
+                    [
+                      "[Acrobatics](srd-5.2/01/proficiency/skill-proficiencies/skill-list/acrobatics)",
+                      "Dexterity",
+                      "Stay on your feet in a tricky situation, or perform an acrobatic stunt."
+                    ],
+                    [
+                      "[Animal Handling](srd-5.2/01/proficiency/skill-proficiencies/skill-list/animal-handling)",
+                      "Wisdom",
+                      "Calm or train an animal, or get an animal to behave in a certain way."
+                    ],
+                    [
+                      "[Arcana](srd-5.2/01/proficiency/skill-proficiencies/skill-list/arcana)",
+                      "Intelligence",
+                      "Recall lore about spells, magic items, and the planes of existence."
+                    ],
+                    [
+                      "[Athletics](srd-5.2/01/proficiency/skill-proficiencies/skill-list/athletics)",
+                      "Strength",
+                      "Jump farther than normal, stay afloat in rough water, or break something."
+                    ],
+                    [
+                      "[Deception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/deception)",
+                      "Charisma",
+                      "Tell a convincing lie, or wear a disguise convincingly."
+                    ],
+                    [
+                      "[History](srd-5.2/01/proficiency/skill-proficiencies/skill-list/history)",
+                      "Intelligence",
+                      "Recall lore about historical events, people, nations, and cultures."
+                    ],
+                    [
+                      "[Insight](srd-5.2/01/proficiency/skill-proficiencies/skill-list/insight)",
+                      "Wisdom",
+                      "Discern a person's mood and intentions."
+                    ],
+                    [
+                      "[Intimidation](srd-5.2/01/proficiency/skill-proficiencies/skill-list/intimidation)",
+                      "Charisma",
+                      "Awe or threaten someone into doing what you want."
+                    ],
+                    [
+                      "[Investigation](srd-5.2/01/proficiency/skill-proficiencies/skill-list/investigation)",
+                      "Intelligence",
+                      "Find obscure information in books, or deduce how something works."
+                    ],
+                    [
+                      "[Medicine](srd-5.2/01/proficiency/skill-proficiencies/skill-list/medicine)",
+                      "Wisdom",
+                      "Diagnose an illness, or determine what killed the recently slain."
+                    ],
+                    [
+                      "[Nature](srd-5.2/01/proficiency/skill-proficiencies/skill-list/nature)",
+                      "Intelligence",
+                      "Recall lore about terrain, plants, animals, and weather."
+                    ],
+                    [
+                      "[Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception)",
+                      "Wisdom",
+                      "Using a combination of senses, notice something that's easy to miss."
+                    ],
+                    [
+                      "[Performance](srd-5.2/01/proficiency/skill-proficiencies/skill-list/performance)",
+                      "Charisma",
+                      "Act, tell a story, perform music, or dance."
+                    ],
+                    [
+                      "[Persuasion](srd-5.2/01/proficiency/skill-proficiencies/skill-list/persuasion)",
+                      "Charisma",
+                      "Honestly and graciously convince someone of something."
+                    ],
+                    [
+                      "[Religion](srd-5.2/01/proficiency/skill-proficiencies/skill-list/religion)",
+                      "Intelligence",
+                      "Recall lore about gods, religious rituals, and holy symbols."
+                    ],
+                    [
+                      "[Sleight of Hand](srd-5.2/01/proficiency/skill-proficiencies/skill-list/sleight-of-hand)",
+                      "Dexterity",
+                      "Pick a pocket, conceal a handheld object, or perform legerdemain."
+                    ],
+                    [
+                      "[Stealth](srd-5.2/01/proficiency/skill-proficiencies/skill-list/stealth)",
+                      "Dexterity",
+                      "Escape notice by moving quietly and hiding behind things."
+                    ],
+                    [
+                      "[Survival](srd-5.2/01/proficiency/skill-proficiencies/skill-list/survival)",
+                      "Wisdom",
+                      "Follow tracks, forage, find a trail, or avoid natural hazards."
+                    ]
+                  ],
+                  "title": "Skills",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/01/proficiency/skill-proficiencies/skill-list",
+              "title": "Skill List",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/01/proficiency/skill-proficiencies",
+          "title": "Skill Proficiencies",
+          "type": "section"
+        }
+      ],
+      "content": [
+        {
+          "columns": [
+            "Level or CR",
+            "Bonus"
+          ],
+          "rows": [
+            [
+              "Up to 4",
+              "+2"
+            ],
+            [
+              "5–8",
+              "+3"
+            ],
+            [
+              "9–12",
+              "+4"
+            ],
+            [
+              "13–16",
+              "+5"
+            ],
+            [
+              "17–20",
+              "+6"
+            ],
+            [
+              "21–24",
+              "+7"
+            ],
+            [
+              "25–28",
+              "+8"
+            ],
+            [
+              "29–30",
+              "+9"
+            ]
+          ],
+          "title": "Proficiency Bonus",
+          "type": "table"
+        }
+      ],
+      "id": "srd-5.2/01/proficiency",
+      "title": "Proficiency",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "content": [
+            {
+              "columns": [
+                "Action",
+                "Summary"
+              ],
+              "rows": [
+                [
+                  "[Attack](srd-5.2/08/rules-definitions/attack)",
+                  "Attack with a weapon or an [Unarmed Strike](srd-5.2/08/rules-definitions/unarmed-strike)."
+                ],
+                [
+                  "[Dash](srd-5.2/08/rules-definitions/dash)",
+                  "For the rest of the turn, give yourself extra movement equal to your [Speed](srd-5.2/08/rules-definitions/speed)."
+                ],
+                [
+                  "[Disengage](srd-5.2/08/rules-definitions/disengage)",
+                  "Your movement doesn't provoke [Opportunity Attack](srd-5.2/08/rules-definitions/opportunity-attacks) for the rest of the turn."
+                ],
+                [
+                  "[Dodge](srd-5.2/08/rules-definitions/dodge)",
+                  "Until the start of your next turn, attack rolls against you have [Disadvantage](srd-5.2/08/rules-definitions/disadvantage), and you make Dexterity saving throws with [Advantage](srd-5.2/08/rules-definitions/advantage). You lose this benefit if you have the [Incapacitated](srd-5.2/08/rules-definitions/incapacitated) condition or if your Speed is 0."
+                ],
+                [
+                  "[Help](srd-5.2/08/rules-definitions/help)",
+                  "Help another creature's ability check or attack roll, or administer first aid."
+                ],
+                [
+                  "[Hide](srd-5.2/08/rules-definitions/hide)",
+                  "Make a Dexterity ([Stealth](srd-5.2/01/proficiency/skill-proficiencies/skill-list/stealth)) check."
+                ],
+                [
+                  "[Influence](srd-5.2/08/rules-definitions/influence)",
+                  "Make a Charisma ([Deception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/deception), [Intimidation](srd-5.2/01/proficiency/skill-proficiencies/skill-list/intimidation), [Performance](srd-5.2/01/proficiency/skill-proficiencies/skill-list/performance), or [Persuasion](srd-5.2/01/proficiency/skill-proficiencies/skill-list/persuasion)) or Wisdom ([Animal Handling](srd-5.2/01/proficiency/skill-proficiencies/skill-list/animal-handling)) check to alter a creature's attitude."
+                ],
+                [
+                  "[Magic](srd-5.2/08/rules-definitions/magic)",
+                  "Cast a spell, use a magic item, or use a magical feature."
+                ],
+                [
+                  "[Ready](srd-5.2/08/rules-definitions/ready)",
+                  "Prepare to take an action in response to a trigger you define."
+                ],
+                [
+                  "[Search](srd-5.2/08/rules-definitions/search)",
+                  "Make a Wisdom ([Insight](srd-5.2/01/proficiency/skill-proficiencies/skill-list/insight), [Medicine](srd-5.2/01/proficiency/skill-proficiencies/skill-list/medicine), [Perception](srd-5.2/01/proficiency/skill-proficiencies/skill-list/perception), or [Survival](srd-5.2/01/proficiency/skill-proficiencies/skill-list/survival)) check."
+                ],
+                [
+                  "[Study](srd-5.2/08/rules-definitions/study)",
+                  "Make an Intelligence ([Arcana](srd-5.2/01/proficiency/skill-proficiencies/skill-list/arcana), [History](srd-5.2/01/proficiency/skill-proficiencies/skill-list/history), [Investigation](srd-5.2/01/proficiency/skill-proficiencies/skill-list/investigation), [Nature](srd-5.2/01/proficiency/skill-proficiencies/skill-list/nature), or [Religion](srd-5.2/01/proficiency/skill-proficiencies/skill-list/religion)) check."
+                ],
+                [
+                  "[Utilize](srd-5.2/08/rules-definitions/utilize)",
+                  "Use a nonmagical object."
+                ]
+              ],
+              "title": "Actions",
+              "type": "table"
+            }
+          ],
+          "id": "srd-5.2/01/actions/actions",
+          "title": "Actions",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/01/actions",
+      "title": "Actions",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "content": [
+                    {
+                      "columns": [
+                        "Pace",
+                        "Minute",
+                        "Hour",
+                        "Day"
+                      ],
+                      "rows": [
+                        [
+                          "Fast",
+                          "400 feet",
+                          "4 miles",
+                          "30 miles"
+                        ],
+                        [
+                          "Normal",
+                          "300 feet",
+                          "3 miles",
+                          "24 miles"
+                        ],
+                        [
+                          "Slow",
+                          "200 feet",
+                          "2 miles",
+                          "18 miles"
+                        ]
+                      ],
+                      "title": "Travel Pace",
+                      "type": "table"
+                    }
+                  ],
+                  "id": "srd-5.2/01/exploration/travel/travel-pace/travel-pace",
+                  "title": "Travel Pace",
+                  "type": "section"
+                }
+              ],
+              "content": [],
+              "id": "srd-5.2/01/exploration/travel/travel-pace",
+              "title": "Travel Pace",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/01/exploration/travel",
+          "title": "Travel",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/01/exploration",
+      "title": "Exploration",
+      "type": "section"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [],
+              "content": [
+                {
+                  "columns": [
+                    "Size",
+                    "Space (Feet)",
+                    "Space (Squares)"
+                  ],
+                  "rows": [
+                    [
+                      "Tiny",
+                      "2½ by 2½ feet",
+                      "4 per square"
+                    ],
+                    [
+                      "Small",
+                      "5 by 5 feet",
+                      "1 square"
+                    ],
+                    [
+                      "Medium",
+                      "5 by 5 feet",
+                      "1 square"
+                    ],
+                    [
+                      "Large",
+                      "10 by 10 feet",
+                      "4 squares (2 by 2)"
+                    ],
+                    [
+                      "Huge",
+                      "15 by 15 feet",
+                      "9 squares (3 by 3)"
+                    ],
+                    [
+                      "Gargantuan",
+                      "20 by 20 feet",
+                      "16 squares (4 by 4)"
+                    ]
+                  ],
+                  "title": "Creature Size and Space",
+                  "type": "table"
+                }
+              ],
+              "id": "srd-5.2/01/combat/movement-and-position/creature-size",
+              "title": "Creature Size",
+              "type": "section"
+            }
+          ],
+          "content": [],
+          "id": "srd-5.2/01/combat/movement-and-position",
+          "title": "Movement and Position",
+          "type": "section"
+        },
+        {
+          "children": [],
+          "content": [
+            {
+              "columns": [
+                "Degree",
+                "Benefit to Target",
+                "Offered By..."
+              ],
+              "rows": [
+                [
+                  "[Half](srd-5.2/08/rules-definitions/cover)",
+                  "+2 bonus to AC and Dexterity saving throws",
+                  "Another creature or an object that covers at least half of the target"
+                ],
+                [
+                  "[Three-Quarters](srd-5.2/08/rules-definitions/cover)",
+                  "+5 bonus to AC and Dexterity saving throws",
+                  "An object that covers at least three-quarters of the target"
+                ],
+                [
+                  "[Total](srd-5.2/08/rules-definitions/cover)",
+                  "Can't be targeted directly",
+                  "An object that covers the whole target"
+                ]
+              ],
+              "title": "Cover",
+              "type": "table"
+            }
+          ],
+          "id": "srd-5.2/01/combat/cover",
+          "title": "Cover",
+          "type": "section"
+        }
+      ],
+      "content": [],
+      "id": "srd-5.2/01/combat",
+      "title": "Combat",
+      "type": "section"
+    }
+  ],
+  "content": [],
+  "id": "srd-5.2/01",
+  "title": "Chapter 1: Playing the Game",
+  "type": "chapter"
+}

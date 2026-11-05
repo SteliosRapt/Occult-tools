@@ -1,0 +1,16 @@
+{% import "cards/_blocks.j2" as k %}
+{# A Bastion facility: type tag, name, level and orders; art; prerequisite / space / hirelings /
+   orders strip; the entry's text (order options as a list). #}
+<article class="card facility {{ 'fac-special' if c.special else 'fac-basic' }} size-{{ c.size }}{{ ' has-art' if c.art }}" data-key="{{ c.key }}" data-back="{{ c.back.key }}">
+  <header class="c-head">
+    <div class="c-titles">{{ k.tag(c.tag ~ (" · Level " ~ c.level if c.level else "")) }}<h2 class="c-title">{{ c.title }}</h2><div class="c-type"><span class="c-type-text">{{ c.type_line }}</span><span class="c-cont-note">continued</span></div></div>
+  </header>
+  {{ k.art(c, "cover") }}
+  <dl class="c-stats c-stats-item c-stats-feat">
+    {% for s in c.stats %}<div class="st{{ ' st-wide' if s.wide }}"><dt>{{ s.label }}</dt><dd>{{ s.html | safe }}</dd></div>{% endfor %}
+  </dl>
+  <div class="c-body">
+    {{ k.blocks(c.body) }}
+  </div>
+  {{ k.foot(c, "Bastion") }}
+</article>

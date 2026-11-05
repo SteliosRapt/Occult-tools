@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14">
+  <!-- Cap for the vertical gold rule beside a sub-list (subclass list on the chapter opener). -->
+  <path d="M1 1 C4 2 6 4 7 8 C8 4 10 2 13 1" fill="none" stroke="#c4a76a" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M7 6 V14" stroke="#c4a76a" stroke-width="1.6"/>
+</svg>
